@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import EntryMessage from './toaster.jsx';
+import { Route,Routes } from 'react-router-dom';
+import Navbar from './navbar.jsx';
 
-import './App.css';
+import Home from './Home.jsx';
+import Contact from './Contact.jsx';
 
 function App() {
-  useEffect(() => {
-    EntryMessage();
-  }, []);
-
   return (
-    <>
-      <ToastContainer />
+   <>
+    <Navbar/>
+      <div>
+        <Routes>        
+        <Route path="/"  element={<Home/>} />
+        <Route path="/Contact"  element={<Contact/>}/>
+        </Routes>
+      </div>
     </>
+   
   );
 }
 

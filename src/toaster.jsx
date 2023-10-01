@@ -8,14 +8,14 @@ function EntryMessage() {
       autoClose: 4000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: false,
+    pauseOnHover: false,
       draggable: true,
       progress: undefined,
       theme: 'dark',
     });
 
   notify();
-  
+
 }
 
 export default EntryMessage;
