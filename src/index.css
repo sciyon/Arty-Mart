@@ -9,11 +9,27 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #2E2A29;
+  background-color: #1F2833;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Add these styles to your CSS */
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  display: block;
+  transition: transform 0.2s; /* Add a smooth transition for the transform property */
+}
+
+.image:hover {
+  transform: scale(0.95); /* Scale the image to 95% on hover */
 }

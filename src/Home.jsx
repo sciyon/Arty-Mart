@@ -4,20 +4,22 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import EntryMessage from './toaster.jsx';
 import Navbar from './navbar.jsx';
+import ImagesMasonry from './imagesMasonry.jsx'; // Correct the capitalization
 
 function App() {
 
-  //[user login not viewers][subject to change so that it only appears after logging in]
-  useEffect(() => {
-    EntryMessage();
-  }, []);
-
   return (
     <div>
-      <ToastContainer />
-        <Navbar />
+      <EntryMessage />
+      <Navbar />
+      <div className='relative top-32 mx-16'>
+          <ImagesMasonry />
+      </div>
     </div>
   );
 }
 
 export default App;
+
+
+
