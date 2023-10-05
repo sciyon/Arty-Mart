@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #1F2833;
+  background-color: #06070D;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -32,4 +32,21 @@
 
 .image:hover {
   transform: scale(0.95); /* Scale the image to 95% on hover */
+}
+
+/* scrollbar.css */
+/* Track */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width as needed */
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #7D1015; /* Adjust the thumb color */
+  border-radius: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #15191E; /* Adjust the track color */
 }

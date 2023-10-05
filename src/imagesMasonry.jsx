@@ -6,7 +6,7 @@ import monaLisa from './images/monaLisa.jpg';
 import persistenceOfMemory from './images/persistenceOfMemory.jpg';
 import starryNight from './images/starryNight.jpg';
 
-const images = [monaLisa, persistenceOfMemory, starryNight, monaLisa, persistenceOfMemory, starryNight, starryNight, starryNight, monaLisa, persistenceOfMemory, monaLisa];
+const images = [monaLisa, persistenceOfMemory, starryNight, monaLisa, persistenceOfMemory, starryNight, starryNight, starryNight, monaLisa, persistenceOfMemory, monaLisa, persistenceOfMemory, persistenceOfMemory];
 
 class imagesMasonry extends React.Component {
     render() {

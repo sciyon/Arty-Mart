@@ -1,25 +1,13 @@
 import React, { useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import EntryMessage from './toaster.jsx';
 import Navbar from './navbar.jsx';
-import ImagesMasonry from './imagesMasonry.jsx'; // Correct the capitalization
+import homeChessboard from './images/homeChessboard.png'; // Assuming homeChessboard is your image path
 
-function App() {
-
+function Home() {
   return (
-    <div>
-      <EntryMessage />
+    <div className="h-screen bg-cover bg-center" style={{ backgroundImage: `url(${homeChessboard})`, filter: 'brightness(75%)' }}>
       <Navbar />
-      <div className='relative top-32 mx-16'>
-          <ImagesMasonry />
-      </div>
     </div>
   );
 }
 
-export default App;
-
-
-
+export default Home;

@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       backgroundColor: {
-        'tier1': '#2E2A29',
-        'tier2': '#1A1717',
-        'tier3': '#D7D3CC',
+        tier1: "#06070D",
+        tier2: "#15191E",
+        tier3: "#7D1015",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
