@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import Navbar from './navbar.jsx';
+import Navbar from '../layouts/navbar.jsx';
 
 function Contact() {
 

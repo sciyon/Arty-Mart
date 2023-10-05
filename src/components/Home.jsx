@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import Navbar from './navbar.jsx';
-import homeChessboard from './images/homeChessboard.png'; // Assuming homeChessboard is your image path
+import Navbar from '../layouts/navbar.jsx';
+import homeChessboard from '../images/homeChessboard.png'; // Assuming homeChessboard is your image path
 
 function Home() {
   return (

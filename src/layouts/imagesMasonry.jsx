@@ -1,10 +1,11 @@
 import React from 'react';
-import './index.css';
+import '../index.css';
+
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
-import monaLisa from './images/monaLisa.jpg';
-import persistenceOfMemory from './images/persistenceOfMemory.jpg';
-import starryNight from './images/starryNight.jpg';
+import monaLisa from '../images/monaLisa.jpg';
+import persistenceOfMemory from '../images/persistenceOfMemory.jpg';
+import starryNight from '../images/starryNight.jpg';
 
 const images = [monaLisa, persistenceOfMemory, starryNight, monaLisa, persistenceOfMemory, starryNight, starryNight, starryNight, monaLisa, persistenceOfMemory, monaLisa, persistenceOfMemory, persistenceOfMemory];
 
