@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import EntryMessage from '../layouts/toaster.jsx';
-import Navbar from '../layouts/navbar.jsx';
+import SignedOut from '../layouts/signedOut.jsx';
 import ImagesMasonry from '../layouts/imagesMasonry.jsx'; // Correct the capitalization
 
 function App() {
@@ -11,8 +11,9 @@ function App() {
   return (
     <>
       <EntryMessage />
-      <Navbar />
-      <div className='relative top-32 mx-16'>
+      <SignedOut />      
+      <div className='relative w-100% h-20 bg-tier2 top-14' />
+      <div className='relative top-36 ml-36 mr-16'>
           <ImagesMasonry />
       </div>
     </>
