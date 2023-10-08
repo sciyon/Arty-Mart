@@ -7,11 +7,11 @@ import CastleBG from "../images/chessCastle.png";
 import { TEInput, TERipple } from "tw-elements-react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
-const Login = () => {
+const Register = () => {
     return (
       <>
       <section className="h-screen bg-cover bg-center flex justify-center items-center" style={{ backgroundImage: `url(${CastleBG})` }}>
-        <div className="container h-[90%] ">
+        <div className="container">
           <div className="g-6 flex h-1/2 flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
             <div className="w-8/12">
               <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
@@ -32,7 +32,7 @@ const Login = () => {
                     </div>
 
                     <form>
-                      <p className="mb-4">Please login to your account</p>
+                      <p className="mb-4">Register your account details here</p>
                       {/* <!--Username input--> */}
                       <TEInput
                         type="text"
@@ -47,6 +47,20 @@ const Login = () => {
                         className="mb-4"
                       ></TEInput>
 
+                      {/* <!--Email input--> */}
+                      <TEInput
+                        type="email"
+                        label="Email"
+                        className="mb-4"
+                      ></TEInput>
+
+                      {/* <!--Email input--> */}
+                      <TEInput
+                        type="confirmemail"
+                        label="Confirm Email"
+                        className="mb-4"
+                      ></TEInput>
+
                       {/* <!--Submit button--> */}
                       <div className="mb-12 pb-1 pt-1 text-center">
                         <TERipple rippleColor="light" className="w-full">
@@ -58,28 +72,25 @@ const Login = () => {
                                 "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
                             }}
                           >
-                            Log in
+                            Register
                           </button>
                         </TERipple>
-
-                        {/* <!--Forgot password link--> */}
-                        <a href="#!">Forgot password?</a>
                       </div>
 
                       {/* <!--Register button--> */}
                       <div className="flex items-center justify-between pb-6">
-                        <p className="mb-0 mr-2">Don't have an account?</p>
+                        <p className="mb-0 mr-2">Already have an account?</p>
                         <TERipple rippleColor="light">
-                        <Link
-                            to="/Register"
+                          <Link
+                          to="/Login"
                           >
                           <button
                             type="button"
                             className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
                           >
-                            Register
+                            Login
                           </button>
-                        </Link>
+                          </Link>
                         </TERipple>
                       </div>
                     </form>
@@ -121,4 +132,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Register;

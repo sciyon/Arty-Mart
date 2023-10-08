@@ -41,7 +41,7 @@ const SignedOut = () => {
             Login
           </Link>
           <Link
-            // to="/"
+            to="/Register"
             className="text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300"
           >
             Join
