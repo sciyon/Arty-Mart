@@ -2,6 +2,7 @@ import React from 'react';
 import '../index.css';
 
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
+import { Image, Shimmer} from 'react-shimmer'
 
 import monaLisa from '../images/monaLisa.jpg';
 import persistenceOfMemory from '../images/persistenceOfMemory.jpg';
@@ -17,10 +18,11 @@ class imagesMasonry extends React.Component {
             >
                 <Masonry columnsCount={5} gutter="15px">
                     {images.map((image, i) => (
-                    <img 
+                    <Image 
                     key={i}
                     src={image}
                     className='image'
+                    fallback={<Shimmer  />}
                     />
                     ))}
                 </Masonry>
