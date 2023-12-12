@@ -7,6 +7,8 @@ import CastleBG from "../images/chessCastle.png";
 import { TEInput, TERipple } from "tw-elements-react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
+import FormikLogin from "../layouts/Formik.js";
+
 const Login = () => {
     return (
       <>
@@ -38,6 +40,7 @@ const Login = () => {
                         type="text"
                         label="Username"
                         className="mb-4"
+
                       ></TEInput>
 
                       {/* <!--Password input--> */}

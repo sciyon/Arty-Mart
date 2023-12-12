@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SignedOut from '../layouts/signedOut.jsx';
 import ImagesMasonry from '../layouts/imagesMasonry.jsx'; // Correct the capitalization
 
-function App() {
+const Store = () => {
 
   return (
     <>
@@ -17,7 +17,4 @@ function App() {
   );
 }
 
-export default App;
-
-
-
+export default Store;
