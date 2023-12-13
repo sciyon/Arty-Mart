@@ -2,6 +2,7 @@ import { Route,Routes } from 'react-router-dom';
 
 import Home from './Home.jsx';
 import Store from './Store.jsx';
+import Create from './Create.jsx';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Routes>        
         <Route path="/"  element={<Home/>} />
         <Route path="/Store"  element={<Store/>} />
+        <Route path="/Create"  element={<Create/>} />
         </Routes>
       </div>
     </div>
