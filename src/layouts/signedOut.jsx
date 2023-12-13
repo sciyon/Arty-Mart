@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 import LOGO from "../images/logoNew.png";
 import { Bars3Icon } from "@heroicons/react/24/solid";
@@ -8,11 +7,13 @@ import { Bars3Icon } from "@heroicons/react/24/solid";
 import SearchBar from '../layouts/searchBar.jsx'; 
 import Sidebar from "./sidebar.jsx";
 import Login from "./LoginModal.jsx";
+import Register from "./RegisterModal.jsx";
 
 const SignedOut = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false)
-  
+  const [open2, setOpen2] = useState(false)
+
   return (
     <div>
       {/* Sidebar component */}
@@ -35,17 +36,15 @@ const SignedOut = () => {
           </p>
           <SearchBar />
         </div>
-        <div className="text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300" onClick={() => console.log("click")}>
-          <button onClick={() => setOpen(true)} className="mr-6">Login</button>
+        <div className="text-white text-1xl font-semibold transition-transform transform-gpu" onClick={() => console.log("click")}>
+          <button onClick={() => setOpen(true)} className="mr-6 hover:text-red-300">Login</button>
             <Login isOpen={open} onClose={() => setOpen(false)}>
               Login
             </Login>
-          <Link
-            to="/Register"
-            className="text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300"
-          >
-            Join
-          </Link>
+          <button onClick={() => setOpen2(true)} className="mr-6 hover:text-red-300">Register</button>
+            <Register isOpen={open2} onClose={() => setOpen2(false)}>
+              Register
+            </Register>
         </div>
       </div>
     </div>
