@@ -24,14 +24,6 @@ function FormikLogin() {
         .matches(/^[A-Za-z\s]*$/, "Must contain letters and spaces only.")
         .required("Password is required"),
     }),
-
-    onSubmit: async (values) => {
-      try {
-        // Your submit logic here
-      } catch (errors) {
-        // Handle errors if needed
-      }
-    },
   });
 
   return null; // Replace with your JSX or return statement

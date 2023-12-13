@@ -7,10 +7,12 @@ import { Bars3Icon } from "@heroicons/react/24/solid";
 
 import SearchBar from '../layouts/searchBar.jsx'; 
 import Sidebar from "./sidebar.jsx";
+import Login from "./LoginModal.jsx";
 
 const SignedOut = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [open, setOpen] = useState(false)
+  
   return (
     <div>
       {/* Sidebar component */}
@@ -33,13 +35,11 @@ const SignedOut = () => {
           </p>
           <SearchBar />
         </div>
-        <div className="hidden md:flex space-x-10">
-          <Link
-            to="/Login"
-            className="text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300"
-          >
-            Login
-          </Link>
+        <div className="text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300" onClick={() => console.log("click")}>
+          <button onClick={() => setOpen(true)} className="mr-6">Login</button>
+            <Login isOpen={open} onClose={() => setOpen(false)}>
+              Login
+            </Login>
           <Link
             to="/Register"
             className="text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300"
