@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import LOGO from '../images/logoNew.png';
+
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
-
-import LOGO from '../images/logoNew.png';
+import Register from "./RegisterModal.jsx";
 
 function Login({ isOpen, onClose }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [open2, setOpen2] = useState(false)
 
   const CloseLogin = () => {
     setUsername('');
@@ -91,6 +93,9 @@ function Login({ isOpen, onClose }) {
               >
                 Register
               </button>
+            <Register isOpen={open2} onClose={() => setOpen2(false)}>
+              Register
+            </Register>
             </TERipple>
           </div>
         </form>
