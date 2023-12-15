@@ -80,7 +80,7 @@ function Login({ isOpen, onClose }) {
           </div>
           {/* <!--Forgot password link--> */}
           <div className="mb-4 flex items-center justify-center">
-            <a className="text-black">Forgot password?</a>
+            <a className="text-black">Join as admin?</a>
           </div>
           {/* <!--Register button--> */}
           <div className="flex items-center justify-between pb-6 mt-8 mb-4">

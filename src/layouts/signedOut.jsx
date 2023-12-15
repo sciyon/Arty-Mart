@@ -14,12 +14,13 @@ const SignedOut = () => {
   const [openRegister, setOpenRegister] = useState(0);
 
   const handleLoginAndRegisterClick = (action) => {
-    
+
     // 1 - Close the login or register modal
     // 2 - Close the login but open the register
     // 3 - Close the register but open the login
     // 4 - Open the login
     // 5 - Open the Register
+    // Do not touch this, if libog ni tanawon ang code, just ask me I have a reasonable explanation for this <3
 
     switch (action) {
       case 1:
