@@ -3,9 +3,11 @@ import { ToastContainer } from 'react-toastify';
 
 import EntryMessage from '../layouts/toaster.jsx';
 import SignedOut from '../layouts/signedOut.jsx';
-import homeChessboard from '../images/homeChessboard.png'; // Assuming homeChessboard is your image path
+import SignedIn from '../layouts/signedin.jsx';
 
-function Home() {
+import homeChessboard from '../images/homeChessboard.png';
+
+const Home = () => {
 
   useEffect(() => {
     EntryMessage();
@@ -15,7 +17,7 @@ function Home() {
     <>
       <div className="h-screen bg-cover bg-center" style={{ backgroundImage: `url(${homeChessboard})`, filter: 'brightness(75%)' }}></div>
       <ToastContainer />      
-      <SignedOut />
+      <SignedIn />
     </>
   );
 }
