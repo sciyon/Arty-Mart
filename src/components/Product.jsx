@@ -86,7 +86,7 @@ const Product = () => {
             {images.map((_, index) => (
               <div
                 key={index}
-                className={`text-white mx-2 ${index === currentImageIndex ? 'text-red-900 text-2xl ' : 'text-xl'}`}
+                className={` font-medium mx-2 ${index === currentImageIndex ? 'text-red-900 text-2xl ' : 'text-xl'}`}
                 onClick={() => setCurrentImageIndex(index)}
               >
                 {index + 1}
@@ -140,7 +140,6 @@ const Product = () => {
             </div>
           </div>
           <div className="flex pl-5 pr-8 border-b-2 mb-4 border-tier4" />
-
         </div>
 
         {/* Second Column */}
