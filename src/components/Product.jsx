@@ -97,7 +97,7 @@ const Product = () => {
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center">
               <button
-                className={`text-white mx-2 text-2xl ${liked ? 'text-red-900' : ''}`}
+                className={`mx-2 text-2xl ${liked ? 'text-red-900' : ''}`}
                 onClick={handleLikeClick}
               >
                 <HeartIcon className="w-8 h-8 pt-1" />
@@ -119,7 +119,7 @@ const Product = () => {
             </div>
           </div>
           <div className="flex pl-5 pr-8 py-2 border-b-2 mb-4 border-tier4" />
-          <p className='mb-4'>Comment</p>
+          <p className='mb-4'>Please give an honest review</p>
           <div className="flex">
             <div className='flex-1 w-[90%] pr-4'>
               <TEInput

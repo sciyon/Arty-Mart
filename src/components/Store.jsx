@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import SignedOut from '../layouts/signedOut.jsx';
-import ImagesMasonry from '../layouts/imagesMasonry.jsx'; 
+
+import ImagesMasonry from '../layouts/ImagesMasonry.jsx'; 
 
 const Store = () => {
 

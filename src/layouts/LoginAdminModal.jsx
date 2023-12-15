@@ -6,7 +6,7 @@ import LOGO from '../images/logoNew.png';
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
-function Login({ isOpen, onClose }) {
+function LoginAdmin({ isOpen, onClose }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,17 +16,12 @@ function Login({ isOpen, onClose }) {
     onClose(1);
   };
 
-  const CloseLoginOpenRegister = () => {
+  const CloseAdminOpenLogin = () => {
     setUsername('');
     setPassword('');
-    onClose(2);
-  };
+    onClose(3);
+  }
 
-  const CloseLoginOpenAdmin = () => {
-    setUsername('');
-    setPassword('');
-    onClose(6);
-  };
 
   if (!isOpen) return null;
 
@@ -43,10 +38,10 @@ function Login({ isOpen, onClose }) {
         <div className="text-center">
           <img className="mx-auto w-16" src={LOGO} alt="logo" />
           <h4 className="mb-6 mt-1 pb-1 text-lg font-semibold text-black">
-            We are The Arty Mart Team
+            Welcome Back Fellow Arty Mart
           </h4>
         </div>
-        <p className="mb-4 text-black">Please login to your account</p>
+        <p className="mb-4 text-black">Please login using your admin credentials</p>
         {/* <!--Logo--> */}
         <form>
           <div className="mb-4">
@@ -88,27 +83,8 @@ function Login({ isOpen, onClose }) {
           <div className="mb-4 flex items-center justify-center">
             <a 
               className="text-black"
-              onClick={CloseLoginOpenAdmin}
-            >
-              Join as admin?
-            </a>
-          </div>
-          {/* <!--Register button--> */}
-          <div className="flex items-center justify-between pb-6 mt-8 mb-4">
-            <p className="mb-0 mr-2 text-black">Don't have an account?</p>
-            <TERipple rippleColor="light">
-              <button
-                type="button"
-                className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-                onClick={CloseLoginOpenRegister}
-                style={{
-                  background:
-                    'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
-                }}
-              >
-                Register
-              </button>
-            </TERipple>
+              onClick={CloseAdminOpenLogin}
+            >Join as user?</a>
           </div>
         </form>
       </div>
@@ -117,4 +93,4 @@ function Login({ isOpen, onClose }) {
   );
 }
 
-export default Login;
+export default LoginAdmin;

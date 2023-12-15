@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import EntryMessage from '../layouts/toaster.jsx';
-import SignedOut from '../layouts/signedOut.jsx';
 import SignedIn from '../layouts/signedin.jsx';
 
 import homeChessboard from '../images/homeChessboard.png';

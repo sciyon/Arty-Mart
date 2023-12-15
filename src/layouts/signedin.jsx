@@ -5,8 +5,8 @@ import LOGO from "../images/logoNew.png";
 import { Bars3Icon, UserCircleIcon, TruckIcon } from "@heroicons/react/24/solid";
 import { TERipple } from "tw-elements-react";
 
-import SearchBar from '../layouts/searchBar.jsx';
-import Sidebar from "./sidebar.jsx";
+import SearchBar from './SearchBar.jsx';
+import Sidebar from "./Sidebar.jsx";
 import Profile from "./ProfileModal.jsx";
 
 const SignedIn = () => {

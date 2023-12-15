@@ -3,15 +3,17 @@ import React, { useState } from "react";
 import LOGO from "../images/logoNew.png";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 
-import SearchBar from '../layouts/searchBar.jsx'; 
-import Sidebar from "./sidebar.jsx";
+import SearchBar from './SearchBar.jsx'; 
+import Sidebar from "./Sidebar.jsx";
 import Login from "./LoginModal.jsx";
 import Register from "./RegisterModal.jsx";
+import LoginAdmin from "./LoginAdminModal.jsx";
 
 const SignedOut = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(0);
   const [openRegister, setOpenRegister] = useState(0);
+  const [openLoginAdmin, setOpenLoginAdmin] = useState(0);
 
   const handleLoginAndRegisterClick = (action) => {
 
@@ -20,31 +22,43 @@ const SignedOut = () => {
     // 3 - Close the register but open the login
     // 4 - Open the login
     // 5 - Open the Register
+    // 6 - Close login and open admin login
     // Do not touch this, if libog ni tanawon ang code, just ask me I have a reasonable explanation for this <3
 
     switch (action) {
       case 1:
         setOpenLogin(0);
+        setOpenLoginAdmin(0)
         setOpenRegister(0);
         break;
       case 2:
         setOpenLogin(0);
+        setOpenLoginAdmin(0)
         setOpenRegister(1);
         break;
       case 3:
         setOpenLogin(1);
+        setOpenLoginAdmin(0)
         setOpenRegister(0);
         break;
       case 4:
         setOpenLogin(1);
+        setOpenLoginAdmin(0)
         setOpenRegister(0);
         break;
       case 5:
         setOpenLogin(0);
+        setOpenLoginAdmin(0)
         setOpenRegister(1);
+        break;
+      case 6:
+        setOpenLogin(0);
+        setOpenLoginAdmin(1);
+        setOpenRegister(0);
         break;
       default:
         setOpenLogin(1);
+        setOpenLoginAdmin(1);
         setOpenRegister(1);
         break;
     }
@@ -88,6 +102,9 @@ const SignedOut = () => {
             Register
           </Register>
         </div>
+
+        {/* Invisible functionality for accessing admin login page */}
+        <LoginAdmin isOpen={openLoginAdmin} onClose={(action) => handleLoginAndRegisterClick(action)} />
       </div>
     </div>
   );
