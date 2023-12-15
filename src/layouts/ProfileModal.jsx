@@ -3,16 +3,27 @@ import ReactDOM from 'react-dom';
 
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
-import Register from "./RegisterModal.jsx";
 
 function Profile({ isOpen, onClose }) {
+  const [profileFile, setProfileFile] = useState(null);
+  const [profileFileName, setProfileFileName] = useState(''); 
   const [username, setUsername] = useState('');
-  const [gender, setGender] = useState(''); // 'male', 'female', or 'not_say'
+  const [gender, setGender] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
-  const [joinDate, setJoinDate] = useState(''); // Assuming this is provided externally
+  const [joinDate, setJoinDate] = useState(''); 
+
+  const handleProfileUpload = (event) => {
+    const file = event.target.files[0];
+    setProfileFile(file);
+
+    const limitedFileName = file ? (file.name.length > 35 ? file.name.substring(0, 35) + '...' : file.name) : 'No File Chosen';
+    setProfileFileName(limitedFileName);
+  };
 
   const CloseProfile = () => {
+    setProfileFile(null);
+    setProfileFileName('');
     setUsername('');
     setGender('');
     setEmail('');
@@ -38,6 +49,17 @@ function Profile({ isOpen, onClose }) {
           </h4>
         </div>
         <form>
+          <div className='mb-4'>
+              <p htmlFor="imageUpload" className='mb-1 mt-1 pb-1 text-black mr-1'>Upload Profile Picture:</p>
+                <input
+                  className="mb-2 w-1/8 inline-block rounded text-xs font-medium uppercase leading-normal text-white"
+                  type="file"
+                  id="imageUpload"
+                  accept="image/*"
+                  onChange={handleProfileUpload}
+                />
+              <div className="text-black leading-normal ml-1">{profileFileName}</div>
+            </div>
           <div className="mb-4">
             <TEInput
               type="text"
@@ -93,7 +115,7 @@ function Profile({ isOpen, onClose }) {
                 className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer text-black"
                 htmlFor="not_say"
               >
-                Not Say
+                Others
               </label>
             </div>
           </div>
@@ -107,6 +129,9 @@ function Profile({ isOpen, onClose }) {
             />
           </div>
           <div className="mb-4">
+            <p className="mb-1 mt-1 pb-1 text-black">
+              Birthday
+            </p>
             <TEInput
                 type="date"
                 placeholder='birthday'

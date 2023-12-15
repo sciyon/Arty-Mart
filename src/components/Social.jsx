@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { UserIcon, CalendarDaysIcon, CakeIcon} from "@heroicons/react/24/solid";
-import joshHutcherson from '../images/joshHutcherson.jpg';
+import joshHutcherson from '../images/joshHutcherson.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
 
 import SignedOut from '../layouts/signedOut.jsx';
 
@@ -32,12 +32,12 @@ const Social = () => {
   return (
     <>
       <SignedOut />
-      <div className='relative w-100% h-20 bg-tier2 top-14 flex justify-center items-center'>
+      <div className='relative w-100% h-28 bg-tier2 top-14 flex justify-center items-center'>
         <div className='font-medium uppercase ml-16 text-xl'>
           Social
         </div>
       </div>
-      <div className='relative top-8 ml-36 mr-16'>
+      <div className='relative ml-36 mr-16'>
         <div className="flex items-center mb-6">
           {/* User Information */}
           <div>
@@ -45,7 +45,7 @@ const Social = () => {
               <img
                 src={joshHutcherson} 
                 alt='Josh Hutcherson'
-                className='h-28 w-28 rounded-full object-cover'
+                className='h-28 w-28 border-2 border-tier4 rounded-full object-cover'
               />
             </div>
             <div className='mb-4'>Username </div>
@@ -69,25 +69,25 @@ const Social = () => {
         {/* Navigation for columns */}
         <div className="flex pl-5 pr-8 py-2 border-b-2 mb-6 border-tier4">
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'posts' ? 'text-blue-500' : ''}`}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'posts' ? 'text-tier3' : ''}`}
             onClick={() => handleColumnClick('posts')}
           >
             Posts
           </div>
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'followers' ? 'text-blue-500' : ''}`}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'followers' ? 'text-tier3' : ''}`}
             onClick={() => handleColumnClick('followers')}
           >
             Followers
           </div>
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'following' ? 'text-blue-500' : ''}`}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'following' ? 'text-tier3' : ''}`}
             onClick={() => handleColumnClick('following')}
           >
             Following
           </div>
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'likes' ? 'text-blue-500' : ''}`}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'likes' ? 'text-tier3' : ''}`}
             onClick={() => handleColumnClick('likes')}
           >
             Likes
