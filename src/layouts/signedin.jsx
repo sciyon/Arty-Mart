@@ -37,9 +37,11 @@ const SignedIn = () => {
           <SearchBar />
         </div>
         <div className="hidden md:flex space-x-10">
+          <button className="hover:text-red-300">
             <Link to="/Product" type="button"> {/* This is just a skeleton of a product, will be removed kung naa nay backend*/}
               Product
             </Link>
+          </button>
           <button onClick={() => setOpen4(true)} className="hover:text-red-300">
             <Link to="/Transaction" type="button">
               <TruckIcon className="w-10 h-10 pt-1 hover:scale-90 hover:text-red-300" />
@@ -49,7 +51,7 @@ const SignedIn = () => {
             <UserCircleIcon className="w-8 h-8 hover:scale-90 hover:text-red-300" />
           </button>
             <Profile isOpen={open3} onClose={() => setOpen3(false)} />
-          <TERipple rippleColor="light" className="w-full">
+          <TERipple rippleColor="light" className="w-full flex justify-center items-center">
             <Link
               className="inline-block rounded border-2 hover:scale-90 border-danger px-10 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
               to="/Create"
