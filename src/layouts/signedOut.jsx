@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import LOGO from "../images/logoNew.png";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 
-
 import SearchBar from '../layouts/searchBar.jsx'; 
 import Sidebar from "./sidebar.jsx";
 import Login from "./LoginModal.jsx";
@@ -11,8 +10,44 @@ import Register from "./RegisterModal.jsx";
 
 const SignedOut = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [open, setOpen] = useState(false)
-  const [open2, setOpen2] = useState(false)
+  const [openLogin, setOpenLogin] = useState(0);
+  const [openRegister, setOpenRegister] = useState(0);
+
+  const handleLoginAndRegisterClick = (action) => {
+    
+    // 1 - Close the login or register modal
+    // 2 - Close the login but open the register
+    // 3 - Close the register but open the login
+    // 4 - Open the login
+    // 5 - Open the Register
+
+    switch (action) {
+      case 1:
+        setOpenLogin(0);
+        setOpenRegister(0);
+        break;
+      case 2:
+        setOpenLogin(0);
+        setOpenRegister(1);
+        break;
+      case 3:
+        setOpenLogin(1);
+        setOpenRegister(0);
+        break;
+      case 4:
+        setOpenLogin(1);
+        setOpenRegister(0);
+        break;
+      case 5:
+        setOpenLogin(0);
+        setOpenRegister(1);
+        break;
+      default:
+        setOpenLogin(1);
+        setOpenRegister(1);
+        break;
+    }
+  };
 
   return (
     <div>
@@ -22,8 +57,10 @@ const SignedOut = () => {
       {/* Main content */}
       <div className="fixed top-0 left-0 z-10 w-full flex items-center justify-between pl-5 pr-8 py-2 border-b-2 border-tier4 bg-tier1 opacity-75">
         <div className="flex items-center">
-         {/* Burger menu icon */}
-          <button onClick={() => setSidebarOpen(!sidebarOpen)}><Bars3Icon className="w-8 h-8 mr-6 hover:text-red-300"/></button> 
+          {/* Burger menu icon */}
+          <button onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <Bars3Icon className="w-8 h-8 mr-6 hover:text-red-300" />
+          </button>
           <img
             src={LOGO}
             width="3%"
@@ -36,15 +73,19 @@ const SignedOut = () => {
           </p>
           <SearchBar />
         </div>
-        <div className="text-white text-1xl font-semibold transition-transform transform-gpu" onClick={() => console.log("click")}>
-          <button onClick={() => setOpen(true)} className="mr-6 hover:text-red-300">Login</button>
-            <Login isOpen={open} onClose={() => setOpen(false)}>
-              Login
-            </Login>
-          <button onClick={() => setOpen2(true)} className="mr-6 hover:text-red-300">Register</button>
-            <Register isOpen={open2} onClose={() => setOpen2(false)}>
-              Register
-            </Register>
+        <div className="text-white text-1xl font-semibold transition-transform transform-gpu">
+          <button onClick={() => handleLoginAndRegisterClick(4)} className="mr-6 hover:text-red-300">
+            Login
+          </button>
+          <Login isOpen={openLogin} onClose={(action) => handleLoginAndRegisterClick(action)}>
+            Login
+          </Login>
+          <button onClick={() => handleLoginAndRegisterClick(5)} className="mr-6 hover:text-red-300">
+            Register
+          </button>
+          <Register isOpen={openRegister} onClose={(action) => handleLoginAndRegisterClick(action)}>
+            Register
+          </Register>
         </div>
       </div>
     </div>

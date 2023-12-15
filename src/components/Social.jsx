@@ -32,7 +32,7 @@ const Social = () => {
   return (
     <>
       <SignedOut />
-      <div className='relative w-100% h-28 bg-tier2 top-14 flex justify-center items-center'>
+      <div className='relative w-100% h-20 bg-tier2 top-14 flex justify-center items-center'>
         <div className='font-medium uppercase ml-16 text-xl'>
           Social
         </div>

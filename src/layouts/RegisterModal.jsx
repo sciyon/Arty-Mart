@@ -17,7 +17,15 @@ function Register({ isOpen, onClose }) {
     setPassword('');
     setEmail('');
     setConfirmEmail('');
-    onClose();
+    onClose(1);
+  };
+
+  const CloseRegisterOpenLogin = () => {
+    setUsername('');
+    setPassword('');
+    setEmail('');
+    setConfirmEmail('');
+    onClose(3);
   };
 
   if (!isOpen) return null;
@@ -25,7 +33,7 @@ function Register({ isOpen, onClose }) {
   return ReactDOM.createPortal(
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-80"></div>
-      <div className="z-10 w-full max-w-md p-4 bg-white rounded-lg shadow-md relative">
+      <div className="z-10 w-full max-w-md p-4 bg-white rounded-2xl shadow-md relative">
         <button
           className="absolute top-2 right-2 text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300"
           onClick={CloseRegister}
@@ -102,6 +110,7 @@ function Register({ isOpen, onClose }) {
             <TERipple rippleColor="light">
               <button
                 className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+                onClick={CloseRegisterOpenLogin}
                 style={{
                   background:
                     'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',

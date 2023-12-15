@@ -36,7 +36,7 @@ function Profile({ isOpen, onClose }) {
   return ReactDOM.createPortal(
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-80"></div>
-      <div className="z-10 w-full max-w-md p-4 bg-white rounded-lg shadow-md relative">
+      <div className="z-10 w-full max-w-md p-4 bg-white rounded-2xl shadow-md relative">
         <button
           className="absolute top-2 right-2 text-white text-1xl font-semibold transition-transform transform-gpu hover:text-red-300"
           onClick={CloseProfile}
