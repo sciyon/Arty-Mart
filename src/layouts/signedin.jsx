@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import LOGO from "../images/logoNew.png";
-import { Bars3Icon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { Bars3Icon, UserCircleIcon, TruckIcon } from "@heroicons/react/24/solid";
 import { TERipple } from "tw-elements-react";
 
 import SearchBar from '../layouts/searchBar.jsx';
@@ -12,6 +12,7 @@ import Profile from "./ProfileModal.jsx";
 const SignedIn = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [open3, setOpen3] = useState(false);
+  const [open4, setOpen4] = useState(false);
 
   return (
     <div>
@@ -36,6 +37,11 @@ const SignedIn = () => {
           <SearchBar />
         </div>
         <div className="hidden md:flex space-x-10">
+          <button onClick={() => setOpen4(true)} className="hover:text-red-300">
+            <Link to="/Transaction" type="button">
+              <TruckIcon className="w-10 h-10 pt-1 hover:scale-90 hover:text-red-300" />
+            </Link>
+          </button>
           <button onClick={() => setOpen3(true)} className="hover:text-red-300">
             <UserCircleIcon className="w-8 h-8 hover:scale-90 hover:text-red-300" />
           </button>

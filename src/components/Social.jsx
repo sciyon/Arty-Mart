@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { UserIcon, CalendarDaysIcon, CakeIcon} from "@heroicons/react/24/solid";
+import { UserIcon, CalendarDaysIcon, CakeIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import joshHutcherson from '../images/joshHutcherson.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
 
 import SignedOut from '../layouts/signedOut.jsx';
@@ -14,7 +14,6 @@ const Social = () => {
   };
 
   const renderContent = () => {
-    // Conditionally render content based on the active column
     switch (activeColumn) {
       case 'posts':
         return <div>Content for Posts</div>;
@@ -48,7 +47,7 @@ const Social = () => {
                 className='h-28 w-28 border-2 border-tier4 rounded-full object-cover'
               />
             </div>
-            <div className='mb-4'>Username </div>
+            <div className='mb-4 uppercase font-medium'>Username </div>
             <div className='flex items-center mb-4'>
               <div className='flex-1 flex items-center mr-20'>
                 <UserIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
@@ -59,9 +58,15 @@ const Social = () => {
                 <div>Birthday: </div>
               </div>
             </div>
-            <div className='flex items-center'>
-              <CalendarDaysIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
-              <div>Joined on: </div>
+            <div className='flex items-center mb-4'>
+              <div className='flex-1 flex items-center mr-20'>
+                <CalendarDaysIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
+                <div>Joined: </div>
+              </div>
+              <div className='flex-1 ml-12 flex items-center'>
+                <EnvelopeIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
+                <div>Email: </div>
+              </div>
             </div>
           </div>
         </div>

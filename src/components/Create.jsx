@@ -10,6 +10,7 @@ const Create = () => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
   const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [upload, setUpload] = useState('');
@@ -30,12 +31,14 @@ const Create = () => {
     setTitle('');
     setType('');
     setPrice('');
+    setQuantity('');
     setDescription('');
     setCategory('');
   };
 
   return (
     <>
+      <SignedIn />
       <div className="h-screen bg-cover bg-center relative flex" style={{ backgroundImage: `url(${chessCastle})`, filter: 'brightness(75%)' }}>
         <div className='fixed left-32 top-24 bg-tier1 h-[600px] w-[1350px] p-4 transform-gpu border-r-2 border-tier4 opacity-95 flex space-x-4'>
           {/* First Column */}
@@ -79,16 +82,34 @@ const Create = () => {
               ></TEInput>
             </div>
 
-            <p htmlFor="imageUpload" className='mb-3'>Price:</p>
-            <div className='w-1/4 mb-6'>
-              <TEInput
-                type="number"
-                placeholder="Price"
-                className='text-white'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></TEInput>
-            </div>
+            <div className="flex">
+              <div className="w-1/4 mb-6 mr-40">
+                <p htmlFor="price" className="mb-3 text-white">
+                  Price:
+                </p>
+                <TEInput
+                  id="price"
+                  type="number"
+                  placeholder="Price"
+                  className="text-white"
+                  value={price}
+                  onChange={(e) => setPrice(Math.max(0, e.target.value))}
+                ></TEInput>
+              </div>
+              <div className="w-1/4 mb-6">
+                <p htmlFor="quantity" className="mb-3 text-white">
+                  Quantity:
+                </p>
+                <TEInput
+                  id="quantity"
+                  type="number"
+                  placeholder="Quantity"
+                  className="text-white"
+                  value={quantity}
+                  onChange={(e) => setQuantity(Math.max(1, e.target.value))}
+                ></TEInput>
+              </div>
+          </div>
 
           </div>
           {/* Second Column */}
@@ -197,7 +218,6 @@ const Create = () => {
 
         </div>
       </div>    
-      <SignedIn />
     </>
   );
 }
