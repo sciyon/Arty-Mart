@@ -3,10 +3,10 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { connect } from 'mongoose';
 import * as dotenv from "dotenv";
 
-import typeDefs from "./backend/typedefs.js";
-import resolvers from "./backend/resolvers.js";
+import typeDefs from "./backend/typeDefs.js";
+import resolvers from "./backend/resolvers/index.js";
 
-require('dotenv').config();
+dotenv.config();
 const MONGODB = process.env.MONGODB_URI;
 
 await connect(MONGODB);
