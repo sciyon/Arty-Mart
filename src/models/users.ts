@@ -2,10 +2,11 @@ import { Schema, model } from 'mongoose';
 
 interface User{
   id?: String,
-  fname: String, 
-  lname: String,
   email: String,
   password: String,
+  token: String,
+  fname: String, 
+  lname: String,
   roles: String[],
   status: String,
   createdOn: Date
