@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { GraphQLError } from 'graphql';
 
-import User from '../../models/users.js';
+import User from '../models/users.js';
 
 const resolvers = {
   Query: {
