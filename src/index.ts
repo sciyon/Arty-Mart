@@ -3,7 +3,7 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { connect } from 'mongoose';
 import * as dotenv from "dotenv";
 
-import typeDefs from "./backend/typeDefs.js";
+import typeDefs from "./backend/types/index.js";
 import resolvers from "./backend/resolvers/index.js";
 
 dotenv.config();
