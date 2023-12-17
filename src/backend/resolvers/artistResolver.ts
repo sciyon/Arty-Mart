@@ -49,8 +49,8 @@ const artistResolver = {
       try {
         const saved = await newArtist.save();
         if (!saved) {
-          throw new GraphQLError("Failed to create artist.", {
-            extensions: { code: 'CREATE_ARTIST_FAILED' }
+          throw new GraphQLError("Failed to save artist.", {
+            extensions: { code: 'SAVE_ARTIST_FAILED' }
           });
         }
         return saved;

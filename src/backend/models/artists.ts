@@ -12,7 +12,7 @@ interface Artist{
 
 const ArtistSchema = new Schema<Artist>({
   id: String,
-  user: { type: Schema.Types.ObjectId, ref:'User', unique: true },
+  user: { type: Schema.Types.ObjectId, ref:'User', required: true },
   name: { type: String, required: true},
   languages: { type: [String], required: true},
   followers: { type: Number, default: 0 },
