@@ -7,6 +7,7 @@ import Trending from './Trending.jsx';
 import Social from './Social.jsx';
 import Product from './Product.jsx';
 import Transaction from './Transaction.jsx';
+import AdminDashboard from './AdminDashboard.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Social"  element={<Social/>} />
         <Route path="/Product"  element={<Product/>} />
         <Route path="/Transaction"  element={<Transaction/>} />
+        <Route path="/AdminDashboard"  element={<AdminDashboard/>} />
         </Routes>
       </div>
     </div>
