@@ -1,16 +1,19 @@
 import { Schema, Types, model } from 'mongoose';
-const mongoose = require('mongoose');
 
-interface Follow {
-  user: Types.ObjectId;
-  artist: Types.ObjectId;
+interface Follower {
+  id?: String,
+  user: Types.ObjectId,
+  artist: Types.ObjectId,
+  followedOn: Date,
 }
 
-const FollowSchema = new Schema<Follow>({
-  user: { type: mongoose.ObjectId, ref: 'User', required: true },
-  artist: { type: mongoose.ObjectId, ref: 'Artist', required: true },
+const FollowerSchema = new Schema<Follower>({
+  id: String,
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  artist: { type: Schema.Types.ObjectId, ref: 'Artist', required: true },
+  followedOn: { type: Date, default: Date.now }
 });
 
-const Follow = model<Follow>('follow', FollowSchema);
+const Follower = model<Follower>('follower', FollowerSchema);
 
-export default Follow;
+export default Follower;

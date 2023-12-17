@@ -9,7 +9,7 @@ const artistType = `#graphql
     createdOn: String
   }
 
-  input CreateInput{
+  input ArtistInput{
     user: String,
     name: String,
     language:[String],
@@ -20,13 +20,13 @@ const artistType = `#graphql
 
   type Query {
     artistGet(ID: ID!):Artist!
-    artistGetLimit(limit: Int): [Artist]
+    artistGetLimit(limit: Int): [Artist]!
     artistGetFollowersCount(ID: ID!):Int!
   }
 
   type Mutation {
-    artistCreate(createInput: CreateInput): Artist
-    artistUpdate(ID: ID!, createInput: CreateInput): Artist!
+    artistCreate(artistInput: ArtistInput): Artist!
+    artistUpdate(ID: ID!, artistInput: ArtistInput): Artist!
     artistDelete(ID: ID!): String!
   }
 `
