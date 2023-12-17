@@ -92,6 +92,7 @@ const artworkResolver = {
       })
 
       try{
+
         const saved = await newArtwork.save();
         if(!saved){
           throw new GraphQLError("Failed to save artwork.", {
@@ -99,10 +100,13 @@ const artworkResolver = {
           });
         }
         return saved;
+
       }catch (error){
+
         throw new GraphQLError("Failed to create artist.", {
           extensions: { code: 'CREATE_ARTIST_FAILED' }
         });
+        
       }
     },
 
