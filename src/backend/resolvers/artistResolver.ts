@@ -19,7 +19,7 @@ const artistResolver = {
   },
 
   Mutation: {
-    async artistCreate(_, { createInput: { user, name, language, followers, countryOrigin, createdOn } }){
+    async artistCreate(_, { artistInput: { user, name, language, followers, countryOrigin, createdOn } }){
         
       const oldArtist = await Artist.findOne({ user });
 
@@ -62,7 +62,7 @@ const artistResolver = {
     },
 
 
-    async artistUpdate(_, { ID, createInput: {
+    async artistUpdate(_, { ID, artistInput: {
       user, name, language, followers, countryOrigin
     } }){
       await Artist.updateOne({ _id: ID }, {$set: { user, name, language, followers, countryOrigin }});
