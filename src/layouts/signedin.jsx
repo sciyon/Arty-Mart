@@ -20,7 +20,7 @@ const SignedIn = () => {
       <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={setSidebarOpen} />
 
       {/* Main content */}
-      <div className="fixed top-0 left-0 z-10 w-full flex items-center justify-between pl-5 pr-8 py-2 border-b-2 border-tier4 bg-tier1 opacity-75">
+      <div className="fixed h-[8%] top-0 left-0 z-10 w-full flex items-center justify-between pl-5 pr-8 py-2 border-b-2 border-tier4 bg-tier1 opacity-75">
         <div className="flex items-center">
           {/* Burger menu icon */}
           <button onClick={() => setSidebarOpen(!sidebarOpen)}><Bars3Icon className="w-8 h-8 mr-6 hover:text-red-300"/></button>

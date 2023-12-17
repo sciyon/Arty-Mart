@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { ShoppingCartIcon, HomeIcon, FireIcon, UserGroupIcon} from "@heroicons/react/24/solid";
+import { ClipboardDocumentCheckIcon, PaintBrushIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
 const AdminSidebar = ({ sidebarOpen, toggleSidebar }) => {
   const handleIconClick = (e) => {
@@ -19,38 +19,31 @@ const AdminSidebar = ({ sidebarOpen, toggleSidebar }) => {
           : "w-20 transition-width duration-300"
       } fixed top-14 left-0 z-10 h-screen bg-tier1 transform-gpu border-r-2 border-tier4 opacity-75`}
     >
-      <Link to="/" className="flex items-center pl-5 mb-6 mt-6 hover:bg-tier4">
+      <Link to="/AdminDashboard" className="flex items-center pl-5 mb-6 mt-6 hover:bg-tier4">
         <div className={`h-14 flex items-center`}>
-          <HomeIcon className={`h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5`} />
+          <ClipboardDocumentCheckIcon className={`h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5`} />
           {sidebarOpen && (
-            <h5 className={`transition-opacity duration-300`}>Home</h5>
+            <h5 className={`transition-opacity duration-300`}>Dashboard</h5>
           )}
         </div>
       </Link>
-      <Link to="/Store" className="flex items-center pl-5 mb-6 hover:bg-tier4">
-      <div className="h-14 flex items-center">
-          <ShoppingCartIcon className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" />
+      <Link to="/AdminUsers" className="flex items-center pl-5 mb-6 mt-6 hover:bg-tier4">
+        <div className={`h-14 flex items-center`}>
+          <UserCircleIcon className={`h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5`} />
           {sidebarOpen && (
-            <h5 className={`transition-opacity duration-300`}>Store</h5>
+            <h5 className={`transition-opacity duration-300`}>Users</h5>
           )}
-      </div>
+        </div>
       </Link>
-      <Link to="/Trending" className="flex items-center pl-5 mb-6 hover:bg-tier4">
-      <div className="h-14 flex items-center">
-          <FireIcon className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" />
+      <Link to="/AdminArt" className="flex items-center pl-5 mb-6 mt-6 hover:bg-tier4">
+        <div className={`h-14 flex items-center`}>
+          <PaintBrushIcon className={`h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5`} />
           {sidebarOpen && (
-            <h5 className={`transition-opacity duration-300`}>Trending</h5>
+            <h5 className={`transition-opacity duration-300`}>Artworks</h5>
           )}
-      </div>
+        </div>
       </Link>
-      <Link to="/Social" className="flex items-center pl-5 mb-6 hover:bg-tier4">
-      <div className="h-14 flex items-center">
-          <UserGroupIcon className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" />
-          {sidebarOpen && (
-            <h5 className={`transition-opacity duration-300`}>Social</h5>
-          )}
-      </div>
-      </Link>
+
     </div>
   );
 };
