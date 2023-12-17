@@ -13,8 +13,8 @@ import AdminUsers from './AdminUsers.jsx';
 
 function App() {
   return (
-<div>
     <div>
+      <div>
         <Routes>        
         <Route path="/"  element={<Home/>} />
         <Route path="/Store"  element={<Store/>} />
@@ -29,7 +29,6 @@ function App() {
         </Routes>
       </div>
     </div>
-   
   );
 }
 
