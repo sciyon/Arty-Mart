@@ -6,10 +6,10 @@ import User from '../models/users.js';
 
 const resolvers = {
   Query: {
-    async getUser(_, { ID }){
+    async userGet(_, { ID }){
       return User.findById(ID);
     },
-    async getUsers(_, { limit }){
+    async userGetLimit(_, { limit }){
       return User.find().limit(limit);
     },
   },

@@ -1,4 +1,4 @@
-const typeDefs = `#graphql
+const userType = `#graphql
   type User{
     _id: String,
     email: String,
@@ -45,8 +45,8 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    getUser(ID: ID!):User!
-    getUsers(limit: Int): [User]
+    userGet(ID: ID!):User!
+    userGetLimit(limit: Int): [User]
   }
 
   type Mutation { 
@@ -57,4 +57,4 @@ const typeDefs = `#graphql
   }
 `;
 
-export default typeDefs;
+export default userType;

@@ -10,20 +10,19 @@ import Transaction from './Transaction.jsx';
 
 function App() {
   return (
-<div>
     <div>
+      <div>
         <Routes>        
-        <Route path="/"  element={<Home/>} />
-        <Route path="/Store"  element={<Store/>} />
-        <Route path="/Create"  element={<Create/>} />
-        <Route path="/Trending"  element={<Trending/>} />
-        <Route path="/Social"  element={<Social/>} />
-        <Route path="/Product"  element={<Product/>} />
-        <Route path="/Transaction"  element={<Transaction/>} />
+          <Route path="/"  element={<Home/>} />
+          <Route path="/Store"  element={<Store/>} />
+          <Route path="/Create"  element={<Create/>} />
+          <Route path="/Trending"  element={<Trending/>} />
+          <Route path="/Social"  element={<Social/>} />
+          <Route path="/Product"  element={<Product/>} />
+          <Route path="/Transaction"  element={<Transaction/>} />
         </Routes>
       </div>
     </div>
-   
   );
 }
 
