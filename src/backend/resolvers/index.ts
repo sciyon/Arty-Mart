@@ -3,6 +3,7 @@ import artistResolver from './artistResolver.js';
 import followerResolver from './followerResolver.js';
 import artworkResolver from './artworkResolver.js';
 import reviewResolver from './reviewResolver.js';
+import commentResolver from './commentResolver.js';
 
 const resolvers = {
   Query:{
@@ -10,7 +11,8 @@ const resolvers = {
     ...artistResolver.Query,
     ...followerResolver.Query,
     ...artworkResolver.Query,
-    ...reviewResolver.Query
+    ...reviewResolver.Query,
+    ...commentResolver.Query
   },
 
   Mutation:{
@@ -18,7 +20,8 @@ const resolvers = {
     ...artistResolver.Mutation,
     ...followerResolver.Mutation,
     ...artworkResolver.Mutation,
-    ...reviewResolver.Mutation
+    ...reviewResolver.Mutation,
+    ...commentResolver.Mutation
   },
 };
 

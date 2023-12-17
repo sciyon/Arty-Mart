@@ -30,6 +30,6 @@ const ReviewSchema = new Schema<Review>({
   status: { type: String, required: true}
 })
 
-const Review = model<Review>('comment', ReviewSchema);
+const Review = model<Review>('review', ReviewSchema);
 
 export default Review;

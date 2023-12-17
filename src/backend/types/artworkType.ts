@@ -1,4 +1,5 @@
 const artworkType = `#graphql
+
   type Artwork{
     _id: String,
     artist: String,
