@@ -76,14 +76,16 @@ const resolvers = {
           return user;
 
         }else{
-          throw new GraphQLError("Incorrect password.",{
-            extensions: { code: 'INCORRECT_PASSWORD'}
-          })
+          // throw new GraphQLError("Incorrect password.",{
+          //   extensions: { code: 'INCORRECT_PASSWORD'}
+          // })
+          return null
         }
       }else{
-        throw new GraphQLError("Account not found.",{
-          extensions: { code: 'ACCOUNT_NOT_FOUND'}
-        })
+        // throw new GraphQLError("Account not found.",{
+        //   extensions: { code: 'ACCOUNT_NOT_FOUND'}
+        // })
+        return null
       }
     },
   }
