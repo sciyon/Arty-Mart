@@ -4,6 +4,7 @@ import followerResolver from './followerResolver.js';
 import artworkResolver from './artworkResolver.js';
 import reviewResolver from './reviewResolver.js';
 import commentResolver from './commentResolver.js';
+import likeResolver from './likesResolver.js';
 
 const resolvers = {
   Query:{
@@ -12,7 +13,8 @@ const resolvers = {
     ...followerResolver.Query,
     ...artworkResolver.Query,
     ...reviewResolver.Query,
-    ...commentResolver.Query
+    ...commentResolver.Query,
+    ...likeResolver.Query
   },
 
   Mutation:{
@@ -21,7 +23,8 @@ const resolvers = {
     ...followerResolver.Mutation,
     ...artworkResolver.Mutation,
     ...reviewResolver.Mutation,
-    ...commentResolver.Mutation
+    ...commentResolver.Mutation,
+    ...likeResolver.Mutation
   },
 };
 
