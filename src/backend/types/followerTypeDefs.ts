@@ -13,7 +13,7 @@ const followerType = `#graphql
   }
 
   type Query{
-    followerGetAll(userID: ID!):[Follower]!
+    followerGetAll(userID: ID!):[Follower]
   }
 
   type Mutation{

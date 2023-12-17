@@ -5,7 +5,8 @@ import followerType from './followerTypeDefs.js';
 import artworkType from './artworkType.js';
 import reviewType from './reviewType.js';
 import commentType from './commentType.js';
+import likeType from './likesTypes.js';
 
-const mergedTypeDefs = mergeTypeDefs([artistType, userType, followerType, artworkType, reviewType, commentType]);
+const mergedTypeDefs = mergeTypeDefs([artistType, userType, followerType, artworkType, reviewType, commentType, likeType]);
 
 export default mergedTypeDefs;
