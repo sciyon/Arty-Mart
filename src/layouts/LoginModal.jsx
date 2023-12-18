@@ -1,43 +1,25 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-// import resolvers from '../backend/resolvers/usersResolver.ts';
-
 import LOGO from '../images/logoNew.png';
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
+import useLoginMutation from '../backend/connect/usersConnect'
 
 function Login({ isOpen, onClose }) {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  const { loginUser } = useLoginMutation();
 
-  const LoginAcc = async () => {
-    try {
-      // Call the userLogin mutation
-      const response = await resolvers.userLogin(null, {
-        loginUserInput: { email: username, password }
-      });
-
-      if (response && response.token) {
-        // Login successful
-        console.log('Login successful');
-        // You may want to handle storing the token in your application state or cookie/session storage here
-      } else {
-        // Login failed
-        console.log('Login failed');
-      }
-
-    } catch (error) {
-      // Handle any errors that occurred during the login process
-      console.error('Login error:', error.message);
-    } finally {
-      // Reset the form fields
-      setUsername('');
-      setPassword('');
-      // Close the modal or perform any other necessary actions
-      onClose(1);
-    }
+  const LoginAcc = () => {
+    loginUser({ variables: { email: username, password } });
+    setUsername('');
+    setPassword('');
+    onClose(1);
   };
+
 
   const CloseLogin = () => {
     setUsername('');
