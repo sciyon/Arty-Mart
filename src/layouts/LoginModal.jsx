@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import LOGO from '../images/logoNew.png';
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
-import useLoginMutation from '../backend/connect/usersConnect'
+
+import useLoginMutation from '../backend/connect/usersConnect.ts';
 
 function Login({ isOpen, onClose }) {
 
