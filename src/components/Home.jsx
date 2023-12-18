@@ -4,9 +4,10 @@ import { ToastContainer } from 'react-toastify';
 
 import EntryMessage from '../layouts/toaster.jsx';
 import SignedIn from '../layouts/signedin.jsx';
+import SignedOut from '../layouts/signedOut.jsx';
+import { useAuth } from '../backend/middleware/authContext.jsx';
 
 import homeChessboard from '../images/homeChessboard.png';
-import { useAuth } from '../backend/middleware/authContext.jsx';
 
 const Home = () => {
   const { authState } = useAuth();
@@ -21,10 +22,14 @@ const Home = () => {
   return (
     <>
       <div className="h-screen bg-cover bg-center" style={{ backgroundImage: `url(${homeChessboard})`, filter: 'brightness(75%)' }}></div>
-      <SignedIn />
       {isLoggedIn ? (
-        <ToastContainer />    
-      ) : null}
+        <>
+          <SignedIn />
+          <ToastContainer />    
+        </>
+      ) : 
+      <SignedOut />
+      }
     </>
   );
 }

@@ -2,14 +2,24 @@ import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import SignedOut from '../layouts/signedOut.jsx';
+import SignedIn from '../layouts/signedin.jsx';
+import { useAuth } from '../backend/middleware/authContext.jsx';
 
 import ImagesMasonry from '../layouts/ImagesMasonry.jsx'; 
 
 const Store = () => {
+  const { authState } = useAuth();
+  const { isLoggedIn } = authState;
 
   return (
     <>
-      <SignedOut />      
+      {isLoggedIn ? (
+        <>
+          <SignedIn />  
+        </>
+      ) : 
+      <SignedOut />
+      } 
       <div className='relative w-100% h-20 bg-tier2 top-14 flex justify-center items-center'>
         <div className='font-medium uppercase ml-16 text-xl'>
         Store
