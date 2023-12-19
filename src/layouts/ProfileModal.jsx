@@ -8,16 +8,18 @@ import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 function Profile({ isOpen, onClose }) {
-  const [profileFile, setProfileFile] = useState(null);
-  const [profileFileName, setProfileFileName] = useState(''); 
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
 
   const { authState } = useAuth();
   const { user } = authState;
+
+  const [profileFile, setProfileFile] = useState(null);
+  const [profileFileName, setProfileFileName] = useState(''); 
+  const [firstname, setFirstName] = useState(user.fname);
+  const [lastname, setLastName] = useState(user.lname);
+  const [gender, setGender] = useState(user.gender);
+  const [email, setEmail] = useState(user.email);
+  const [birthday, setBirthday] = useState(user.birthDate);
+
   const { updateUser } = useUpdateMutation();
   
   const handleProfileUpload = (event) => {
@@ -40,11 +42,6 @@ function Profile({ isOpen, onClose }) {
   };
 
   const UpdateProfile = () => {
-    // Ensure required fields are not empty before updating
-    if (!email || !firstname || !lastname || !gender || !birthday) {
-      console.error('Please fill in all required fields');
-      return;
-    }
   
     updateUser({
       variables: {
@@ -57,16 +54,8 @@ function Profile({ isOpen, onClose }) {
           birthDate: birthday,
         },
       },
-    });
+    });    
   
-    // Clear form fields and close the modal
-    setProfileFile(null);
-    setProfileFileName('');
-    setFirstName('');
-    setLastName('');
-    setGender('');
-    setEmail('');
-    setBirthday('');
     onClose(1);
   };
 
@@ -128,13 +117,13 @@ function Profile({ isOpen, onClose }) {
               <input
                 type="radio"
                 name="gender"
-                id="male"
-                checked={gender === 'male'}
-                onChange={() => setGender('male')}
+                id="Male"
+                checked={gender === 'Male'}
+                onChange={() => setGender('Male')}
               />
               <label
                 className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer text-black"
-                htmlFor="male"
+                htmlFor="Male"
               >
                 Male
               </label>
@@ -143,13 +132,13 @@ function Profile({ isOpen, onClose }) {
               <input
                 type="radio"
                 name="gender"
-                id="female"
-                checked={gender === 'female'}
-                onChange={() => setGender('female')}
+                id="Female"
+                checked={gender === 'Female'}
+                onChange={() => setGender('Female')}
               />
               <label
                 className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer text-black"
-                htmlFor="female"
+                htmlFor="Female"
               >
                 Female
               </label>
@@ -158,13 +147,13 @@ function Profile({ isOpen, onClose }) {
               <input
                 type="radio"
                 name="gender"
-                id="not_say"
-                checked={gender === 'not_say'}
-                onChange={() => setGender('not_say')}
+                id="Others"
+                checked={gender === 'Others'}
+                onChange={() => setGender('Others')}
               />
               <label
                 className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer text-black"
-                htmlFor="not_say"
+                htmlFor="Others"
               >
                 Others
               </label>

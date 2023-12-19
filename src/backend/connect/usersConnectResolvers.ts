@@ -38,15 +38,11 @@ const REGISTER_MUTATION = gql`
 const UPDATE_MUTATION = gql`
   mutation UserUpdate($id: ID!, $updateUserInput: UpdateUserInput!) {
     userUpdate(ID: $id, updateUserInput: $updateUserInput) {
-      _id
       email
       fname
       lname
       gender
       birthDate
-      roles
-      status
-      createdOn
     }
   }
 `;

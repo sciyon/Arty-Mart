@@ -62,12 +62,36 @@ const resolvers = {
       return newUser;
     },
 
-    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, roles, status } }) {
-      await User.updateOne({ _id: ID}, { $set: { email, password, fname, lname, gender, birthDate, roles, status } });
+    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, roles, status }}){
+      try {
+        const update = await User.findOneAndUpdate(
+          { _id: ID }, 
+          { 
+            $set: { 
+              email, 
+              fname, 
+              lname, 
+              gender, 
+              birthDate, 
+            }
+          }, 
+          { new: true }
+        );
+      
+        if(!update){
+          throw new GraphQLError("Failed to update user.", {
+            extensions: { code: 'UPDATE_USER_FAILED_1' }
+          });
+        }
+        return update;
+      
+      } catch (error) {
+        throw new GraphQLError("Failed to update user.", {
+          extensions: { code: 'UPDATE_USER_FAILED_2' }
+        });
+      }
+    },    
 
-      return ID;
-    },
-    
     async userDelete(_, { ID }) {
       await User.deleteOne({ _id: ID });
       
