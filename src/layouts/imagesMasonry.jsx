@@ -8,6 +8,8 @@ import monaLisa from '../images/monaLisa.jpg';
 import persistenceOfMemory from '../images/persistenceOfMemory.jpg';
 import starryNight from '../images/starryNight.jpg';
 
+{/* Examples rani but we can print the backend component as an array of images to be displayed */}
+{/* Sa trending na part, just sort it according to likes */}
 const images = [monaLisa, persistenceOfMemory, starryNight, monaLisa, persistenceOfMemory, starryNight, starryNight, starryNight, monaLisa, persistenceOfMemory, monaLisa, persistenceOfMemory, persistenceOfMemory];
 
 class imagesMasonry extends React.Component {

@@ -5,8 +5,11 @@ import SignedIn from '../layouts/signedin.jsx';
 import chessCastle from '../images/chessCastle.png';
 
 const Create = () => {
+
   const [videoFile, setVideoFile] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile1, setImageFile1] = useState(null);
+  const [imageFile2, setImageFile2] = useState(null);
+  const [imageFile3, setImageFile3] = useState(null);
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
   const [price, setPrice] = useState('');
@@ -20,21 +23,40 @@ const Create = () => {
     setVideoFile(file);
   };
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload1 = (event) => {
     const file = event.target.files[0];
-    setImageFile(file);
+    setImageFile1(file);
   };
 
+  const handleImageUpload2 = (event) => {
+    const file = event.target.files[0];
+    setImageFile2(file);
+  };
+
+  const handleImageUpload3 = (event) => {
+    const file = event.target.files[0];
+    setImageFile3(file);
+  };
+
+  //Add backend for this part
   const uploadArt = () => {
     setVideoFile(null);
-    setImageFile(null);
+    setImageFile1(null);
+    setImageFile2(null);
+    setImageFile3(null);
     setTitle('');
     setType('');
     setPrice('');
     setQuantity('');
     setDescription('');
     setCategory('');
+  
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach((input) => {
+      input.value = '';
+    });
   };
+  
 
   return (
     <>
@@ -54,11 +76,25 @@ const Create = () => {
 
             <p htmlFor="imageUpload" className='mb-3'>Upload Art Image:</p>
             <input 
-              className="mb-6 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
+              className="mb-4 block w-68 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
               type="file" 
-              id="imageUpload" 
+              id="imageUpload1" 
               accept="image/*"
-              onChange={handleImageUpload} />
+              onChange={handleImageUpload1} />
+
+            <input 
+              className="mb-4 block w-68 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
+              type="file" 
+              id="imageUpload2" 
+              accept="image/*"
+              onChange={handleImageUpload2} />
+
+            <input 
+              className="mb-4 block w-68 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
+              type="file" 
+              id="imageUpload3" 
+              accept="image/*"
+              onChange={handleImageUpload3} />
 
             <p htmlFor="imageUpload" className='mb-3'>Artpiece Title:</p>
             <div className='w-1/2 mb-6'>
@@ -82,48 +118,50 @@ const Create = () => {
               ></TEInput>
             </div>
 
-            <div className="flex">
-              <div className="w-1/4 mb-6 mr-40">
-                <p htmlFor="price" className="mb-3 text-white">
-                  Price:
-                </p>
-                <TEInput
-                  id="price"
-                  type="number"
-                  placeholder="Price"
-                  className="text-white"
-                  value={price}
-                  onChange={(e) => setPrice(Math.max(0, e.target.value))}
-                ></TEInput>
-              </div>
-              <div className="w-1/4 mb-6">
-                <p htmlFor="quantity" className="mb-3 text-white">
-                  Quantity:
-                </p>
-                <TEInput
-                  id="quantity"
-                  type="number"
-                  placeholder="Quantity"
-                  className="text-white"
-                  value={quantity}
-                  onChange={(e) => setQuantity(Math.max(1, e.target.value))}
-                ></TEInput>
-              </div>
-          </div>
 
           </div>
           {/* Second Column */}
           <div className="flex-1 ml-8">
             <p htmlFor="description" className='mb-3 mt-12'>Art Description:</p>
-            <div className='w-full mb-6'>
-              <textarea
-                id="description"
-                placeholder="Description"
-                className='text-black rounded px-6 pb-2 w-[85%] h-52 pt-2.5 text-xs font-medium resize-none'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
+              <div className='w-full mb-6'>
+                <textarea
+                  id="description"
+                  placeholder="Description"
+                  className='text-black rounded px-6 pb-2 w-[85%] h-32 pt-2.5 text-xs font-medium resize-none'
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
+
+              <div className="flex">
+                <div className="w-1/4 mb-6 mr-40">
+                  <p htmlFor="price" className="mb-3 text-white">
+                    Price:
+                  </p>
+                  <TEInput
+                    id="price"
+                    type="number"
+                    placeholder="Price"
+                    className="text-white"
+                    value={price}
+                    onChange={(e) => setPrice(Math.max(0, e.target.value))}
+                  ></TEInput>
+                </div>
+                <div className="w-1/4 mb-6">
+                  <p htmlFor="quantity" className="mb-3 text-white">
+                    Quantity:
+                  </p>
+                  <TEInput
+                    id="quantity"
+                    type="number"
+                    placeholder="Quantity"
+                    className="text-white"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(1, e.target.value))}
+                  ></TEInput>
+                </div>
             </div>
+
             <div className="flex-1 mb-6">
               <p className='mb-6'>Select Art Category:</p>
               <div className="flex items-center mb-4">

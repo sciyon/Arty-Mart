@@ -7,19 +7,25 @@ import Trending from './Trending.jsx';
 import Social from './Social.jsx';
 import Product from './Product.jsx';
 import Transaction from './Transaction.jsx';
+import AdminDashboard from './AdminDashboard.jsx';
+import AdminArt from './AdminArt.jsx';
+import AdminUsers from './AdminUsers.jsx';
 
 function App() {
   return (
     <div>
       <div>
         <Routes>        
-          <Route path="/"  element={<Home/>} />
-          <Route path="/Store"  element={<Store/>} />
-          <Route path="/Create"  element={<Create/>} />
-          <Route path="/Trending"  element={<Trending/>} />
-          <Route path="/Social"  element={<Social/>} />
-          <Route path="/Product"  element={<Product/>} />
-          <Route path="/Transaction"  element={<Transaction/>} />
+        <Route path="/"  element={<Home/>} />
+        <Route path="/Store"  element={<Store/>} />
+        <Route path="/Create"  element={<Create/>} />
+        <Route path="/Trending"  element={<Trending/>} />
+        <Route path="/Social"  element={<Social/>} />
+        <Route path="/Product"  element={<Product/>} />
+        <Route path="/Transaction"  element={<Transaction/>} />
+        <Route path="/AdminDashboard"  element={<AdminDashboard/>} />
+        <Route path="/AdminArt"  element={<AdminArt/>} />
+        <Route path="/AdminUsers"  element={<AdminUsers/>} />
         </Routes>
       </div>
     </div>

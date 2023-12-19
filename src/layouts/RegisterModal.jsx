@@ -6,25 +6,52 @@ import { XCircleIcon } from '@heroicons/react/24/solid';
 
 import LOGO from '../images/logoNew.png';
 
+import { useRegisterMutation } from '../backend/connect/usersConnect.ts';
+
 function Register({ isOpen, onClose }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [confirm_email, setConfirmEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const { register } = useRegisterMutation();
+
+  const RegisterAcc = async () => {
+    if (password === confirmPassword) {
+      try {
+        await register({
+          email,
+          password,
+          fname: firstname,
+          lname: lastname,
+        });
+        console.log('Registration successful');
+        onClose(1); //Pwede rani e remove ig front-end to print toaster outside DOM <3
+      } catch (error) {
+        console.error('Registration error:', error.message);
+      }
+    } else {
+      console.error('Password does not match');
+    }
+  };
+
 
   const CloseRegister = () => {
-    setUsername('');
+    setFirstName('');
+    setLastName('');
     setPassword('');
     setEmail('');
-    setConfirmEmail('');
+    setConfirmPassword('');
     onClose(1);
   };
 
   const CloseRegisterOpenLogin = () => {
-    setUsername('');
+    setFirstName('');
+    setLastName('');
     setPassword('');
     setEmail('');
-    setConfirmEmail('');
+    setConfirmPassword('');
     onClose(3);
   };
 
@@ -49,14 +76,35 @@ function Register({ isOpen, onClose }) {
         <p className="mb-4 text-black">Please register your account</p>
         {/* <!--Logo--> */}
         <form>
+          <div className="mb-4 flex space-x-8">
+            {/* <!--First and Last name input--> */}
+            <div flex-1>
+              <TEInput
+                type="text"
+                placeholder="First name"
+                className='text-black'
+                value={firstname}
+                onChange={(e) => setFirstName(e.target.value)}
+              ></TEInput>
+            </div>
+            <div flex-1>
+              <TEInput
+                type="text"
+                placeholder="Last name"
+                className='text-black'
+                value={lastname}
+                onChange={(e) => setLastName(e.target.value)}
+              ></TEInput>
+            </div>
+          </div>
           <div className="mb-4">
-            {/* <!--Username input--> */}
+            {/* <!--Email input--> */}
             <TEInput
-              type="text"
-              placeholder="Username"
+              type="email"
+              placeholder="Email"
               className='text-black'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             ></TEInput>
           </div>
           <div className="mb-4">
@@ -72,21 +120,11 @@ function Register({ isOpen, onClose }) {
           <div className="mb-4">
             {/* <!--Password input--> */}
             <TEInput
-              type="email"
-              placeholder="Email"
+              type="text"
+              placeholder="Confirm Password"
               className='text-black'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></TEInput>
-          </div>
-          <div className="mb-4">
-            {/* <!--Password input--> */}
-            <TEInput
-              type="confirm_email"
-              placeholder="Confirm Email"
-              className='text-black'
-              value={confirm_email}
-              onChange={(e) => setConfirmEmail(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             ></TEInput>
           </div>
           <div className="flex justify-end">
@@ -94,7 +132,7 @@ function Register({ isOpen, onClose }) {
               <button
                 className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                 type="button"
-                onClick={CloseRegister}
+                onClick={RegisterAcc}
                 style={{
                   background:
                     'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',

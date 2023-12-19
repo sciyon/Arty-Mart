@@ -2,13 +2,25 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import LOGO from '../images/logoNew.png';
-
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
+import { useLoginMutation } from '../backend/connect/usersConnect.ts';
+
 function Login({ isOpen, onClose }) {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  const { loginUser } = useLoginMutation();
+
+  const LoginAcc = () => {
+    loginUser({ variables: { email: username, password } });
+    setUsername('');
+    setPassword('');
+    onClose(1);
+  };
+
 
   const CloseLogin = () => {
     setUsername('');
@@ -20,6 +32,12 @@ function Login({ isOpen, onClose }) {
     setUsername('');
     setPassword('');
     onClose(2);
+  };
+
+  const CloseLoginOpenAdmin = () => {
+    setUsername('');
+    setPassword('');
+    onClose(6);
   };
 
   if (!isOpen) return null;
@@ -68,7 +86,7 @@ function Login({ isOpen, onClose }) {
               <button
                 className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                 type="button"
-                onClick={CloseLogin}
+                onClick={LoginAcc}
                 style={{
                   background:
                     'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
@@ -80,7 +98,12 @@ function Login({ isOpen, onClose }) {
           </div>
           {/* <!--Forgot password link--> */}
           <div className="mb-4 flex items-center justify-center">
-            <a className="text-black">Forgot password?</a>
+            <a 
+              className="text-black"
+              onClick={CloseLoginOpenAdmin}
+            >
+              Join as admin?
+            </a>
           </div>
           {/* <!--Register button--> */}
           <div className="flex items-center justify-between pb-6 mt-8 mb-4">

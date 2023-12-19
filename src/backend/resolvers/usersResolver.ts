@@ -79,11 +79,13 @@ const resolvers = {
           throw new GraphQLError("Incorrect password.",{
             extensions: { code: 'INCORRECT_PASSWORD'}
           })
+
         }
       }else{
         throw new GraphQLError("Account not found.",{
           extensions: { code: 'ACCOUNT_NOT_FOUND'}
         })
+
       }
     },
   }

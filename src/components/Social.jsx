@@ -5,9 +5,13 @@ import { UserIcon, CalendarDaysIcon, CakeIcon, EnvelopeIcon} from "@heroicons/re
 import joshHutcherson from '../images/joshHutcherson.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
 
 import SignedOut from '../layouts/signedOut.jsx';
+import SignedIn from '../layouts/signedin.jsx';
+import { useAuth } from '../backend/middleware/authContext.jsx';
 
 const Social = () => {
   const [activeColumn, setActiveColumn] = useState('posts');
+  const { authState } = useAuth();
+  const { isLoggedIn } = authState;
 
   const handleColumnClick = (column) => {
     setActiveColumn(column);
@@ -30,7 +34,13 @@ const Social = () => {
 
   return (
     <>
+      {isLoggedIn ? (
+        <>
+          <SignedIn />  
+        </>
+      ) : 
       <SignedOut />
+      } 
       <div className='relative w-100% h-20 bg-tier2 top-14 flex justify-center items-center'>
         <div className='font-medium uppercase ml-16 text-xl'>
           Social
