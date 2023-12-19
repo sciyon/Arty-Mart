@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { ShoppingCartIcon, HomeIcon, FireIcon, UserGroupIcon, ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { useAuth } from '../backend/middleware/authContext.jsx';
-import { useLogoutMutation } from '../backend/connect/usersConnect.ts';
+import { useLogoutMutation } from '../backend/connect/usersConnectResolvers.ts';
 
 const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
 

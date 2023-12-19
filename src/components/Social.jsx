@@ -8,7 +8,7 @@ import SignedOut from '../layouts/signedOut.jsx';
 import SignedIn from '../layouts/signedin.jsx';
 import { useQuery } from '@apollo/client';
 import { useAuth } from '../backend/middleware/authContext.jsx';
-import { GETUSER_QUERY } from '../backend/connect/usersConnect.ts';
+import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 
 const Social = () => {
   const [activeColumn, setActiveColumn] = useState('posts');
@@ -16,19 +16,12 @@ const Social = () => {
   const { authState } = useAuth();
   const { isLoggedIn, user } = authState;
 
-  const { data: fetchedUser, loading: userLoading, error: userError } = useQuery(GETUSER_QUERY, {
-    variables: { _id: user?._id || '' },
+  const { data } = useQuery(GETUSER_QUERY, {
+    variables: { id: user?._id || '' }, // Replace with the actual user ID
   });
 
+  const user2 = data?.userGet;
   
-  useEffect(() => {
-    if (fetchedUser) {
-      console.log('User data fetched:', fetchedUser.getUser);
-    } else if (userError) {
-      console.log('Error fetching user data:', userError);
-    }
-  }, [fetchedUser, userError]);
-
   const handleColumnClick = (column) => {
     setActiveColumn(column);
   };
@@ -73,7 +66,7 @@ const Social = () => {
                 className='h-28 w-28 border-2 border-tier4 rounded-full object-cover'
               />
             </div>
-            <div className='mb-4 uppercase font-medium'>Username </div>
+            <div className='mb-4 uppercase font-medium'> {user2?.fname && user2?.lname ? `${user2.fname} ${user2.lname}` : 'N/A'}  </div>
             <div className='flex items-center mb-4'>
               <div className='flex-1 flex items-center mr-20'>
                 <UserIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
@@ -82,19 +75,19 @@ const Social = () => {
               <div className='flex-1 ml-12 flex items-center'>
                 <CakeIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
                 <div className="mr-2">Birthdate:</div>
-                <div> {fetchedUser?.birthDate || 'N/A'}</div>
+                <div> {user2?.birthDate || 'N/A'}</div>
               </div>
             </div>
             <div className='flex items-center mb-4'>
               <div className='flex-1 flex items-center mr-20'>
                 <CalendarDaysIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
                 <div className="mr-2">Joined:</div>
-                <div> {fetchedUser?.createdOn || 'N/A'}</div>
+                <div> {user2?.createdOn || 'N/A'}</div>
               </div>
               <div className='flex-1 ml-12 flex items-center'>
                 <EnvelopeIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
                 <div className="mr-2">Email:</div>
-                <div> {fetchedUser?.email || 'N/A'}</div>
+                <div> {user2?.email || 'N/A'}</div>
               </div>
             </div>
           </div>

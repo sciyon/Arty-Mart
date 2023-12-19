@@ -1,5 +1,5 @@
 // usersConnect.ts
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useAuth } from '../middleware/authContext.jsx';
 
 const LOGIN_MUTATION = gql`
@@ -15,21 +15,6 @@ const LOGIN_MUTATION = gql`
 const REGISTER_MUTATION = gql`
   mutation UserRegister($registerUserInput: RegisterUserInput!) {
     userRegister(registerUserInput: $registerUserInput) {
-      _id
-      email
-      fname
-      lname
-      birthDate
-      roles
-      status
-      createdOn
-    }
-  }
-`;
-
-const GETUSER_QUERY = gql`
-  query UserGet($id: ID!) {
-    getUser(_id: $id) {
       _id
       email
       fname
@@ -91,4 +76,4 @@ const useRegisterMutation = () => {
 };
 
 
-export { useLoginMutation, useLogoutMutation, useRegisterMutation, GETUSER_QUERY };
+export { useLoginMutation, useLogoutMutation, useRegisterMutation };
