@@ -54,15 +54,16 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
           )}
         </div>
       </Link>
-      <Link to="/Social" className="flex items-center pl-5 mb-6 hover:bg-tier4">
-        <div className="h-14 flex items-center">
-          <UserGroupIcon className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" />
-          {sidebarOpen && (
-            <h5 className={`transition-opacity duration-300`}>Social</h5>
-          )}
-        </div>
-      </Link>
       {isLoggedIn ? (
+        <>
+          <Link to="/Social" className="flex items-center pl-5 mb-6 hover:bg-tier4">
+            <div className="h-14 flex items-center">
+              <UserGroupIcon className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" />
+              {sidebarOpen && (
+                <h5 className={`transition-opacity duration-300`}>Social</h5>
+              )}
+            </div>
+          </Link>
           <div className="absolute h-14 flex items-center pl-5 bottom-20">
             <ArrowLeftOnRectangleIcon 
               className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" 
@@ -72,6 +73,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
               <h5 className={`transition-opacity duration-300`}>Logout</h5>
             )}
           </div>
+        </>
       ) : null}
     </div>
   );

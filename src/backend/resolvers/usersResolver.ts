@@ -1,13 +1,32 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { GraphQLError } from 'graphql';
+import { Mongoose } from 'mongoose';
 
 import User from '../models/users.js';
+import { CastError } from 'mongoose';
 
 const resolvers = {
   Query: {
     async userGet(_, { ID }){
-      return User.findById(ID);
+      try{
+        const foundUser = await User.findById(ID);
+        if(!foundUser){
+        throw new GraphQLError("User doesnt exist.", {
+          extensions: { code: 'USER_DOESNT_EXIST'}
+        })
+      }
+      return foundUser;
+      }catch(error){
+        if(error.name === 'CastError'){
+        throw new GraphQLError("Invalid ID.", {
+          extensions: { code: 'INVALID_ID'}
+        })
+      }
+      throw new GraphQLError("User fetch failed.", {
+      extensions: { code: 'USER_FETCH_FAIL'}
+      })
+      }
     },
     async userGetLimit(_, { limit }){
       return User.find().limit(limit);
