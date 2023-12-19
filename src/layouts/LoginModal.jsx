@@ -65,7 +65,7 @@ function Login({ isOpen, onClose }) {
             {/* <!--Username input--> */}
             <TEInput
               type="text"
-              placeholder="Username"
+              placeholder="Email"
               className='text-black'
               value={username}
               onChange={(e) => setUsername(e.target.value)}

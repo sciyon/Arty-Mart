@@ -70,7 +70,7 @@ const Social = () => {
             <div className='flex items-center mb-4'>
               <div className='flex-1 flex items-center mr-20'>
                 <UserIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
-                <div>Gender: </div>
+                <div>Gender: {user2?.gender || 'N/A'}</div>
               </div>
               <div className='flex-1 ml-12 flex items-center'>
                 <CakeIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />

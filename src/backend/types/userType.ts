@@ -6,6 +6,7 @@ const userType = `#graphql
     token: String,
     fname: String, 
     lname: String,
+    gender: String,
     birthDate: String,
     roles: [String],
     status: String,
@@ -18,6 +19,7 @@ const userType = `#graphql
     token: String,
     fname: String, 
     lname: String,
+    gender: String,
     birthDate: String,
     roles: [String],
     status: String,
@@ -34,6 +36,7 @@ const userType = `#graphql
     password: String,
     fname: String, 
     lname: String,
+    gender: String,
     birthDate: String,
     roles: [String],
     status: String

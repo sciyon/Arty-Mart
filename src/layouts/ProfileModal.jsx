@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import { useAuth } from '../backend/middleware/authContext.jsx';
+import { useUpdateMutation } from '../backend/connect/usersConnectResolvers.ts';
+
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 function Profile({ isOpen, onClose }) {
   const [profileFile, setProfileFile] = useState(null);
   const [profileFileName, setProfileFileName] = useState(''); 
-  const [username, setUsername] = useState('');
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
   const [gender, setGender] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
-  const [joinDate, setJoinDate] = useState(''); 
 
+  const { authState } = useAuth();
+  const { user } = authState;
+  const { updateUser } = useUpdateMutation();
+  
   const handleProfileUpload = (event) => {
     const file = event.target.files[0];
     setProfileFile(file);
@@ -24,11 +31,43 @@ function Profile({ isOpen, onClose }) {
   const CloseProfile = () => {
     setProfileFile(null);
     setProfileFileName('');
-    setUsername('');
+    setFirstName('')
+    setLastName('')
     setGender('');
     setEmail('');
     setBirthday('');
-    onClose();
+    onClose(1);
+  };
+
+  const UpdateProfile = () => {
+    // Ensure required fields are not empty before updating
+    if (!email || !firstname || !lastname || !gender || !birthday) {
+      console.error('Please fill in all required fields');
+      return;
+    }
+  
+    updateUser({
+      variables: {
+        id: user._id,
+        updateUserInput: {
+          email,
+          fname: firstname,
+          lname: lastname,
+          gender,
+          birthDate: birthday,
+        },
+      },
+    });
+  
+    // Clear form fields and close the modal
+    setProfileFile(null);
+    setProfileFileName('');
+    setFirstName('');
+    setLastName('');
+    setGender('');
+    setEmail('');
+    setBirthday('');
+    onClose(1);
   };
 
   if (!isOpen) return null;
@@ -60,14 +99,26 @@ function Profile({ isOpen, onClose }) {
                 />
               <div className="text-black leading-normal ml-1">{profileFileName}</div>
             </div>
-          <div className="mb-4">
-            <TEInput
-              type="text"
-              placeholder="Username"
-              className='text-black'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+            <div className="mb-4 flex space-x-8">
+            {/* <!--First and Last name input--> */}
+            <div flex-1>
+              <TEInput
+                type="text"
+                placeholder="First name"
+                className='text-black'
+                value={firstname}
+                onChange={(e) => setFirstName(e.target.value)}
+              ></TEInput>
+            </div>
+            <div flex-1>
+              <TEInput
+                type="text"
+                placeholder="Last name"
+                className='text-black'
+                value={lastname}
+                onChange={(e) => setLastName(e.target.value)}
+              ></TEInput>
+            </div>
           </div>
           <div className="mb-4">
           <p className="mb-1 mt-1 pb-1 text-black">
@@ -142,14 +193,14 @@ function Profile({ isOpen, onClose }) {
             />
         </div>
         <div className="mb-4">
-            <p className='text-black ml-1'>Joined On: {joinDate}</p>
+            <p className='text-black ml-1'>Joined On: {user?.createdOn || 'N/A'}</p>
         </div>
         <div className="flex justify-end">
             <TERipple rippleColor="light" className="w-full">
               <button
                 className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                 type="button"
-                onClick={CloseProfile}
+                onClick={UpdateProfile}
                 style={{
                   background:
                     'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',

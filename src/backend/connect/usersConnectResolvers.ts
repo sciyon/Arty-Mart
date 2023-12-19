@@ -8,6 +8,13 @@ const LOGIN_MUTATION = gql`
       _id
       email
       token 
+      fname
+      lname
+      gender
+      birthDate
+      roles
+      status
+      createdOn
     }
   }
 `;
@@ -19,6 +26,23 @@ const REGISTER_MUTATION = gql`
       email
       fname
       lname
+      gender
+      birthDate
+      roles
+      status
+      createdOn
+    }
+  }
+`;
+
+const UPDATE_MUTATION = gql`
+  mutation UserUpdate($id: ID!, $updateUserInput: UpdateUserInput!) {
+    userUpdate(ID: $id, updateUserInput: $updateUserInput) {
+      _id
+      email
+      fname
+      lname
+      gender
       birthDate
       roles
       status
@@ -61,6 +85,7 @@ const useRegisterMutation = () => {
   const [registerUser, { loading, error }] = useMutation(REGISTER_MUTATION);
 
   const register = (registerUserInput) => {
+    registerUserInput.gender = "N/A";
     registerUserInput.birthDate = "000000";
     registerUserInput.status = "activated";
     registerUserInput.roles = "user";
@@ -75,5 +100,10 @@ const useRegisterMutation = () => {
   return { register, loading, error };
 };
 
+const useUpdateMutation = () => {
+  const [updateUser, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_MUTATION);
 
-export { useLoginMutation, useLogoutMutation, useRegisterMutation };
+  return { updateUser, updateLoading, updateError };
+};
+
+export { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateMutation };

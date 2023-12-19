@@ -7,6 +7,7 @@ export const GETUSER_QUERY = gql`
       email
       fname
       lname
+      gender
       birthDate
       roles
       status
