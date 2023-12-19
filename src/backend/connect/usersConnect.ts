@@ -12,13 +12,21 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const LOGOUT_MUTATION = gql`
-  mutation UserLogout {
-    userLogout {
-      success
+const REGISTER_MUTATION = gql`
+  mutation UserRegister($registerUserInput: RegisterUserInput!) {
+    userRegister(registerUserInput: $registerUserInput) {
+      _id
+      email
+      fname
+      lname
+      birthDate
+      roles
+      status
+      createdOn
     }
   }
 `;
+
 
 const useLoginMutation = () => {
   const { dispatch } = useAuth();
@@ -40,6 +48,7 @@ const useLoginMutation = () => {
   return { loginUser, loading, error };
 };
 
+
 const useLogoutMutation = () => {
   const { dispatch } = useAuth();
 
@@ -50,4 +59,25 @@ const useLogoutMutation = () => {
   return { logoutUser };
 };
 
-export { useLoginMutation, useLogoutMutation };
+
+const useRegisterMutation = () => {
+  const [registerUser, { loading, error }] = useMutation(REGISTER_MUTATION);
+
+  const register = (registerUserInput) => {
+
+    registerUserInput.birthDate = "000000";
+    registerUserInput.status = "activated";
+    registerUserInput.roles = "user";
+
+    return registerUser({
+      variables: {
+        registerUserInput,
+      },
+    });
+  };
+
+  return { register, loading, error };
+};
+
+
+export { useLoginMutation, useLogoutMutation, useRegisterMutation };
