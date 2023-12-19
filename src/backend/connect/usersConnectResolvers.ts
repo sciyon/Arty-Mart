@@ -2,7 +2,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { useAuth } from '../middleware/authContext.jsx';
 
-const LOGIN_MUTATION = gql`
+const USER_LOGIN_MUTATION = gql`
   mutation UserLogin($email: String!, $password: String!) {
     userLogin(loginUserInput: { email: $email, password: $password }) {
       _id
@@ -50,11 +50,39 @@ const UPDATE_MUTATION = gql`
 const useLoginMutation = () => {
   const { dispatch } = useAuth();
 
-  const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION, {
+  const [loginUser, { loading, error }] = useMutation(USER_LOGIN_MUTATION, {
     onCompleted: (data) => {
       if (data && data.userLogin && data.userLogin.token) {
-        console.log('Login successful');
-        dispatch({ type: 'LOGIN', payload: data.userLogin });
+        if (data.userLogin.roles === "user") {
+          console.log('Login User successful');
+          dispatch({ type: 'LOGIN', payload: data.userLogin });
+        } else {
+          console.log('User is not authorized to login');
+        }
+      } else {
+        console.log('Login failed');
+      }
+    },
+    onError: (error) => {
+      console.error('Login error:', error.message);
+    },
+  });
+
+  return { loginUser, loading, error };
+};
+
+const useAdminLoginMutation = () => {
+  const { dispatch } = useAuth();
+
+  const [loginUser, { loading, error }] = useMutation(USER_LOGIN_MUTATION, {
+    onCompleted: (data) => {
+      if (data && data.userLogin && data.userLogin.token) {
+        if (data.userLogin.roles === "admin") {
+          console.log('Login Admin successful');
+          dispatch({ type: 'LOGIN', payload: data.userLogin });
+        } else {
+          console.log('User is not authorized to login');
+        }
       } else {
         console.log('Login failed');
       }
@@ -102,4 +130,4 @@ const useUpdateMutation = () => {
   return { updateUser, updateLoading, updateError };
 };
 
-export { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateMutation };
+export { useLoginMutation, useAdminLoginMutation, useLogoutMutation,  useRegisterMutation, useUpdateMutation };

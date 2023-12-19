@@ -8,7 +8,7 @@ const userType = `#graphql
     lname: String,
     gender: String,
     birthDate: String,
-    roles: [String],
+    roles: String,
     status: String,
     createdOn: String
   }
@@ -21,7 +21,7 @@ const userType = `#graphql
     lname: String,
     gender: String,
     birthDate: String,
-    roles: [String],
+    roles: String,
     status: String,
     createdOn: String
   }

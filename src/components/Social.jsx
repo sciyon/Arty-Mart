@@ -43,13 +43,16 @@ const Social = () => {
 
   return (
     <>
-      {isLoggedIn ? (
+      {isLoggedIn && user.roles === "user" ? (
         <>
-          <SignedIn />  
+          <SignedIn />
+          <ToastContainer />    
         </>
-      ) : 
-      <SignedOut />
-      } 
+      ) : isLoggedIn && user.roles === "admin" ? (
+        navigate('/AdminDashboard') // Use navigate for admin role
+      ) : (
+        <SignedOut />
+      )}
       <div className='relative w-100% h-20 bg-tier2 top-14 flex justify-center items-center'>
         <div className='font-medium uppercase ml-16 text-xl'>
           Social

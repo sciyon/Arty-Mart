@@ -1,27 +1,36 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 
 import LOGO from '../images/logoNew.png';
-
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
+import { useAdminLoginMutation } from '../backend/connect/usersConnectResolvers.ts';
+
+
 function LoginAdmin({ isOpen, onClose }) {
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const { loginUser } = useAdminLoginMutation();
+
+  const LoginAdmin = () => {
+    loginUser({ variables: { email: username, password } });
+    setUsername('');
+    setPassword('');
+    onClose(1);
+  }
 
   const CloseLogin = () => {
     setUsername('');
     setPassword('');
+    onClose(1);
   };
 
   const CloseAdminOpenLogin = () => {
-    setUsername('');
-    setPassword('');
     onClose(3);
   }
-
 
   if (!isOpen) return null;
 
@@ -66,11 +75,10 @@ function LoginAdmin({ isOpen, onClose }) {
           </div>
           <div className="flex justify-end">
             <TERipple rippleColor="light" className="w-full">
-              <Link to='/AdminDashboard'>
                 <button
                   className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                   type="button"
-                  onClick={CloseLogin}
+                  onClick={LoginAdmin}
                   style={{
                     background:
                       'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
@@ -78,7 +86,6 @@ function LoginAdmin({ isOpen, onClose }) {
                 >
                   Log in
                 </button>
-              </Link>
             </TERipple>
           </div>
           {/* <!--Forgot password link--> */}

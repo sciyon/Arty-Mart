@@ -9,7 +9,7 @@ interface User{
   lname: String,
   gender: String,
   birthDate: Date,
-  roles: String[],
+  roles: String,
   status: String,
   createdOn: Date
 }
@@ -23,7 +23,7 @@ const UserSchema = new Schema<User>({
   lname: { type: String, required: true},
   gender: { type: String, required: true},
   birthDate: { type: Date, required: true},
-  roles: { type: [String], required: true },
+  roles: { type: String, required: true },
   status: { type: String, required: true },
   createdOn: { type: Date, default: Date.now },
 })
