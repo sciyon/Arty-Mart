@@ -22,9 +22,9 @@ const likeResolver = {
           extensions: { code: 'USER_LIKED_FETCH_ERROR_2'}
         })
       }
-     },
-     
-     async likeGetAllLiker(_, { artworkID }){
+    },
+    
+    async likeGetAllLiker(_, { artworkID }){
       try{
 
         const likers = Like.find({ artwork: artworkID }, { user: 1, _id: 0 });
@@ -40,7 +40,7 @@ const likeResolver = {
           extensions: { code: 'USER_LIKED_FETCH_ERROR_2'}
         })
       }
-     }
+    }
   },
 
   Mutation:{
