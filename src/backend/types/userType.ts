@@ -45,7 +45,7 @@ const userType = `#graphql
   }
 
   type Query {
-    userGet(ID: ID!):User!
+    userGet(ID: ID!): User
     userGetLimit(limit: Int): [User]
   }
 
