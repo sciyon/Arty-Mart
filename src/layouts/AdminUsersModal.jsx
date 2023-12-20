@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { useUpdateMutation } from '../backend/connect/usersConnectResolvers.ts';
 import { useQuery } from '@apollo/client';
 import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
+import { GETALLUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
@@ -30,33 +31,38 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
     onClose();
   };
 
-  const DeactivateProfile = () => {  
-
-    updateUser({
-        variables: {
-          id: userId,
-          updateUserInput: {
-            status: "deactivated",
-          },
+  const DeactivateProfile = async () => {
+    await updateUser({
+      variables: {
+        id: userId,
+        updateUserInput: {
+          status: "deactivated",
         },
-      }); 
-
-    onClose();
+      },
+      refetchQueries: [
+        { query: GETUSER_QUERY, variables: { id: userId } },
+        { query: GETALLUSER_QUERY, variables: { limit: 100 } },
+      ],
+    });
+    onClose(1);
   };
-
-  const ActivateProfile = () => {  
-
-    updateUser({
-        variables: {
-          id: userId,
-          updateUserInput: {
-            status: "activated",
-          },
+  
+  const ActivateProfile = async () => {
+    await updateUser({
+      variables: {
+        id: userId,
+        updateUserInput: {
+          status: "activated",
         },
-      }); 
-
-    onClose();
+      },
+      refetchQueries: [
+        { query: GETUSER_QUERY, variables: { id: userId } },
+        { query: GETALLUSER_QUERY, variables: { limit: 100 } },
+      ],
+    });
+    onClose(2);
   };
+  
 
   useEffect(() => {
     refetch();
@@ -189,7 +195,7 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
                     onClick={ActivateProfile}
                     style={{
                     background:
-                        'linear-gradient(to right, #4CAF50, #45a049)',
+                        'linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))',
                     }}
                 >
                     ACTIVATE
