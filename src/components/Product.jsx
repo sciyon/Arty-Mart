@@ -11,7 +11,7 @@ import {
   PaperAirplaneIcon,
 } from "@heroicons/react/24/solid";
 import joshHutcherson1 from '../images/joshHutcherson.jpg';
-import chessTransactionBG from '../images/chessTransactionBG.jpg';
+import chessOceanBG from '../images/chessOceanBG.jpg';
 import monaLisa from '../images/monaLisa.jpg';
 
 const Product = () => {
@@ -21,7 +21,7 @@ const Product = () => {
   const [comment, setComment] = useState('');
   const [productQuantity, setProductQuantity] = useState('');
 
-  const images = [joshHutcherson1, chessTransactionBG, monaLisa];
+  const images = [joshHutcherson1, chessOceanBG, monaLisa];
 
   const handlePrevClick = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));

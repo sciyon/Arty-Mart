@@ -73,18 +73,20 @@ const resolvers = {
               lname, 
               gender, 
               birthDate, 
+              roles, 
+              status,
             }
           }, 
           { new: true }
         );
-      
+    
         if(!update){
           throw new GraphQLError("Failed to update user.", {
             extensions: { code: 'UPDATE_USER_FAILED_1' }
           });
         }
         return update;
-      
+    
       } catch (error) {
         throw new GraphQLError("Failed to update user.", {
           extensions: { code: 'UPDATE_USER_FAILED_2' }

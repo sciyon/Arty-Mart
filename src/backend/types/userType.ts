@@ -37,6 +37,7 @@ const userType = `#graphql
     lname: String,
     gender: String,
     birthDate: String,
+    status: String
   }
 
   type LoginResponse {

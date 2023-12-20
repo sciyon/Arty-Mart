@@ -15,3 +15,21 @@ export const GETUSER_QUERY = gql`
     }
   }
 `;
+
+export const GETALLUSER_QUERY = gql`
+  query UserGetLimit($limit: Int) {
+    userGetLimit(limit: $limit) {
+      _id
+      email
+      password
+      token
+      fname
+      lname
+      gender
+      birthDate
+      roles
+      status
+      createdOn
+    }
+  }
+`;

@@ -43,6 +43,7 @@ const UPDATE_MUTATION = gql`
       lname
       gender
       birthDate
+      status
     }
   }
 `;
