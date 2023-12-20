@@ -16,12 +16,16 @@ const Social = () => {
   const { authState } = useAuth();
   const { isLoggedIn, user } = authState;
 
-  const { data } = useQuery(GETUSER_QUERY, {
-    variables: { id: user?._id || '' }, // Replace with the actual user ID
+  const { data, refetch } = useQuery(GETUSER_QUERY, {
+    variables: { id: user?._id || '' },
   });
 
   const user2 = data?.userGet;
   
+  useEffect(() => {
+    refetch();
+  }, [user, refetch]);
+
   const handleColumnClick = (column) => {
     setActiveColumn(column);
   };
@@ -46,7 +50,6 @@ const Social = () => {
       {isLoggedIn && user.roles === "user" ? (
         <>
           <SignedIn />
-          <ToastContainer />    
         </>
       ) : isLoggedIn && user.roles === "admin" ? (
         navigate('/AdminDashboard') // Use navigate for admin role

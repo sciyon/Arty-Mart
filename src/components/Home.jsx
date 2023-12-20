@@ -13,11 +13,11 @@ import homeChessboard from '../images/homeChessboard.png';
 const Home = () => {
   const { authState } = useAuth();
   const { isLoggedIn, user } = authState;
-  const navigate = useNavigate(); // Initialize useNavigate
-
+  const navigate = useNavigate(); 
+  
   useEffect(() => {
     if (user && user.email) {
-      EntryMessage(user.email); // Pass user.email to EntryMessage
+      EntryMessage(user.email);
     }
   }, [user]);
 

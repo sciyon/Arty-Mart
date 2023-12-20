@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useUpdateMutation } from '../backend/connect/usersConnectResolvers.ts';
+import { useQuery } from '@apollo/client';
+import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
@@ -12,13 +14,23 @@ function Profile({ isOpen, onClose }) {
   const { authState } = useAuth();
   const { user } = authState;
 
+  const { data, refetch } = useQuery(GETUSER_QUERY, {
+    variables: { id: user?._id || '' },
+  });
+
+  const user2 = data?.userGet;
+  
+  useEffect(() => {
+    refetch();
+  }, [user, refetch]);
+  
   const [profileFile, setProfileFile] = useState(null);
   const [profileFileName, setProfileFileName] = useState(''); 
-  const [firstname, setFirstName] = useState(user.fname);
-  const [lastname, setLastName] = useState(user.lname);
-  const [gender, setGender] = useState(user.gender);
-  const [email, setEmail] = useState(user.email);
-  const [birthday, setBirthday] = useState(user.birthDate);
+  const [firstname, setFirstName] = useState(user2.fname);
+  const [lastname, setLastName] = useState(user2.lname);
+  const [gender, setGender] = useState(user2.gender);
+  const [email, setEmail] = useState(user2.email);
+  const [birthday, setBirthday] = useState(user2.birthDate);
 
   const { updateUser } = useUpdateMutation();
   
@@ -32,12 +44,6 @@ function Profile({ isOpen, onClose }) {
 
   const CloseProfile = () => {
     setProfileFile(null);
-    setProfileFileName('');
-    setFirstName('')
-    setLastName('')
-    setGender('');
-    setEmail('');
-    setBirthday('');
     onClose(1);
   };
 
