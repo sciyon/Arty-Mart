@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-import { ClipboardDocumentCheckIcon, PaintBrushIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { ClipboardDocumentCheckIcon, PaintBrushIcon, UserCircleIcon, ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import { useLogoutMutation } from '../backend/connect/usersConnectResolvers.ts';
 
 const AdminSidebar = ({ sidebarOpen, toggleSidebar }) => {
+
+  const navigate = useNavigate(); // Initialize useNavigate
+  const { logoutUser } = useLogoutMutation();
+
   const handleIconClick = (e) => {
     if (!sidebarOpen) {
       e.preventDefault();
       toggleSidebar();
     }
   };
+
+  const handleLogout = () => {
+    logoutUser(); 
+    navigate('/') 
+  };  
 
   return (
     <div
@@ -43,7 +54,15 @@ const AdminSidebar = ({ sidebarOpen, toggleSidebar }) => {
           )}
         </div>
       </Link>
-
+      <div className="absolute h-14 flex items-center pl-5 bottom-20">
+          <ArrowLeftOnRectangleIcon 
+            className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" 
+            onClick={handleLogout}
+          />
+          {sidebarOpen && (
+            <h5 className={`transition-opacity duration-300`}>Logout</h5>
+          )}
+      </div>
     </div>
   );
 };

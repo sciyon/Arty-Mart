@@ -1,15 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'; 
 
 import { ShoppingCartIcon, HomeIcon, FireIcon, UserGroupIcon, ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { useAuth } from '../backend/middleware/authContext.jsx';
-import { useLogoutMutation } from '../backend/connect/usersConnect.ts';
+import { useLogoutMutation } from '../backend/connect/usersConnectResolvers.ts';
 
 const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
 
   const { authState } = useAuth();
   const { isLoggedIn } = authState;
   const { logoutUser } = useLogoutMutation();
+  const navigate = useNavigate(); 
 
   const handleIconClick = (e) => {
     if (!sidebarOpen) {
@@ -20,6 +22,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
 
   const handleLogout = () => {
     logoutUser(); 
+    navigate('/')
   };  
 
   return (
@@ -54,15 +57,16 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
           )}
         </div>
       </Link>
-      <Link to="/Social" className="flex items-center pl-5 mb-6 hover:bg-tier4">
-        <div className="h-14 flex items-center">
-          <UserGroupIcon className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" />
-          {sidebarOpen && (
-            <h5 className={`transition-opacity duration-300`}>Social</h5>
-          )}
-        </div>
-      </Link>
       {isLoggedIn ? (
+        <>
+          <Link to="/Social" className="flex items-center pl-5 mb-6 hover:bg-tier4">
+            <div className="h-14 flex items-center">
+              <UserGroupIcon className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" />
+              {sidebarOpen && (
+                <h5 className={`transition-opacity duration-300`}>Social</h5>
+              )}
+            </div>
+          </Link>
           <div className="absolute h-14 flex items-center pl-5 bottom-20">
             <ArrowLeftOnRectangleIcon 
               className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" 
@@ -72,6 +76,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
               <h5 className={`transition-opacity duration-300`}>Logout</h5>
             )}
           </div>
+        </>
       ) : null}
     </div>
   );

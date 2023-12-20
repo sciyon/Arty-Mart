@@ -6,8 +6,9 @@ const userType = `#graphql
     token: String,
     fname: String, 
     lname: String,
+    gender: String,
     birthDate: String,
-    roles: [String],
+    roles: String,
     status: String,
     createdOn: String
   }
@@ -18,8 +19,9 @@ const userType = `#graphql
     token: String,
     fname: String, 
     lname: String,
+    gender: String,
     birthDate: String,
-    roles: [String],
+    roles: String,
     status: String,
     createdOn: String
   }
@@ -31,12 +33,10 @@ const userType = `#graphql
 
   input UpdateUserInput{
     email: String,
-    password: String,
     fname: String, 
     lname: String,
+    gender: String,
     birthDate: String,
-    roles: [String],
-    status: String
   }
 
   type LoginResponse {
@@ -51,7 +51,7 @@ const userType = `#graphql
 
   type Mutation { 
     userRegister(registerUserInput: RegisterUserInput): User!
-    userUpdate(ID: ID!, updateUserInput: UpdateUserInput): String!
+    userUpdate(ID: ID!, updateUserInput: UpdateUserInput): User
     userDelete(ID: ID!): String!
     userLogin(loginUserInput: LoginUserInput): User!
   }

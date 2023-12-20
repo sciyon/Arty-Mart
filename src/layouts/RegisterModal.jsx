@@ -6,7 +6,7 @@ import { XCircleIcon } from '@heroicons/react/24/solid';
 
 import LOGO from '../images/logoNew.png';
 
-import { useRegisterMutation } from '../backend/connect/usersConnect.ts';
+import { useRegisterMutation } from '../backend/connect/usersConnectResolvers.ts';
 
 function Register({ isOpen, onClose }) {
   const [firstname, setFirstName] = useState('');

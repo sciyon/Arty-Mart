@@ -5,7 +5,7 @@ import LOGO from '../images/logoNew.png';
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
-import { useLoginMutation } from '../backend/connect/usersConnect.ts';
+import { useLoginMutation } from '../backend/connect/usersConnectResolvers.ts';
 
 function Login({ isOpen, onClose }) {
 
@@ -65,7 +65,7 @@ function Login({ isOpen, onClose }) {
             {/* <!--Username input--> */}
             <TEInput
               type="text"
-              placeholder="Username"
+              placeholder="Email"
               className='text-black'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
