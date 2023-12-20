@@ -8,10 +8,10 @@ interface User{
   fname: String, 
   lname: String,
   gender: String,
-  birthDate: Date,
+  birthDate: String,
   roles: String,
   status: String,
-  createdOn: Date
+  createdOn: String
 }
 
 const UserSchema = new Schema<User>({
@@ -22,10 +22,10 @@ const UserSchema = new Schema<User>({
   fname: { type: String, required: true},
   lname: { type: String, required: true},
   gender: { type: String, required: true},
-  birthDate: { type: Date, required: true},
+  birthDate: { type: String, required: true},
   roles: { type: String, required: true },
   status: { type: String, required: true },
-  createdOn: { type: Date, default: Date.now },
+  createdOn: { type: String, required: true },
 })
 
 const User = model<User>('user', UserSchema);

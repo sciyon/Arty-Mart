@@ -26,11 +26,11 @@ function Profile({ isOpen, onClose }) {
   
   const [profileFile, setProfileFile] = useState(null);
   const [profileFileName, setProfileFileName] = useState(''); 
-  const [firstname, setFirstName] = useState(user2.fname);
-  const [lastname, setLastName] = useState(user2.lname);
-  const [gender, setGender] = useState(user2.gender);
-  const [email, setEmail] = useState(user2.email);
-  const [birthday, setBirthday] = useState(user2.birthDate);
+  const [firstname, setFirstName] = useState(user2?.fname || user?.fname);
+  const [lastname, setLastName] = useState(user2?.lname || user?.lname);
+  const [gender, setGender] = useState(user2?.gender || user?.gender);
+  const [email, setEmail] = useState(user2?.email || user?.email);
+  const [birthday, setBirthday] = useState(user2?.birthDate || user?.birthDate);
 
   const { updateUser } = useUpdateMutation();
   

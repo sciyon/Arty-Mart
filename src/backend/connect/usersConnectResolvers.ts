@@ -110,9 +110,10 @@ const useRegisterMutation = () => {
 
   const register = (registerUserInput) => {
     registerUserInput.gender = "N/A";
-    registerUserInput.birthDate = "000000";
+    registerUserInput.birthDate = "N/A";
     registerUserInput.status = "activated";
     registerUserInput.roles = "user";
+    registerUserInput.createdOn = new Date().toISOString().split('T')[0]
 
     return registerUser({
       variables: {

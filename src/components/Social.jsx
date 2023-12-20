@@ -74,26 +74,27 @@ const Social = () => {
             </div>
             <div className='mb-4 uppercase font-medium'> {user2?.fname && user2?.lname ? `${user2.fname} ${user2.lname}` : 'N/A'}  </div>
             <div className='flex items-center mb-4'>
-              <div className='flex-1 flex items-center mr-20'>
+              <div className='flex-3 flex items-center mr-8'>
                 <UserIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
-                <div>Gender: {user2?.gender || 'N/A'}</div>
+                <div className="mr-2">Gender:</div>
+                <div className="w-40"> {user2?.gender || 'N/A'}</div> {/* Adjusted width */}
               </div>
-              <div className='flex-1 ml-12 flex items-center'>
+              <div className='flex-3 ml-8 flex items-center'>
                 <CakeIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
                 <div className="mr-2">Birthdate:</div>
-                <div> {user2?.birthDate || 'N/A'}</div>
+                <div className="w-40"> {user2?.birthDate || 'N/A'}</div> {/* Adjusted width */}
               </div>
             </div>
             <div className='flex items-center mb-4'>
-              <div className='flex-1 flex items-center mr-20'>
+              <div className='flex-3 flex items-center mr-8'>
                 <CalendarDaysIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
                 <div className="mr-2">Joined:</div>
-                <div> {user2?.createdOn || 'N/A'}</div>
+                <div className="w-40"> {user2?.createdOn || 'N/A'}</div> {/* Adjusted width */}
               </div>
-              <div className='flex-1 ml-12 flex items-center'>
+              <div className='flex-3 ml-8 flex items-center'>
                 <EnvelopeIcon className="h-4 w-4 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-2" />
                 <div className="mr-2">Email:</div>
-                <div> {user2?.email || 'N/A'}</div>
+                <div className="w-40"> {user2?.email || 'N/A'}</div> {/* Adjusted width */}
               </div>
             </div>
           </div>
