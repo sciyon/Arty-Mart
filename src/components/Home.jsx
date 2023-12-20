@@ -1,7 +1,6 @@
-// Home.jsx
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 import EntryMessage from '../layouts/toaster.jsx';
 import SignedIn from '../layouts/signedin.jsx';

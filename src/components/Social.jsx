@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 import { UserIcon, CalendarDaysIcon, CakeIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import joshHutcherson from '../images/joshHutcherson.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
@@ -15,6 +16,7 @@ const Social = () => {
 
   const { authState } = useAuth();
   const { isLoggedIn, user } = authState;
+  const navigate = useNavigate(); 
 
   const { data, refetch } = useQuery(GETUSER_QUERY, {
     variables: { id: user?._id || '' },
