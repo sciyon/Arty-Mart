@@ -3,6 +3,9 @@ import { TEInput, TERipple } from 'tw-elements-react';
 import SignedIn from '../layouts/signedin.jsx';
 
 import chessCastle from '../images/chessCastle.png';
+import artCreateMutation from '../backend/connect/artworkConnectResolvers.ts';
+import { useAuth } from '../backend/middleware/authContext.jsx';
+import { useToasts } from '../toastcontext.jsx';
 
 const Create = () => {
 
@@ -17,6 +20,10 @@ const Create = () => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [upload, setUpload] = useState('');
+
+  const { authState } = useAuth();
+  const { user } = authState;
+  const { showToastPositive, showToastNegative } = useToasts(); 
 
   const handleVideoUpload = (event) => {
     const file = event.target.files[0];
@@ -38,8 +45,29 @@ const Create = () => {
     setImageFile3(file);
   };
 
-  //Add backend for this part
-  const uploadArt = () => {
+  const { artnew } = artCreateMutation();
+
+  const uploadArt = async () => {
+    if (title && type && category && description && price && quantity) {
+      const { result, error: artCreateError } = await artnew({
+        artist: user._id,
+        title: title,
+        type: type,
+        categories: category,
+        description: description,
+        price: price, 
+        quantity: quantity
+      });
+  
+      if (result) {
+        showToastPositive(title + ' has been successfully published!');
+      } else {
+        showToastNegative(artCreateError || 'Artwork credentials invalid');
+      }
+    } else {
+      showToastNegative('Please fill out the important fields');
+    }
+  
     setVideoFile(null);
     setImageFile1(null);
     setImageFile2(null);
@@ -55,8 +83,7 @@ const Create = () => {
     fileInputs.forEach((input) => {
       input.value = '';
     });
-  };
-  
+  };  
 
   return (
     <>
