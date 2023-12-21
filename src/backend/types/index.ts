@@ -8,7 +8,8 @@ import reviewType from './reviewType.js';
 import commentType from './commentType.js';
 import likeType from './likesTypes.js';
 import addressType from './addressType.js';
+import transactionType from './transactionType.js';
 
-const mergedTypeDefs = mergeTypeDefs([artistType, userType, followerType, artworkType, reviewType, commentType, likeType, addressType]);
+const mergedTypeDefs = mergeTypeDefs([artistType, userType, followerType, artworkType, reviewType, commentType, likeType, addressType, transactionType]);
 
 export default mergedTypeDefs;

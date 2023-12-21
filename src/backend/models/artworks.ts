@@ -12,6 +12,7 @@ interface Artwork{
   imageURL: String,
   videoURL: String,
   status: String
+  price: Number,
   quantity: Number,
 }
 
@@ -27,6 +28,7 @@ const ArtworkSchema = new Schema<Artwork>({
   imageURL: { type: String, required: true},
   videoURL: { type: String, required: true},
   status: { type: String, required: true},
+  price: { type: Number, required: true },
   quantity: { type: Number, required: true },
 })
 
