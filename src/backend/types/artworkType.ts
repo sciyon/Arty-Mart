@@ -12,6 +12,7 @@ const artworkType = `#graphql
     imageURL: String,
     videoURL: String,
     status: String,
+    price: Int,
     quantity: Int
   }
 
@@ -26,6 +27,7 @@ const artworkType = `#graphql
     imageURL: String,
     videoURL: String,
     status: String,
+    price: Int,
     quantity: Int
   }
 
