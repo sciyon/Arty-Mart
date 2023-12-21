@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { GraphQLError } from 'graphql';
-import { Mongoose } from 'mongoose';
 
 import User from '../models/users.js';
-import { CastError } from 'mongoose';
 
 const resolvers = {
   Query: {
@@ -28,13 +26,14 @@ const resolvers = {
         })
       }
     },
+
     async userGetLimit(_, { limit }){
       return User.find().limit(limit);
     },
   },
 
   Mutation: {
-    async userRegister(_, { registerUserInput: { email, password, fname, lname, gender, birthDate, roles, status, createdOn } }){
+    async userRegister(_, { registerUserInput: { email, password, fname, lname, gender, birthDate, address, roles, status, createdOn } }){
       
       const oldUser = await User.findOne({ email });
       
@@ -55,24 +54,26 @@ const resolvers = {
       );
 
       
-      const newUser =  new User({ email, password, fname, lname, gender, birthDate, roles, status, createdOn, token  });
+      const newUser =  new User({ email, password, fname, lname, gender, birthDate, address, roles, status, createdOn, token  });
 
       await newUser.save();
 
       return newUser;
     },
 
-    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, roles, status }}){
+    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, address }}){
       try {
         const update = await User.findOneAndUpdate(
           { _id: ID }, 
           { 
             $set: { 
               email, 
+              password,
               fname, 
               lname, 
               gender, 
               birthDate, 
+              address
             }
           }, 
           { new: true }
@@ -97,8 +98,6 @@ const resolvers = {
       
       return ID;
     },
-    
-
     
     async userLogin(_, { loginUserInput: { email, password } }){
 
@@ -128,7 +127,6 @@ const resolvers = {
         throw new GraphQLError("Account not found.",{
           extensions: { code: 'ACCOUNT_NOT_FOUND'}
         })
-
       }
     },
   }

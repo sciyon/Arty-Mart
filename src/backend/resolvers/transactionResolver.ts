@@ -1,10 +1,6 @@
 import { GraphQLError } from 'graphql';
 
 import Transaction from '../models/transaction.js';
-import User from '../models/users.js';
-import Address from '../models/address.js';
-import Artist from '../models/artists.js';
-import Artwork from '../models/artworks.js';
 
 const transactionResolver = {
   Query: {

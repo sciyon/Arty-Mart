@@ -9,6 +9,7 @@ interface User{
   lname: String,
   gender: String,
   birthDate: String,
+  address: String,
   roles: String,
   status: String,
   createdOn: String
@@ -22,7 +23,8 @@ const UserSchema = new Schema<User>({
   fname: { type: String, required: true},
   lname: { type: String, required: true},
   gender: { type: String, required: true},
-  birthDate: { type: String, required: true},
+  birthDate: { type: Date, required: true},
+  address: { type: String, required: true},
   roles: { type: String, required: true },
   status: { type: String, required: true },
   createdOn: { type: String, required: true },

@@ -5,7 +5,6 @@ import artworkResolver from './artworkResolver.js';
 import reviewResolver from './reviewResolver.js';
 import commentResolver from './commentResolver.js';
 import likeResolver from './likesResolver.js';
-import addressResolver from './addressResolver.js';
 import transactionResolver from './transactionResolver.js';
 
 const resolvers = {
@@ -17,7 +16,6 @@ const resolvers = {
     ...reviewResolver.Query,
     ...commentResolver.Query,
     ...likeResolver.Query,
-    ...addressResolver.Query,
     ...transactionResolver.Query
   },
 
@@ -29,7 +27,6 @@ const resolvers = {
     ...reviewResolver.Mutation,
     ...commentResolver.Mutation,
     ...likeResolver.Mutation,
-    ...addressResolver.Mutation,
     ...transactionResolver.Mutation
   },
 };

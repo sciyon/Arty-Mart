@@ -8,6 +8,7 @@ const userType = `#graphql
     lname: String,
     gender: String,
     birthDate: String,
+    address: String,
     roles: String,
     status: String,
     createdOn: String
@@ -21,6 +22,7 @@ const userType = `#graphql
     lname: String,
     gender: String,
     birthDate: String,
+    address: String,
     roles: String,
     status: String,
     createdOn: String
@@ -33,10 +35,12 @@ const userType = `#graphql
 
   input UpdateUserInput{
     email: String,
+    password: String,
     fname: String, 
     lname: String,
     gender: String,
     birthDate: String,
+    address: String,
   }
 
   type LoginResponse {

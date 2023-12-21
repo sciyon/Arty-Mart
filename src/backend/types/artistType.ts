@@ -7,7 +7,8 @@ const artistType = `#graphql
     language:[String],
     followers: Int,
     countryOrigin: String,
-    createdOn: String
+    address: String,
+    createdOn: String,
   }
 
   input ArtistInput{
@@ -16,6 +17,7 @@ const artistType = `#graphql
     language:[String],
     followers: Int,
     countryOrigin: String,
+    address: String,
     createdOn: String
   }
 
