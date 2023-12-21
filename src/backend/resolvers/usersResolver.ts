@@ -30,10 +30,33 @@ const resolvers = {
     async userGetLimit(_, { limit }){
       return User.find().limit(limit);
     },
+
+    async userGetFollowers(_, { ID }){
+      try{
+        const user = await User.findById(ID).populate('followers');
+        return user.followers;
+      }catch(error){
+        throw new GraphQLError("Failed to fetch followers.", {
+          extensions: { code: 'FETCH_FOLLOWERS_FAILED'}
+        });
+      }
+    }, 
+    
+    async userGetFollowing(_, { ID }){
+      try{
+        const user = await User.findById(ID);
+        const following = await User.find({ followers: user._id});
+        return following;
+      }catch(error){
+        throw new GraphQLError("Failed to fetch following.", {
+          extensions: { code: 'FETCH_FOLLOWING_FAILED'}
+        });
+      }
+    }, 
   },
 
   Mutation: {
-    async userRegister(_, { registerUserInput: { email, password, fname, lname, gender, birthDate, address, roles, status, createdOn } }){
+    async userRegister(_, { registerUserInput: { email, password, fname, lname, gender, birthDate, address, role, status, createdOn } }){
       
       const oldUser = await User.findOne({ email });
       
@@ -54,7 +77,7 @@ const resolvers = {
       );
 
       
-      const newUser =  new User({ email, password, fname, lname, gender, birthDate, address, roles, status, createdOn, token  });
+      const newUser =  new User({ email, password, token, fname, lname, gender, birthDate, address, role, status,  createdOn });
 
       await newUser.save();
 
@@ -129,6 +152,29 @@ const resolvers = {
         })
       }
     },
+
+    async followerAdd(_, { followingInput: { followingID, followerID }}){
+      try{
+        const user = await User.findByIdAndUpdate(followingID, {$push: {followers: followerID}}, {new: true});
+        return user;
+      }catch(error){
+        throw new GraphQLError("Failed to add follower.", {
+          extensions: { code: 'ADD_FOLLOWER_FAILED'}
+        });
+      }
+    },
+    
+    async followerRemove(_, { followingInput: { followingID, followerID }}){
+      try{
+        const user = await User.findByIdAndUpdate(followingID, {$pull: {followers: followerID}}, {new: true});
+        return user;
+      }catch(error){
+        throw new GraphQLError("Failed to remove follower.", {
+          extensions: { code: 'REMOVE_FOLLOWER_FAILED'}
+        });
+      }
+    },
+    
   }
 }
 

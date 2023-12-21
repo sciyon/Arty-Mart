@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
 
-import Artist from "../models/artists.js"
+import User from "../models/users.js"
 import Artwork from '../models/artworks.js';
 
 const artworkResolver = {
@@ -70,7 +70,7 @@ const artworkResolver = {
       artist, title, type, categories, description, tags, createdOn, imageURL, videoURL, status, price,  quantity
     } }){
       
-      const artistExists = await Artist.findById(artist);
+      const artistExists = await User.findById(artist);
       if(!artistExists){
         throw new GraphQLError("Artist does not exist.", {
           extensions: { code: 'ARTIST_DOESNT_ARTIST'}

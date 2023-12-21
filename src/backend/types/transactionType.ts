@@ -2,20 +2,16 @@ const transactionType = `#graphql
   type Transaction {
     _id: String,
     buyerID: String,
-    buyerAddressID: String,
     artworkID: String,
     artistID: String,
-    artistAddressID: String,
     total: Int,
     status: String
   }
  
   input TransactionInput {
     buyerID: String,
-    buyerAddressID: String,
     artworkID: String,
     artistID: String,
-    artistAddressID: String,
     total: Int,
     status: String
   }
