@@ -80,25 +80,28 @@ const useLoginMutation = () => {
 const useAdminLoginMutation = () => {
   const { dispatch } = useAuth();
 
-  const [loginUser, { loading, error }] = useMutation(USER_LOGIN_MUTATION, {
+  const [loginUser, { loading, error, data }] = useMutation(USER_LOGIN_MUTATION, {
     onCompleted: (data) => {
       if (data && data.userLogin && data.userLogin.token) {
         if (data.userLogin.role === "admin") {
-          console.log('Login Admin successful');
+          console.log('Login User successful');
           dispatch({ type: 'LOGIN', payload: data.userLogin });
         } else {
           console.log('User is not authorized to login');
+          throw new Error('User is not an admin');
         }
       } else {
         console.log('Login failed');
+        throw new Error('Login failed');
       }
     },
     onError: (error) => {
       console.error('Login error:', error.message);
+      throw new Error(error.message);
     },
   });
 
-  return { loginUser, loading, error };
+  return { loginUser };
 };
 
 const useLogoutMutation = () => {

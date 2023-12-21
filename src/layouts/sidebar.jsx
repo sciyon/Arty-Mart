@@ -16,7 +16,7 @@ import { useToasts } from '../toastcontext.jsx';
 
 const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
   const { authState } = useAuth();
-  const { isLoggedIn } = authState;
+  const { isLoggedIn, user } = authState;
   const { logoutUser } = useLogoutMutation();
   const navigate = useNavigate();
   const { showToastPositive } = useToasts(); 
@@ -31,7 +31,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
   const handleLogout = () => {
     logoutUser();
     navigate('/');
-    showToastPositive('Logged out successfully'); // Show toast after logout
+    showToastPositive(user.email + ' logged out successfully!'); // Show toast after logout
   };
 
   return (
