@@ -6,16 +6,19 @@ import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 import { useLoginMutation } from '../backend/connect/usersConnectResolvers.ts';
+import { useToasts } from '../toastcontext.jsx';
 
 function Login({ isOpen, onClose }) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+  const { showToastPositive } = useToasts(); 
+
   const { loginUser } = useLoginMutation();
 
   const LoginAcc = () => {
     loginUser({ variables: { email: username, password } });
+    showToastPositive('Welcome back ' + username + '!');
     setUsername('');
     setPassword('');
     onClose(1);

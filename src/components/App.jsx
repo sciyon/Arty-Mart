@@ -16,16 +16,16 @@ function App() {
     <div>
       <div>
         <Routes>        
-        <Route path="/"  element={<Home/>} />
-        <Route path="/Store"  element={<Store/>} />
-        <Route path="/Create"  element={<Create/>} />
-        <Route path="/Trending"  element={<Trending/>} />
-        <Route path="/Social"  element={<Social/>} />
-        <Route path="/Product"  element={<Product/>} />
-        <Route path="/Transaction"  element={<Transaction/>} />
-        <Route path="/AdminDashboard"  element={<AdminDashboard/>} />
-        <Route path="/AdminArt"  element={<AdminArt/>} />
-        <Route path="/AdminUsers"  element={<AdminUsers/>} />
+          <Route path="/"  element={<Home/>} />
+          <Route path="/Store"  element={<Store/>} />
+          <Route path="/Create"  element={<Create/>} />
+          <Route path="/Trending"  element={<Trending/>} />
+          <Route path="/Social"  element={<Social/>} />
+          <Route path="/Product"  element={<Product/>} />
+          <Route path="/Transaction"  element={<Transaction/>} />
+          <Route path="/AdminDashboard"  element={<AdminDashboard/>} />
+          <Route path="/AdminArt"  element={<AdminArt/>} />
+          <Route path="/AdminUsers"  element={<AdminUsers/>} />
         </Routes>
       </div>
     </div>

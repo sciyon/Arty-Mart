@@ -44,7 +44,7 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
         { query: GETALLUSER_QUERY, variables: { limit: 100 } },
       ],
     });
-    onClose(1);
+    onClose();
   };
   
   const ActivateProfile = async () => {
@@ -60,7 +60,7 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
         { query: GETALLUSER_QUERY, variables: { limit: 100 } },
       ],
     });
-    onClose(2);
+    onClose();
   };
   
 

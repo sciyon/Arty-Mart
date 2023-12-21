@@ -5,6 +5,7 @@ import App from './components/App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { AuthProvider  } from './backend/middleware/authContext.jsx';
+import { ToastProvider } from './toastcontext.jsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql', // Corrected URI
@@ -12,11 +13,13 @@ const client = new ApolloClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <AuthProvider>
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <App />
-      </ApolloProvider>
-    </BrowserRouter>
-  </AuthProvider>,
+  <ToastProvider>
+    <AuthProvider>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+            <App />
+        </ApolloProvider>
+      </BrowserRouter>
+    </AuthProvider>
+  </ToastProvider>,
 );

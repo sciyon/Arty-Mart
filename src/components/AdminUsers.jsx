@@ -203,13 +203,13 @@ const AdminUsers = () => {
         {/* Navigation for columns */}
         <div className="flex pl-5 pr-8 py-2 border-b-2 mb-6 border-tier4">
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Pending' ? 'text-tier3' : ''}`}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Activated' ? 'text-tier3' : ''}`}
             onClick={() => handleColumnClick('Activated')}
           >
             Activated
           </div>
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Completed' ? 'text-tier3' : ''}`}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Deactivated' ? 'text-tier3' : ''}`}
             onClick={() => handleColumnClick('Deactivated')}
           >
             Deactivated
