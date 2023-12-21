@@ -8,7 +8,7 @@ interface Artwork{
   categories: String,
   description: String,
   createdOn: String,
-  imageURL: String,
+  imageURL: [String],
   videoURL: String,
   status: String
   price: Number,
@@ -24,7 +24,7 @@ const ArtworkSchema = new Schema<Artwork>({
   categories: { type: String, required: true},
   description: { type: String, required: true},
   createdOn: { type: String, required: true },
-  imageURL: { type: String, required: true},
+  imageURL: { type: [String], required: true },
   videoURL: { type: String, required: true},
   status: { type: String, required: true},
   price: { type: Number, required: true },

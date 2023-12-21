@@ -19,7 +19,6 @@ const Create = () => {
   const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [upload, setUpload] = useState('');
 
   const { authState } = useAuth();
   const { user } = authState;
@@ -45,11 +44,14 @@ const Create = () => {
     setImageFile3(file);
   };
 
-  const { artnew } = artCreateMutation();
+  const { artnew } = artCreateMutation();  
 
   const uploadArt = async () => {
-    if (title && type && category && description && price && quantity) {
+    if ((imageFile1 || imageFile2 || imageFile3) && title && type && category && description && price && quantity) {
+      const imageFiles = [imageFile1, imageFile2, imageFile3].filter(file => file !== null).map(file => file.name);
+
       const { result, error: artCreateError } = await artnew({
+        imageURL: imageFiles,
         artist: user._id,
         title: title,
         type: type,

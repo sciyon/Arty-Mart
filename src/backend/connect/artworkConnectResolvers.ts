@@ -28,8 +28,7 @@ const artCreateMutation = () => {
         variables: {
           artworkInput: {
             ...artworkInput,
-            imageURL: "empty_temp",
-            videoURL: "empty_temp",
+            videoURL: "null",
             status: "activated",
             createdOn: new Date().toISOString().split('T')[0],
           },
