@@ -15,12 +15,12 @@ const Home = () => {
   return (
     <>
       <div className="h-screen bg-cover bg-center" style={{ backgroundImage: `url(${homeChessboard})`, filter: 'brightness(75%)' }}></div>
-      {isLoggedIn && user.roles === "user" ? (
+      {isLoggedIn && user.role === "user" ? (
         <>
           <SignedIn />
         </>
-      ) : isLoggedIn && user.roles === "admin" ? (
-        navigate('/AdminDashboard') // Use navigate for admin role
+      ) : isLoggedIn && user.role === "admin" ? (
+        navigate('/AdminDashboard')
       ) : (
         <SignedOut />
       )}

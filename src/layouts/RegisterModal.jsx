@@ -19,22 +19,33 @@ function Register({ isOpen, onClose }) {
   const { register } = useRegisterMutation();
 
   const RegisterAcc = async () => {
-    if (password === confirmPassword) {
-      try {
-        await register({
+    if (firstname && lastname && email && password && confirmPassword) {
+      if (password === confirmPassword) {
+        const { result, error: registrationError } = await register({
           email,
           password,
           fname: firstname,
           lname: lastname,
         });
-        showToastPositive(username + 'is succesfully registered');
-        onClose(1);
-      } catch (error) {
-        showToastNegative('Registration error:', error.message); 
+  
+        if (result) {
+          showToastPositive(firstname + ' is successfully registered');
+          onClose(1);
+        } else {
+          showToastNegative(registrationError || 'Registration credentials invalid');
+        }
+      } else {
+        showToastNegative('Password does not match');
       }
     } else {
-      showToastNegative('Password does not match'); 
+      showToastNegative('Please fill out the important fields');
     }
+  
+    setFirstName('');
+    setLastName('');
+    setPassword('');
+    setEmail('');
+    setConfirmPassword('');
   };
 
   const CloseRegister = () => {

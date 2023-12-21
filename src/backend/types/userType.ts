@@ -49,8 +49,8 @@ const userType = `#graphql
     birthDate: String,
     status: String,
     address: String,
-    status: String
-  }
+    role: String
+}
   
   input FollowingInput{
     followingID: String,

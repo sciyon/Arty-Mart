@@ -9,7 +9,7 @@ export const GETUSER_QUERY = gql`
       lname
       gender
       birthDate
-      roles
+      role
       status
       createdOn
     }
@@ -27,7 +27,7 @@ export const GETALLUSER_QUERY = gql`
       lname
       gender
       birthDate
-      roles
+      role
       status
       createdOn
     }

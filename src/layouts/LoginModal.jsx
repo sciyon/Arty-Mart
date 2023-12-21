@@ -18,19 +18,23 @@ function Login({ isOpen, onClose }) {
 
   const LoginAcc = async () => {
     if (username && password) {
-      const { data } = await loginUser({ variables: { email: username, password } });
-        if (!data.errorMessage) {
+      try {
+        const { data, error: loginError } = await loginUser({ variables: { email: username, password } });
+        if (data && data.userLogin && !data.userLogin.errorMessage) {
           showToastPositive('Welcome back ' + username + '!');
           setUsername('');
           setPassword('');
           onClose(1);
         } else {
-          showToastNegative('Login error', data.errorMessage);
+          showToastNegative(loginError?.message || 'Login credentials are invalid');
         }
+      } catch (error) {
+        showToastNegative(error.message || 'Login credentials are invalid');
+      }
     } else {
-      showToastNegative('Login credentials are invalid');
+      showToastNegative('Please fill out the important fields');
     }
-  };  
+  };
 
   const CloseLogin = () => {
     setUsername('');

@@ -20,7 +20,7 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
   const [firstname, setFirstName] = useState("N/A");
   const [lastname, setLastName] = useState("N/A");
   const [gender, setGender] = useState("N/A");
-  const [roles, setRoles] = useState("N/A");
+  const [role, setRole] = useState("N/A");
   const [birthdate, setBirthDate] = useState("N/A");
   const [createdon, setCreatedOn] = useState("N/A");
   const status = user?.status || "N/A";
@@ -151,13 +151,13 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
             </div>
             <div flex-1>
               <p className="mb-1 mt-1 pb-1 text-black">
-                Roles
+                Role
               </p>
               <TEInput
                 type="text"
                 placeholder="Last name"
                 className='text-black'
-                value={user?.roles || roles}
+                value={user?.role || role}
                 readOnly  
               />
             </div>

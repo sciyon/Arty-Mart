@@ -84,7 +84,7 @@ const resolvers = {
       return newUser;
     },
 
-    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, address, status }}){
+    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, address, status, role }}){
       try {
         const update = await User.findOneAndUpdate(
           { _id: ID }, 
@@ -97,7 +97,8 @@ const resolvers = {
               gender, 
               birthDate, 
               address,
-              status
+              status,
+              role
             }
           }, 
           { new: true }
