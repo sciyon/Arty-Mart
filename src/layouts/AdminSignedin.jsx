@@ -30,9 +30,6 @@ const AdminSignedIn = () => {
             Arty mArt
           </p>
         </div>
-        <div className="hidden md:flex space-x-10">
-          Hello
-        </div>
       </div>
     </div>
   );

@@ -15,12 +15,12 @@ const Store = () => {
 
   return (
     <>
-      {isLoggedIn && user.roles === "user" ? (
+      {isLoggedIn && user.role === "user" ? (
         <>
           <SignedIn />
         </>
-      ) : isLoggedIn && user.roles === "admin" ? (
-        navigate('/AdminDashboard') // Use navigate for admin role
+      ) : isLoggedIn && user.role === "admin" ? (
+        navigate('/AdminDashboard') 
       ) : (
         <SignedOut />
       )}

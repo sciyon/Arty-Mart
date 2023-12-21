@@ -5,6 +5,7 @@ import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useUpdateMutation } from '../backend/connect/usersConnectResolvers.ts';
 import { useQuery } from '@apollo/client';
 import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
+import { useToasts } from '../toastcontext.jsx';
 
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
@@ -33,7 +34,8 @@ function Profile({ isOpen, onClose }) {
   const [birthday, setBirthday] = useState(user2?.birthDate || user?.birthDate);
 
   const { updateUser } = useUpdateMutation();
-  
+  const { showToastPositive } = useToasts(); 
+
   const handleProfileUpload = (event) => {
     const file = event.target.files[0];
     setProfileFile(file);
@@ -61,7 +63,8 @@ function Profile({ isOpen, onClose }) {
         },
       },
     });    
-  
+    
+    showToastPositive('Your profile has been updated');
     onClose(1);
   };
 

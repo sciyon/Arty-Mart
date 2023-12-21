@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 import { ClipboardDocumentCheckIcon, PaintBrushIcon, UserCircleIcon, ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { useLogoutMutation } from '../backend/connect/usersConnectResolvers.ts';
+import { useToasts } from '../toastcontext.jsx';
 
 const AdminSidebar = ({ sidebarOpen, toggleSidebar }) => {
 
   const navigate = useNavigate(); // Initialize useNavigate
   const { logoutUser } = useLogoutMutation();
+  const { showToastPositive } = useToasts(); 
 
   const handleIconClick = (e) => {
     if (!sidebarOpen) {
@@ -19,6 +21,7 @@ const AdminSidebar = ({ sidebarOpen, toggleSidebar }) => {
 
   const handleLogout = () => {
     logoutUser(); 
+    showToastPositive('Admin logged out successfully'); 
     navigate('/') 
   };  
 

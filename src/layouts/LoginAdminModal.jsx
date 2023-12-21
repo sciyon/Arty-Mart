@@ -6,21 +6,35 @@ import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 import { useAdminLoginMutation } from '../backend/connect/usersConnectResolvers.ts';
-
+import { useToasts } from '../toastcontext.jsx';
 
 function LoginAdmin({ isOpen, onClose }) {
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { showToastPositive, showToastNegative } = useToasts(); 
 
   const { loginUser } = useAdminLoginMutation();
 
-  const LoginAdmin = () => {
-    loginUser({ variables: { email: username, password } });
-    setUsername('');
-    setPassword('');
-    onClose(1);
-  }
+  const LoginAdmin = async () => {
+    if (username && password) {
+      try {
+        const { data, error: loginError } = await loginUser({ variables: { email: username, password } });
+        if (data && data.userLogin && !data.userLogin.errorMessage) {
+          showToastPositive('Welcome back ' + username + '!');
+          setUsername('');
+          setPassword('');
+          onClose(1);
+        } else {
+          showToastNegative(loginError?.message || 'Login credentials are invalid');
+        }
+      } catch (error) {
+        showToastNegative(error.message || 'Login credentials are invalid');
+      }
+    } else {
+      showToastNegative('Please fill out the important fields');
+    }
+  };
 
   const CloseLogin = () => {
     setUsername('');

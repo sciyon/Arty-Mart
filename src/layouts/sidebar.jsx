@@ -2,16 +2,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'; 
 
-import { ShoppingCartIcon, HomeIcon, FireIcon, UserGroupIcon, ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import {
+  ShoppingCartIcon,
+  HomeIcon,
+  FireIcon,
+  UserGroupIcon,
+  ArrowLeftOnRectangleIcon
+} from "@heroicons/react/24/solid";
+
 import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useLogoutMutation } from '../backend/connect/usersConnectResolvers.ts';
+import { useToasts } from '../toastcontext.jsx';
 
 const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
-
   const { authState } = useAuth();
-  const { isLoggedIn } = authState;
+  const { isLoggedIn, user } = authState;
   const { logoutUser } = useLogoutMutation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { showToastPositive } = useToasts(); 
 
   const handleIconClick = (e) => {
     if (!sidebarOpen) {
@@ -21,9 +29,10 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
   };
 
   const handleLogout = () => {
-    logoutUser(); 
-    navigate('/')
-  };  
+    logoutUser();
+    navigate('/');
+    showToastPositive(user.email + ' logged out successfully!');
+  };
 
   return (
     <div

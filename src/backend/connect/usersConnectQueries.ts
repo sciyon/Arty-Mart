@@ -9,7 +9,25 @@ export const GETUSER_QUERY = gql`
       lname
       gender
       birthDate
-      roles
+      role
+      status
+      createdOn
+    }
+  }
+`;
+
+export const GETALLUSER_QUERY = gql`
+  query UserGetLimit($limit: Int) {
+    userGetLimit(limit: $limit) {
+      _id
+      email
+      password
+      token
+      fname
+      lname
+      gender
+      birthDate
+      role
       status
       createdOn
     }
