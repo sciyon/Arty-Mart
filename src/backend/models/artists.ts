@@ -7,6 +7,7 @@ interface Artist{
   languages: String[],
   followers: Number,
   countryOrigin:String,
+  address: String,
   createdOn: Date
 }
 
@@ -17,6 +18,7 @@ const ArtistSchema = new Schema<Artist>({
   languages: { type: [String], required: true},
   followers: { type: Number, default: 0 },
   countryOrigin: { type: String, required: true},
+  address: { type: String, required: true},
   createdOn: { type: Date, default: Date.now },
 })
 
