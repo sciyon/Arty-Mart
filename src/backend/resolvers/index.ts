@@ -2,7 +2,6 @@ import usersResolvers from './usersResolver.js';
 import artworkResolver from './artworkResolver.js';
 import reviewResolver from './reviewResolver.js';
 import commentResolver from './commentResolver.js';
-import likeResolver from './likesResolver.js';
 import transactionResolver from './transactionResolver.js';
 
 const resolvers = {
@@ -11,7 +10,6 @@ const resolvers = {
     ...artworkResolver.Query,
     ...reviewResolver.Query,
     ...commentResolver.Query,
-    ...likeResolver.Query,
     ...transactionResolver.Query
   },
 
@@ -20,7 +18,6 @@ const resolvers = {
     ...artworkResolver.Mutation,
     ...reviewResolver.Mutation,
     ...commentResolver.Mutation,
-    ...likeResolver.Mutation,
     ...transactionResolver.Mutation
   },
 };

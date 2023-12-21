@@ -61,7 +61,35 @@ const artworkResolver = {
         });
 
       }
+    },
+
+    async artworkGetAllLikes(_, { ID }) {
+      try {
+        const artwork = await Artwork.findById(ID);
+        if (!artwork) {
+          throw new GraphQLError("Artwork not found.", {
+            extensions: { code: 'ARTWORK_NOT_FOUND' }
+          });
+        }
+        return { likes: artwork.likes };
+      } catch (error) {
+        throw new GraphQLError("Error in fetching likes.", {
+          extensions: { code: 'FETCH_LIKES_ERROR' }
+        });
+      }
     }
+    ,
+
+    async artworkGetAllLiked(_, { userID }) {
+      try {
+        const likedArtworks = await Artwork.find({ likes: userID });
+        return likedArtworks;
+      } catch (error) {
+        throw new GraphQLError("Error in fetching liked artworks.", {
+          extensions: { code: 'FETCH_LIKED_ARTWORKS_ERROR' }
+        });
+      }
+    }    
   },
 
   Mutation: {
@@ -149,7 +177,38 @@ const artworkResolver = {
           extensions: { code: 'DELETE_ARTWORK_FAILED_2' }
         });
       }
+    },
+
+    async likeArtworkAdd(_, { likeInput: { userID, artworkID }}){
+      try {
+        const updatedArtwork = await Artwork.findOneAndUpdate(
+          { _id: artworkID },
+          { $addToSet: { likes: userID } },
+          { new: true }
+        );
+        return updatedArtwork;
+      } catch (error) {
+        throw new GraphQLError("Error in adding like.", {
+          extensions: { code: 'ADD_LIKE_ERROR' }
+        });
+      }
+    },
+    
+    async likeArtworkRemove(_, { likeInput: { userID, artworkID }}){
+      try {
+        const updatedArtwork = await Artwork.findOneAndUpdate(
+          { _id: artworkID },
+          { $pull: { likes: userID } },
+          { new: true }
+        );
+        return updatedArtwork;
+      } catch (error) {
+        throw new GraphQLError("Error in removing like.", {
+          extensions: { code: 'REMOVE_LIKE_ERROR' }
+        });
+      }
     }
+    
   }
 }
 

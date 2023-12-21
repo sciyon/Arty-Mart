@@ -14,6 +14,7 @@ interface Artwork{
   status: String
   price: Number,
   quantity: Number,
+  likes: Types.ObjectId[];
 }
 
 const ArtworkSchema = new Schema<Artwork>({
@@ -30,6 +31,7 @@ const ArtworkSchema = new Schema<Artwork>({
   status: { type: String, required: true},
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
+  likes: {type: [{ type: Schema.Types.ObjectId, ref: 'User' }], default: []},
 })
 
 const Artwork = model<Artwork>('artwork', ArtworkSchema);

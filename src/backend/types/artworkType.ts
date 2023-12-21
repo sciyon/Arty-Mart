@@ -13,7 +13,8 @@ const artworkType = `#graphql
     videoURL: String,
     status: String,
     price: Int,
-    quantity: Int
+    quantity: Int,
+    likes: [String]
   }
 
   input ArtworkInput {
@@ -36,19 +37,31 @@ const artworkType = `#graphql
     status: String
   }
 
+  input LikeInput{
+    userID: String,
+    artworkID: String
+  }
+
+  type LikesType{
+    likes: [String]
+  }
+
   type Query {
     artworkGetByLimit(limit: Int!): [Artwork]
     artworkGetByID(ID: ID!): Artwork
     artworkGetAllByArtist(artistID: String!): [Artwork]
     artworkGetAllByArtistAndStatus(artworkByStatus: ArtworkByStatus!): [Artwork]
+    artworkGetAllLikes(ID: ID!): LikesType
+    artworkGetAllLiked(userID: String!): [Artwork]
   }
 
   type Mutation {
     artworkCreate(artworkInput: ArtworkInput): Artwork!
     artworkUpdate(ID: ID!, artworkInput: ArtworkInput): Artwork!
     artworkDelete(ID: ID!): String!
+    likeArtworkAdd(likeInput: LikeInput): Artwork!
+    likeArtworkRemove(likeInput: LikeInput): Artwork!
   }
-
 `;
 
 export default artworkType;
