@@ -1,7 +1,5 @@
 import { GraphQLError } from 'graphql';
 import User from '../models/users.js';
-import Address from '../models/address.js';
-import Artist from '../models/artists.js';
 import Artwork from '../models/artworks.js';
 
 export async function fetchBuyer(buyerID) {
@@ -20,25 +18,9 @@ export async function fetchBuyer(buyerID) {
   }
 }
 
-export async function fetchAddress(addressID) {
-  try {
-    const result = await Address.findById(addressID);
-    if(!result){
-      throw new GraphQLError("User has no address found.", {
-        extensions: { code: 'USER_ADDRESS_FETCH_ERROR_1'}
-      })
-    }
-    return result;
-  }catch (error) {
-    throw new GraphQLError("Address info fetch fail.", {
-      extensions: { code: 'ADDRESS_FETCH_FAIL'}
-    })
-  }
-}
-
 export async function fetchArtist(artistID){
   try {
-    const artist = await Artist.findById(artistID);
+    const artist = await User.findById(artistID);
     if(!artist){
       throw new GraphQLError("Artist does not exist.", {
         extensions: { code: 'ARTIST_DOESNT_EXIST'}

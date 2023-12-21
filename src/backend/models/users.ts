@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 
 interface User{
   id?: String,
@@ -9,8 +9,10 @@ interface User{
   lname: String,
   gender: String,
   birthDate: String,
-  roles: String,
+  address: String,
+  role: String,
   status: String,
+  followers: Types.ObjectId[];
   createdOn: String
 }
 
@@ -22,9 +24,11 @@ const UserSchema = new Schema<User>({
   fname: { type: String, required: true},
   lname: { type: String, required: true},
   gender: { type: String, required: true},
-  birthDate: { type: String, required: true},
-  roles: { type: String, required: true },
+  birthDate: { type: Date, required: true},
+  address: { type: String, required: true},
+  role: { type: String, required: true },
   status: { type: String, required: true },
+  followers: {type: [{ type: Schema.Types.ObjectId, ref: 'User' }], default: []},
   createdOn: { type: String, required: true },
 })
 

@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { GraphQLError } from 'graphql';
-import { Mongoose } from 'mongoose';
 
 import User from '../models/users.js';
-import { CastError } from 'mongoose';
 
 const resolvers = {
   Query: {
@@ -28,13 +26,37 @@ const resolvers = {
         })
       }
     },
+
     async userGetLimit(_, { limit }){
       return User.find().limit(limit);
     },
+
+    async userGetFollowers(_, { ID }){
+      try{
+        const user = await User.findById(ID).populate('followers');
+        return user.followers;
+      }catch(error){
+        throw new GraphQLError("Failed to fetch followers.", {
+          extensions: { code: 'FETCH_FOLLOWERS_FAILED'}
+        });
+      }
+    }, 
+    
+    async userGetFollowing(_, { ID }){
+      try{
+        const user = await User.findById(ID);
+        const following = await User.find({ followers: user._id});
+        return following;
+      }catch(error){
+        throw new GraphQLError("Failed to fetch following.", {
+          extensions: { code: 'FETCH_FOLLOWING_FAILED'}
+        });
+      }
+    }, 
   },
 
   Mutation: {
-    async userRegister(_, { registerUserInput: { email, password, fname, lname, gender, birthDate, roles, status, createdOn } }){
+    async userRegister(_, { registerUserInput: { email, password, fname, lname, gender, birthDate, address, role, status, createdOn } }){
       
       const oldUser = await User.findOne({ email });
       
@@ -55,26 +77,26 @@ const resolvers = {
       );
 
       
-      const newUser =  new User({ email, password, fname, lname, gender, birthDate, roles, status, createdOn, token  });
+      const newUser =  new User({ email, password, token, fname, lname, gender, birthDate, address, role, status,  createdOn });
 
       await newUser.save();
 
       return newUser;
     },
 
-    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, roles, status }}){
+    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, address }}){
       try {
         const update = await User.findOneAndUpdate(
           { _id: ID }, 
           { 
             $set: { 
               email, 
+              password,
               fname, 
               lname, 
               gender, 
               birthDate, 
-              roles, 
-              status,
+              address
             }
           }, 
           { new: true }
@@ -99,8 +121,6 @@ const resolvers = {
       
       return ID;
     },
-    
-
     
     async userLogin(_, { loginUserInput: { email, password } }){
 
@@ -130,9 +150,31 @@ const resolvers = {
         throw new GraphQLError("Account not found.",{
           extensions: { code: 'ACCOUNT_NOT_FOUND'}
         })
-
       }
     },
+
+    async followerAdd(_, { followingInput: { followingID, followerID }}){
+      try{
+        const user = await User.findByIdAndUpdate(followingID, {$push: {followers: followerID}}, {new: true});
+        return user;
+      }catch(error){
+        throw new GraphQLError("Failed to add follower.", {
+          extensions: { code: 'ADD_FOLLOWER_FAILED'}
+        });
+      }
+    },
+    
+    async followerRemove(_, { followingInput: { followingID, followerID }}){
+      try{
+        const user = await User.findByIdAndUpdate(followingID, {$pull: {followers: followerID}}, {new: true});
+        return user;
+      }catch(error){
+        throw new GraphQLError("Failed to remove follower.", {
+          extensions: { code: 'REMOVE_FOLLOWER_FAILED'}
+        });
+      }
+    },
+    
   }
 }
 

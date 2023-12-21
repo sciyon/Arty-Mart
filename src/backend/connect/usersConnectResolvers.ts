@@ -59,9 +59,11 @@ const useLoginMutation = () => {
           dispatch({ type: 'LOGIN', payload: data.userLogin });
         } else {
           console.log('User is not authorized to login');
+          throw new Error('User is not authorized to login');
         }
       } else {
         console.log('Login failed');
+        throw new Error('Login failed');
       }
     },
     onError: (error) => {
@@ -69,7 +71,7 @@ const useLoginMutation = () => {
     },
   });
 
-  return { loginUser, loading, error };
+  return { loginUser, loading, errorMessage: error ? error.message : null };
 };
 
 const useAdminLoginMutation = () => {

@@ -5,8 +5,8 @@ import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 import LOGO from '../images/logoNew.png';
-
 import { useRegisterMutation } from '../backend/connect/usersConnectResolvers.ts';
+import { useToasts } from '../toastcontext.jsx';
 
 function Register({ isOpen, onClose }) {
   const [firstname, setFirstName] = useState('');
@@ -14,6 +14,7 @@ function Register({ isOpen, onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { showToastPositive, showToastNegative } = useToasts(); 
 
   const { register } = useRegisterMutation();
 
@@ -26,16 +27,15 @@ function Register({ isOpen, onClose }) {
           fname: firstname,
           lname: lastname,
         });
-        console.log('Registration successful');
-        onClose(1); //Pwede rani e remove ig front-end to print toaster outside DOM <3
+        showToastPositive(username + 'is succesfully registered');
+        onClose(1);
       } catch (error) {
-        console.error('Registration error:', error.message);
+        showToastNegative('Registration error:', error.message); 
       }
     } else {
-      console.error('Password does not match');
+      showToastNegative('Password does not match'); 
     }
   };
-
 
   const CloseRegister = () => {
     setFirstName('');

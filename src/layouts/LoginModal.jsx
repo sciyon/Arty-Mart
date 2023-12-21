@@ -12,18 +12,25 @@ function Login({ isOpen, onClose }) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { showToastPositive } = useToasts(); 
+  const { showToastPositive, showToastNegative } = useToasts(); 
 
   const { loginUser } = useLoginMutation();
 
-  const LoginAcc = () => {
-    loginUser({ variables: { email: username, password } });
-    showToastPositive('Welcome back ' + username + '!');
-    setUsername('');
-    setPassword('');
-    onClose(1);
-  };
-
+  const LoginAcc = async () => {
+    if (username && password) {
+      const { data } = await loginUser({ variables: { email: username, password } });
+        if (!data.errorMessage) {
+          showToastPositive('Welcome back ' + username + '!');
+          setUsername('');
+          setPassword('');
+          onClose(1);
+        } else {
+          showToastNegative('Login error', data.errorMessage);
+        }
+    } else {
+      showToastNegative('Login credentials are invalid');
+    }
+  };  
 
   const CloseLogin = () => {
     setUsername('');
