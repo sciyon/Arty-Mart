@@ -31,7 +31,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
   const handleLogout = () => {
     logoutUser();
     navigate('/');
-    showToastPositive(user.email + ' logged out successfully!'); // Show toast after logout
+    showToastPositive(user.email + ' logged out successfully!');
   };
 
   return (

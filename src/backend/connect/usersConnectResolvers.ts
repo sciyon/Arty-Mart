@@ -55,12 +55,17 @@ const useLoginMutation = () => {
   const [loginUser, { loading, error, data }] = useMutation(USER_LOGIN_MUTATION, {
     onCompleted: (data) => {
       if (data && data.userLogin && data.userLogin.token) {
-        if (data.userLogin.role === "user") {
-          console.log('Login User successful');
-          dispatch({ type: 'LOGIN', payload: data.userLogin });
+        if (data.userLogin.status == "activated") {
+          if (data.userLogin.role === "user") {
+            console.log('Login User successful');
+            dispatch({ type: 'LOGIN', payload: data.userLogin });
+          } else {
+            console.log('User is not authorized to login');
+            throw new Error('User is not authorized to login');
+          }
         } else {
-          console.log('User is not authorized to login');
-          throw new Error('User is not authorized to login');
+          console.log('Account needs to be reactivated');
+          throw new Error('Account needs to be reactivated');
         }
       } else {
         console.log('Login failed');

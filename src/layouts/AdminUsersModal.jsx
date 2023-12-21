@@ -4,12 +4,15 @@ import { useUpdateMutation } from '../backend/connect/usersConnectResolvers.ts';
 import { useQuery } from '@apollo/client';
 import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 import { GETALLUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
+import { useToasts } from '../toastcontext.jsx';
 
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 function AdminUsersModal({ isOpen, onClose, userId }) {
 
+
+  const { showToastPositive, showToastNegative } = useToasts(); 
   const { data, refetch } = useQuery(GETUSER_QUERY, {
     variables: { id: userId || '' },
   });
@@ -44,6 +47,7 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
         { query: GETALLUSER_QUERY, variables: { limit: 100 } },
       ],
     });
+    showToastPositive(user?.fname + ' has been deactivated');
     onClose();
   };
   
@@ -60,6 +64,7 @@ function AdminUsersModal({ isOpen, onClose, userId }) {
         { query: GETALLUSER_QUERY, variables: { limit: 100 } },
       ],
     });
+    showToastPositive(user?.fname + ' has been reactivated');
     onClose();
   };
   
