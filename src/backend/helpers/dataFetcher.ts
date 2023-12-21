@@ -1,6 +1,5 @@
 import { GraphQLError } from 'graphql';
 import User from '../models/users.js';
-import Artist from '../models/artists.js';
 import Artwork from '../models/artworks.js';
 
 export async function fetchBuyer(buyerID) {
@@ -21,7 +20,7 @@ export async function fetchBuyer(buyerID) {
 
 export async function fetchArtist(artistID){
   try {
-    const artist = await Artist.findById(artistID);
+    const artist = await User.findById(artistID);
     if(!artist){
       throw new GraphQLError("Artist does not exist.", {
         extensions: { code: 'ARTIST_DOESNT_EXIST'}

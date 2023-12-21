@@ -18,7 +18,7 @@ interface Artwork{
 
 const ArtworkSchema = new Schema<Artwork>({
   id: String,
-  artist: { type: Schema.Types.ObjectId, ref:'Artist', required: true },
+  artist: { type: Schema.Types.ObjectId, ref:'User', required: true },
   title: { type: String, required: true},
   type: { type: String, required: true},
   categories: { type: [String], required: true},
