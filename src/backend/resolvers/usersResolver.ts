@@ -12,20 +12,20 @@ const resolvers = {
       try{
         const foundUser = await User.findById(ID);
         if(!foundUser){
-        throw new GraphQLError("User doesnt exist.", {
-          extensions: { code: 'USER_DOESNT_EXIST'}
-        })
-      }
-      return foundUser;
+          throw new GraphQLError("User doesnt exist.", {
+            extensions: { code: 'USER_DOESNT_EXIST'}
+          })
+        }
+        return foundUser;
       }catch(error){
         if(error.name === 'CastError'){
-        throw new GraphQLError("Invalid ID.", {
-          extensions: { code: 'INVALID_ID'}
+          throw new GraphQLError("Invalid ID.", {
+            extensions: { code: 'INVALID_ID'}
+          })
+        }
+        throw new GraphQLError("User fetch failed.", {
+          extensions: { code: 'USER_FETCH_FAIL'}
         })
-      }
-      throw new GraphQLError("User fetch failed.", {
-      extensions: { code: 'USER_FETCH_FAIL'}
-      })
       }
     },
     async userGetLimit(_, { limit }){
