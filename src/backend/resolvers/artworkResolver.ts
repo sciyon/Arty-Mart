@@ -95,7 +95,7 @@ const artworkResolver = {
   Mutation: {
 
     async artworkCreate(_, { artworkInput: {
-      artist, title, type, categories, description, createdOn, imageURL, videoURL, status, price,  quantity
+      artist, title, type, categories, description, createdOn, imageURL, status, price,  quantity
     } }){
       
       const artistExists = await User.findById(artist);
@@ -113,7 +113,6 @@ const artworkResolver = {
         description, 
         createdOn, 
         imageURL, 
-        videoURL, 
         status, 
         price,
         quantity
@@ -139,11 +138,11 @@ const artworkResolver = {
     },
 
     async artworkUpdate(_, { ID, artworkInput: {
-      artist, title, type, categories, description, createdOn, imageURL, videoURL, status, price, quantity
+      artist, title, type, categories, description, createdOn, imageURL, status, price, quantity
     } }){
       try{
 
-        const updated = await Artwork.updateOne({ _id: ID }, {$set: { artist, title, type, categories, description, createdOn, imageURL, videoURL, status, price, quantity }});
+        const updated = await Artwork.updateOne({ _id: ID }, {$set: { artist, title, type, categories, description, createdOn, imageURL, status, price, quantity }});
 
         if(!updated){
           throw new GraphQLError("Failed to update artwork.", {

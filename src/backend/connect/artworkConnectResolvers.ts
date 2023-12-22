@@ -12,7 +12,6 @@ const CREATE_ARTWORK_MUTATION = gql`
       description
       createdOn
       imageURL
-      videoURL
       status
       price
       quantity
@@ -28,7 +27,6 @@ const artCreateMutation = () => {
         variables: {
           artworkInput: {
             ...artworkInput,
-            videoURL: "null",
             status: "activated",
             createdOn: new Date().toISOString().split('T')[0],
           },
