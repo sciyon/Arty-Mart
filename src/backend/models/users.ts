@@ -9,7 +9,6 @@ interface User{
   lname: String,
   gender: String,
   birthDate: String,
-  address: String,
   role: String,
   status: String,
   followers: Types.ObjectId[];
@@ -25,7 +24,6 @@ const UserSchema = new Schema<User>({
   lname: { type: String, required: true},
   gender: { type: String, required: true},
   birthDate: { type: String, required: true},
-  address: { type: String, required: true},
   role: { type: String, required: true },
   status: { type: String, required: true },
   followers: {type: [{ type: Schema.Types.ObjectId, ref: 'User' }], default: []},

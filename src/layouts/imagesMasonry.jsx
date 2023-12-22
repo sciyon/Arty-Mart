@@ -23,7 +23,6 @@ const ImagesMasonry = () => {
   const navigate = useNavigate();
 
   const handleArtworkClick = (artworkID) => {
-    console.log(artworkID)
     setSessionID(artworkID);
     navigate('/Product')
   };

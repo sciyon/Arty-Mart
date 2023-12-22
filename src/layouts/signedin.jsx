@@ -37,11 +37,6 @@ const SignedIn = () => {
           <SearchBar />
         </div>
         <div className="hidden md:flex space-x-10">
-          <button className="hover:text-red-300">
-            <Link to="/Product" type="button"> {/* This is just a skeleton of a product, will be removed kung naa nay backend*/}
-              Product
-            </Link>
-          </button>
           <button onClick={() => setOpen4(true)} className="hover:text-red-300">
             <Link to="/Transaction" type="button">
               <TruckIcon className="w-10 h-10 pt-1 hover:scale-90 hover:text-red-300" />

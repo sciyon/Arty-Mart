@@ -1,29 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { TEInput, TERipple } from 'tw-elements-react';
+
 import SignedIn from '../layouts/signedin.jsx';
 import { useSession } from '../session.jsx';
 import { useQuery } from '@apollo/client';
 import { GETARTWORKSID_QUERY } from '../backend/connect/artworkConnectQueries.ts';
+import  transactionCreateMutation from '../backend/connect/transactionConnectResolver.ts';
 import {
   HeartIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/solid";
+import { useAuth } from '../backend/middleware/authContext.jsx';
+import { useToasts } from '../toastcontext.jsx';
+
 
 const Product = () => {
+
   const [liked, setLiked] = useState(false);
   const [comment, setComment] = useState('');
-  const [productQuantity, setProductQuantity] = useState('');
   const [address, setAddress] = useState('');
+  const [chosenQuantity, setChosenQuantity] = useState('');
+  const { authState } = useAuth();
+  const { isLoggedIn, user } = authState;
 
-  // State variables for other properties
+  const [artID, setArtID] = useState('');
+  const [artistID, setArtistID] = useState('');
   const [title, setTitle] = useState('');
   const [imageURL, setImageURL] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState('');
   const [categories, setCategories] = useState('');
   const [price, setPrice] = useState('');
+  const [productQuantity, setProductQuantity] = useState('');
 
   const { selectedSessionID } = useSession();
+  const { showToastPositive, showToastNegative } = useToasts(); 
 
   // Query to fetch artwork details by ID
   const { data, refetch } = useQuery(GETARTWORKSID_QUERY, {
@@ -36,15 +47,16 @@ const Product = () => {
 
   useEffect(() => {
     const artworkData = data?.artworkGetByID;
+    setArtID(artworkData?._id || '');
+    setArtistID(artworkData?.artist || '');
     setTitle(artworkData?.title || '');
     setImageURL(artworkData?.imageURL || '');
     setDescription(artworkData?.description || '');
     setType(artworkData?.type || '');
     setCategories(artworkData?.categories || '');
     setPrice(artworkData?.price || '');
+    setProductQuantity(artworkData?.quantity || '');
   }, [data]);
-
-  const artwork = data?.artworkGetByID;
 
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked);
@@ -58,6 +70,47 @@ const Product = () => {
     console.log('Comment sent:', comment);
   };
 
+  const handleQuantityChange = (e) => {
+    const newValue = parseInt(e.target.value, 10);
+    if (!isNaN(newValue) && newValue >= 1 && newValue <= productQuantity) {
+      setChosenQuantity(newValue);
+    }
+  };
+
+  const { transactionNew } = transactionCreateMutation(); 
+
+  const handleOrderNowClick = async () => {
+    if (isLoggedIn) {
+      if (chosenQuantity && address) {
+        if (user._id != artistID){
+          const totalPrice = price * chosenQuantity;
+        
+          const { result, error: transactionCreateError } = await transactionNew({
+            buyerID: user._id,
+            artworkID: artID,
+            artistID: artistID,
+            total: totalPrice,
+            address: address,
+            quantity: chosenQuantity,
+          });
+    
+          if (result) {
+            showToastPositive('Order placed successfully');
+          } else if (transactionCreateError) {
+            console.error('Transaction creation error:', transactionCreateError.message);
+            showToastNegative('Transaction creation error');
+          }
+        } else {
+          showToastNegative('User cannot order their own artworks');
+        }
+      } else {
+        showToastNegative('Fill up the important details');
+      }
+    } else {
+      showToastNegative('User must log in to order');
+    }
+  };
+  
   return (
     <>
       <SignedIn />
@@ -154,31 +207,32 @@ const Product = () => {
               </div>
             </div>
 
-            <div className="flex pl-5 pr-8 py-2 border-b-2 mb-8 border-tier4">
-              <div className="flex-1 flex">
-                <div className='w-1/3 mr-4'> {/* Set width to 1/3 and added margin-right */}
-                  <p className='mb-4'>Quantity</p>
-                  <TEInput
-                    type="text"
-                    placeholder="Quantity"
-                    className='text-white mb-4 w-full'
-                    value={productQuantity}
-                    onChange={(e) => setProductQuantity(e.target.value)}
-                  />
-                </div>
-                <div className='w-2/3'> {/* Set width to 2/3 */}
-                  <p className='mb-4'>Address</p>
-                  <TEInput
-                    type="text"
-                    placeholder="Address"
-                    className='text-white mb-4 w-full'
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
+            <form>
+              <div className="flex pl-5 pr-8 py-2 border-b-2 mb-8 border-tier4">
+                <div className="flex-1 flex">
+                  <div className='w-1/3 mr-4'> {/* Set width to 1/3 and added margin-right */}
+                    <p className='mb-4'>{'Quantity: ' + productQuantity}</p>
+                    <TEInput
+                      type="number"
+                      placeholder="Quantity"
+                      value={chosenQuantity}
+                      onChange={handleQuantityChange}
+                      className='text-white mb-4 w-full'
+                    />
+                  </div>
+                  <div className='w-2/3'> {/* Set width to 2/3 */}
+                    <p className='mb-4'>Address</p>
+                    <TEInput
+                      type="text"
+                      placeholder="Address"
+                      className='text-white mb-4 w-full'
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-
+            </form>
             <div>
               <TERipple rippleColor="light" className="w-1/2 flex items-center justify-center mx-auto">
                 <button
@@ -187,6 +241,7 @@ const Product = () => {
                   style={{
                     background: 'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
                   }}
+                  onClick={handleOrderNowClick}
                 >
                   Order Now
                 </button>

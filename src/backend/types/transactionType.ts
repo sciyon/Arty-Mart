@@ -5,7 +5,9 @@ const transactionType = `#graphql
     artworkID: String,
     artistID: String,
     total: Int,
-    status: String
+    status: String,
+    quantity: Int,
+    address: String
   }
  
   input TransactionInput {
@@ -13,7 +15,9 @@ const transactionType = `#graphql
     artworkID: String,
     artistID: String,
     total: Int,
-    status: String
+    status: String,
+    quantity: Int,
+    address: String
   }
  
   type Query {

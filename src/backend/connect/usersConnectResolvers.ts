@@ -29,7 +29,6 @@ const REGISTER_MUTATION = gql`
       birthDate
       role
       status
-      address
       createdOn
     }
   }
@@ -130,7 +129,6 @@ const useRegisterMutation = () => {
             ...registerUserInput,
             gender: "N/A",
             birthDate: "N/A",
-            address: "N/A",
             role: "user",
             status: "activated",
             createdOn: new Date().toISOString().split('T')[0],

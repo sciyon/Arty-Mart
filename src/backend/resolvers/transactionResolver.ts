@@ -69,10 +69,10 @@ const transactionResolver = {
   },
  
   Mutation: {
-    async transactionCreate(_, { transactionInput: { buyerID, artworkID, artistID, total, status } }) {
+    async transactionCreate(_, { transactionInput: { buyerID, artworkID, artistID, total, status, address, quantity } }) {
       try {
         const newTransaction = new Transaction({
-          buyerID, artworkID, artistID, total, status
+          buyerID, artworkID, artistID, total, status, address, quantity
         })
     
         // Save the populated transaction
