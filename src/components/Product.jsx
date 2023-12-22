@@ -108,6 +108,9 @@ const Product = () => {
     } else {
       showToastNegative('User must log in to order');
     }
+
+    setPrice('')
+    setChosenQuantity('')
   };
   
   return (

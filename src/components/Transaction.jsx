@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import { TERipple } from 'tw-elements-react';
+
 import SignedIn from '../layouts/signedin.jsx';
-
-
 import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useQuery } from '@apollo/client';
 import { GETBUYERTRANSACTION_QUERY } from '../backend/connect/transactionConnectQueries.ts';
+import { GETARTWORKSID_QUERY } from '../backend/connect/artworkConnectQueries.ts';
 
 const Transaction = () => {
   const [activeColumn, setActiveColumn] = useState('Purchases');
@@ -19,16 +20,27 @@ const Transaction = () => {
   const { data, refetch, loading, error } = useQuery(GETBUYERTRANSACTION_QUERY, {
     variables: { buyerID: user?._id || '' },
   });  
-  
-  
+
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  const ArtworkTitle = ({ artworkID }) => {
+    const { data: data2 } = useQuery(GETARTWORKSID_QUERY, {
+      variables: { id: artworkID },
+    });
   
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+    return <p>{data2?.artworkGetByID?.title ?? 'N/A'}</p>;
+  };
+
+  const ArtworkCategory = ({ artworkID }) => {
+    const { data: data2 } = useQuery(GETARTWORKSID_QUERY, {
+      variables: { id: artworkID },
+    });
   
+    return <p>{data2?.artworkGetByID?.categories ?? 'N/A'}</p>;
+  };
+
   const renderContent = () => {
     switch (activeColumn) {
       case 'Purchases':
@@ -47,8 +59,50 @@ const Transaction = () => {
               <div className='flex-1 flex items-center uppercase font-medium'>
                 QUANTITIES
               </div>
+              <div className='flex-1 flex items-center uppercase font-medium' />
             </div>
             <div className="flex pl-5 pr-8 py-2 border-b-2 mb-6 border-tier2" />
+            {data?.transactionGetFromUser ? (
+              data.transactionGetFromUser.map((transacData) => (
+                <React.Fragment key={transacData._id}>
+                    <>
+                      <div key={transacData._id} className="color-red flex x-4">
+                        <div className='flex-1'>
+                          <ArtworkTitle artworkID={transacData.artworkID} />
+                        </div>
+                        <div className='flex-1'>
+                          <ArtworkCategory artworkID={transacData.artworkID} />
+                        </div>
+                        <div className='flex-1'>
+                          <p>{transacData.total ?? 'N/A'}</p>
+                        </div>
+                        <div className='flex-1'>
+                          <p>{transacData.quantity ?? 'N/A'}</p>
+                        </div>
+                        <div className='flex-1'>
+                          <TERipple rippleColor="light" className="w-1/2 h-2/3">
+                              <button
+                                className="mb-3 items-center justify-center flex w-1/2 h-2/3 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                                type="button"
+                                onClick={() => handleViewDetails(userData._id)}
+                                style={{
+                                  background: 'linear-gradient(to right, #007BFF, #00BFFF)',
+                                  width: '100%',
+                                  height: '100%',
+                                }}
+                              >
+                                VIEW DETAILS
+                              </button>
+                          </TERipple>
+                        </div>
+                      </div>
+                      <div className="flex pl-5 pr-8 py-2 border-b-2 mb-6 border-tier2" />
+                    </>
+                </React.Fragment>
+              ))
+            ) : (
+              <p>No data available</p>
+            )}
           </div>
         );
       case 'Sold':
@@ -57,7 +111,7 @@ const Transaction = () => {
         return null;
     }
   };
-
+  
   return (
     <>
       <SignedIn />
