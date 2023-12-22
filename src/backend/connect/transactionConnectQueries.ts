@@ -15,3 +15,18 @@ query TransactionGetFromUser($buyerID: String!) {
     }
   }
 `;
+
+export const GETUSERTRANSACTION_QUERY = gql`
+query TransactionGetFromID($id: ID!) {
+    transactionGetFromID(ID: $id) {
+      _id
+      buyerID
+      artworkID
+      artistID
+      total
+      status
+      quantity
+      address
+    }
+  }
+`;

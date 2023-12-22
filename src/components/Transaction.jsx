@@ -7,14 +7,22 @@ import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useQuery } from '@apollo/client';
 import { GETBUYERTRANSACTION_QUERY } from '../backend/connect/transactionConnectQueries.ts';
 import { GETARTWORKSID_QUERY } from '../backend/connect/artworkConnectQueries.ts';
+import TransactionModal from "../layouts/TransactionModal.jsx";
 
 const Transaction = () => {
   const [activeColumn, setActiveColumn] = useState('Purchases');
   const { authState } = useAuth();
   const { isLoggedIn, user } = authState;
+  const [openTransactionModal, setOpenTransactionModal] = useState(false);
+  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
 
   const handleColumnClick = (column) => {
     setActiveColumn(column);
+  };
+
+  const handleViewDetails = (transacID) => {
+    setOpenTransactionModal(true);
+    setSelectedTransactionId(transacID);
   };
 
   const { data, refetch, loading, error } = useQuery(GETBUYERTRANSACTION_QUERY, {
@@ -84,7 +92,7 @@ const Transaction = () => {
                               <button
                                 className="mb-3 items-center justify-center flex w-1/2 h-2/3 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                                 type="button"
-                                onClick={() => handleViewDetails(userData._id)}
+                                onClick={() => handleViewDetails(transacData._id)}
                                 style={{
                                   background: 'linear-gradient(to right, #007BFF, #00BFFF)',
                                   width: '100%',
@@ -98,6 +106,11 @@ const Transaction = () => {
                       </div>
                       <div className="flex pl-5 pr-8 py-2 border-b-2 mb-6 border-tier2" />
                     </>
+                    <TransactionModal
+                      isOpen={openTransactionModal}
+                      onClose={() => setOpenAdminUsersModal(false)}
+                      transacID={selectedTransactionId}
+                    ></TransactionModal>
                 </React.Fragment>
               ))
             ) : (
