@@ -19,3 +19,22 @@ export const GETALLARTWORKS_QUERY = gql`
         }
     }
 `;
+
+export const GETARTWORKSID_QUERY = gql`
+    query ArtworkGetByID($id: ID!) {
+        artworkGetByID(ID: $id) {
+        _id
+        artist
+        title
+        type
+        categories
+        description
+        createdOn
+        imageURL
+        status
+        price
+        quantity
+        likes
+        }
+    }
+`;

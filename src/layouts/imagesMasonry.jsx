@@ -23,17 +23,10 @@ const ImagesMasonry = () => {
   const navigate = useNavigate();
 
   const handleArtworkClick = (artworkID) => {
+    console.log(artworkID)
     setSessionID(artworkID);
     navigate('/Product')
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching data: {error.message}</div>;
-  }
 
   const artworks = data?.artworkGetByLimit;
 
