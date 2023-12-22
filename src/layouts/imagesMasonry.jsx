@@ -1,38 +1,46 @@
 import React from 'react';
 import '../index.css';
-import Axios from "axios";
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { Image, Shimmer } from 'react-shimmer';
 
-import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
-import { Image, Shimmer} from 'react-shimmer'
+import { useQuery } from '@apollo/client';
+import { GETALLARTWORKS_QUERY } from '../backend/connect/artworkConnectQueries.ts';
 
-import monaLisa from '../images/monaLisa.jpg';
-import persistenceOfMemory from '../images/persistenceOfMemory.jpg';
-import starryNight from '../images/starryNight.jpg';
+const ImagesMasonry = () => {
+  const { data, loading, error, refetch } = useQuery(GETALLARTWORKS_QUERY, {
+    variables: { limit: 100 },
+  });
 
-{/* Examples rani but we can print the backend component as an array of images to be displayed */}
-{/* Sa trending na part, just sort it according to likes */}
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-const images = [monaLisa, persistenceOfMemory, starryNight, monaLisa, persistenceOfMemory, starryNight, starryNight, starryNight, monaLisa, persistenceOfMemory, monaLisa, persistenceOfMemory, persistenceOfMemory];
+  if (error) {
+    return <div>Error fetching data: {error.message}</div>;
+  }
 
-class imagesMasonry extends React.Component {
-    render() {
-        return (
-            <ResponsiveMasonry
-            columnsCountBreakPoints={{350: 1, 750: 2, 900: 3, 1200: 4, 1500: 5}}
-            >
-                <Masonry columnsCount={5} gutter="15px">
-                    {images.map((image, i) => (
-                    <Image 
-                    key={i}
-                    src={image}
-                    className='image'
-                    fallback={<Shimmer  />}
-                    />
-                    ))}
-                </Masonry>
-            </ResponsiveMasonry>
-        )
-    }
-}
+  const artworks = data?.artworkGetByLimit; // Adjust the field based on your GraphQL query
 
-export default imagesMasonry;
+  if (!artworks) {
+    return <div>No artworks found</div>;
+  }
+
+  return (
+    <ResponsiveMasonry
+      columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1200: 4, 1500: 5 }}
+    >
+      <Masonry columnsCount={5} gutter="15px">
+        {artworks.map((artwork, i) => (
+          <Image
+            key={i}
+            src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
+            className='image'
+            fallback={<Shimmer />}
+          />
+        ))}
+      </Masonry>
+    </ResponsiveMasonry>
+  );
+};
+
+export default ImagesMasonry;
