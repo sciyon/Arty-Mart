@@ -14,7 +14,7 @@ const Store = () => {
   const navigate = useNavigate(); 
 
   return (
-    <>
+    <div>
       {isLoggedIn && user.role === "user" ? (
         <>
           <SignedIn />
@@ -32,7 +32,7 @@ const Store = () => {
       <div className='relative top-36 ml-36 mr-16'>
           <ImagesMasonry />
       </div>
-    </>
+    </div>
   );
 }
 

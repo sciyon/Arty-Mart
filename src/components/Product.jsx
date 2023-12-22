@@ -2,41 +2,22 @@ import React, { useState } from 'react';
 import { TEInput, TERipple } from 'tw-elements-react';
 
 import SignedIn from '../layouts/signedin.jsx';
+import { useSession } from '../session.jsx';
 
 import {
-  ArrowLeftCircleIcon,
-  ArrowRightCircleIcon,
   HeartIcon,
-  StarIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/solid";
-import joshHutcherson1 from '../images/joshHutcherson.jpg';
-import chessOceanBG from '../images/chessOceanBG.jpg';
-import monaLisa from '../images/monaLisa.jpg';
 
 const Product = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const [liked, setLiked] = useState(false);
-  const [selectedStars, setSelectedStars] = useState(0);
   const [comment, setComment] = useState('');
   const [productQuantity, setProductQuantity] = useState('');
-
-  const images = [joshHutcherson1, chessOceanBG, monaLisa];
-
-  const handlePrevClick = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
-  };
-
-  const handleNextClick = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
-  };
+  const { selectedSessionID } = useSession();
 
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked);
-  };
-
-  const handleStarClick = (index) => {
-    setSelectedStars(index + 1);
   };
 
   const handleChange = (event) => {
@@ -52,46 +33,18 @@ const Product = () => {
       <SignedIn />
       <div className='relative w-full h-20 bg-tier2 top-14 flex justify-center items-center'>
         <div className='font-medium uppercase ml-16 text-xl'>
-          Title of Product
+        { selectedSessionID }
         </div>
       </div>
       <div className='relative top-24 ml-36 mr-16 flex'>
 
         {/* First Column */}
         <div className="flex-1 ml-8 relative overflow-y-auto">
-          <div className='relative flex items-center justify-center'>
+          <div className='relative mb-5 flex items-center justify-center'>
             <img
-              src={images[currentImageIndex]}
-              alt={`Product ${currentImageIndex + 1}`}
+              src={`https://res.cloudinary.com/dyqbjfpka/image/upload/jpg`}
               className='h-80 w-80 object-cover rounded-2xl border-2 border-tier4'
             />
-            <div className="absolute left-36 top-1/2 transform -translate-y-1/2">
-              <button
-                className="text-white mx-2 text-2xl"
-                onClick={handlePrevClick}
-              >
-                <ArrowLeftCircleIcon className="w-10 h-10 pt-1 text-white hover:scale-90 hover:text-tier3" />
-              </button>
-            </div>
-            <div className="absolute right-36 top-1/2 transform -translate-y-1/2">
-              <button
-                className="text-white mx-2 text-2xl"
-                onClick={handleNextClick}
-              >
-                <ArrowRightCircleIcon className="w-10 h-10 pt-1 text-white hover:scale-90 hover:text-tier3" />
-              </button>
-            </div>
-          </div>
-          <div className="flex items-center justify-center mt-2">
-            {images.map((_, index) => (
-              <div
-                key={index}
-                className={` font-medium mx-2 ${index === currentImageIndex ? 'text-red-900 text-2xl ' : 'text-xl'}`}
-                onClick={() => setCurrentImageIndex(index)}
-              >
-                {index + 1}
-              </div>
-            ))}
           </div>
           <div className="flex pl-5 pr-8 py-2 border-b-2 mb-4 border-tier4" />
           <div className="flex items-center justify-between mt-2">
@@ -103,19 +56,6 @@ const Product = () => {
                 <HeartIcon className="w-8 h-8 pt-1" />
               </button>
               Like
-            </div>
-
-            <div className="flex items-center">
-              {[...Array(5)].map((_, index) => (
-                <button
-                  key={index}
-                  className={`text-white text-2xl ${index < selectedStars ? 'text-yellow-500' : ''}`}
-                  onClick={() => handleStarClick(index)}
-                >
-                  <StarIcon className="w-8 h-8 pt-1" />
-                </button>
-              ))}
-              <p className='ml-4'> Rate </p>
             </div>
           </div>
           <div className="flex pl-5 pr-8 py-2 border-b-2 mb-4 border-tier4" />

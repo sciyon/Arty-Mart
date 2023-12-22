@@ -7,6 +7,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { AuthProvider  } from './backend/middleware/authContext.jsx';
 import { ToastProvider } from './toastcontext.jsx';
 import {Cloudinary} from "@cloudinary/url-gen";
+import { SessionProvider } from './session.jsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql', // Corrected URI
@@ -20,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <BrowserRouter>
         <ApolloProvider client={client}>
+          <SessionProvider>
             <App />
+          </SessionProvider>
         </ApolloProvider>
       </BrowserRouter>
     </AuthProvider>
