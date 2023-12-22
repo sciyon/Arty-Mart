@@ -1,21 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import SignedIn from '../layouts/signedin.jsx';
 
+
+import { useAuth } from '../backend/middleware/authContext.jsx';
+import { useQuery } from '@apollo/client';
+import { GETBUYERTRANSACTION_QUERY } from '../backend/connect/transactionConnectQueries.ts';
+
 const Transaction = () => {
-  const [activeColumn, setActiveColumn] = useState('Pending');
+  const [activeColumn, setActiveColumn] = useState('Purchases');
+  const { authState } = useAuth();
+  const { isLoggedIn, user } = authState;
 
   const handleColumnClick = (column) => {
-    // Add your logic to handle column clicks and update the activeColumn state
     setActiveColumn(column);
   };
 
+  const { data, refetch, loading, error } = useQuery(GETBUYERTRANSACTION_QUERY, {
+    variables: { buyerID: user?._id || '' },
+  });  
+  
+  
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+  
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+  
   const renderContent = () => {
     switch (activeColumn) {
-      case 'Pending':
-        return <div>Content for Pending Transactions</div>;
-      case 'Completed':
-        return <div>Content for Completed Transactions</div>;
+      case 'Purchases':
+        return (
+          <div>
+            <div className="mb-1 color-red flex x-4 text-red-400">
+              <div className='flex-1 flex items-center uppercase font-medium'>
+                ART PIECE
+              </div>
+              <div className='flex-1 flex items-center uppercase font-medium'>
+                CATEGORIES
+              </div>
+              <div className='flex-1 flex items-center uppercase font-medium'>
+                PRICE
+              </div>
+              <div className='flex-1 flex items-center uppercase font-medium'>
+                QUANTITIES
+              </div>
+            </div>
+            <div className="flex pl-5 pr-8 py-2 border-b-2 mb-6 border-tier2" />
+          </div>
+        );
+      case 'Sold':
+        return <div>Content for Sold Transactions</div>;
       default:
         return null;
     }
@@ -33,16 +70,16 @@ const Transaction = () => {
         {/* Navigation for columns */}
         <div className="flex pl-5 pr-8 py-2 border-b-2 mb-6 border-tier4">
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Pending' ? 'text-tier3' : ''}`}
-            onClick={() => handleColumnClick('Pending')}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Purchases' ? 'text-tier3' : ''}`}
+            onClick={() => handleColumnClick('Purchases')}
           >
-            Pending
+            PURCHASES
           </div>
           <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Completed' ? 'text-tier3' : ''}`}
-            onClick={() => handleColumnClick('Completed')}
+            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'Sold' ? 'text-tier3' : ''}`}
+            onClick={() => handleColumnClick('Sold')}
           >
-            Completed
+            SOLD
           </div>
         </div>
 

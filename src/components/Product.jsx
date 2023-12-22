@@ -36,7 +36,6 @@ const Product = () => {
   const { selectedSessionID } = useSession();
   const { showToastPositive, showToastNegative } = useToasts(); 
 
-  // Query to fetch artwork details by ID
   const { data, refetch } = useQuery(GETARTWORKSID_QUERY, {
     variables: { id: selectedSessionID },
   });
