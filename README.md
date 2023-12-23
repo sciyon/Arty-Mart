@@ -45,7 +45,7 @@ For terminal two, run this command for the frontend server:
 ```
 
 
-Use these accounts for the admin:
+Use these account for the admin:
 
 ```bash
     email: erwin@gmail.com
