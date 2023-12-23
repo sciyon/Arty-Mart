@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TEInput, TERipple } from 'tw-elements-react';
+import defaultProfile from '../images/defaultProfile.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
 
 import SignedIn from '../layouts/signedin.jsx';
 import { useSession } from '../session.jsx';
 import { useQuery } from '@apollo/client';
+import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 import { GETARTWORKSID_QUERY } from '../backend/connect/artworkConnectQueries.ts';
 import  { transactionCreateMutation } from '../backend/connect/transactionConnectResolvers.ts';
 import {
@@ -41,10 +43,6 @@ const Product = () => {
   });
 
   useEffect(() => {
-    refetch();
-  }, [selectedSessionID, refetch]);
-
-  useEffect(() => {
     const artworkData = data?.artworkGetByID;
     setArtID(artworkData?._id || '');
     setArtistID(artworkData?.artist || '');
@@ -77,6 +75,17 @@ const Product = () => {
   };
 
   const { transactionNew } = transactionCreateMutation(); 
+
+  const { data: data2, refetch: refetchData2 } = useQuery(GETUSER_QUERY, {
+    variables: { id: artistID },
+  });  
+
+  const user2 = data2?.userGet 
+
+  useEffect(() => {
+    refetch();
+    refetchData2();
+  }, [selectedSessionID, refetch, refetchData2]);
 
   const handleOrderNowClick = async () => {
     if (isLoggedIn) {
@@ -171,15 +180,32 @@ const Product = () => {
         <div className="flex-1 ml-8 static">
           <div className="sticky top-32">
             {/* Description */}
-            <div className="flex flex-col pl-5">
-              <p className='mb-4'>Description</p>
-                <div className='w-full mb-[30px]'>
+            <div className="flex flex-row">
+              {/* Left Column */}
+              <div className="flex-1 pr-5">
+                <p className="mb-3">{'Artist: ' + ' ' + user2?.email }</p>
+                <p className="mb-3">{'Profile Picture:'}</p>
+                <img
+                  src={
+                    user2 && user2.profileURL !== "N/A"
+                      ? `https://res.cloudinary.com/dyqbjfpka/image/upload/${user2.profileURL}.jpg`
+                      : defaultProfile
+                  }
+                  className='h-48 w-full object-cover rounded-2xl border-2 border-tier4'
+                />
+              </div>
+
+              {/* Right Column */}
+              <div className="flex-1 pl-5">
+                <p className="mb-4">Description</p>
+                <div className="w-full mb-[30px]">
                   <textarea
                     id="description"
-                    className='text-black rounded px-6 pb-2 w-full h-56 pt-2.5 text-xs font-medium resize-none'
+                    className="text-black rounded px-6 pb-2 w-full h-56 pt-2.5 text-xs font-medium resize-none"
                     value={description.replace(/\n/g, '<br>')}
                   />
                 </div>
+              </div>
             </div>
 
             <div className="flex pl-5 pr-8 py-2 border-b-2 mb-4 border-tier4">

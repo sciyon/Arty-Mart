@@ -4,6 +4,7 @@ import Axios from "axios";
 
 import SignedIn from '../layouts/signedin.jsx';
 import chessCastle from '../images/chessCastle.png';
+import insertImage from '../images/insertImage.jpg';
 import artCreateMutation from '../backend/connect/artworkConnectResolvers.ts';
 import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useToasts } from '../toastcontext.jsx';
@@ -116,7 +117,7 @@ const Create = () => {
               )}
               {!cloudinaryImage && (
                 <div className="w-64 h-48 mb-5">
-                  <img src="https://res.cloudinary.com/dyqbjfpka/image/upload/ztkm8d8phhhyh36bwody.jpg" alt="Your Image" class="w-full h-full object-cover" />
+                  <img src={insertImage} alt="Insert Image" className="w-full h-full object-cover" />
                 </div>
               )}
             </div>
