@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { UserIcon, CalendarDaysIcon, CakeIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import defaultProfile from '../images/defaultProfile.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
+import ImagesMasonry from '../layouts/imagesMasonry.jsx'; 
 
 import SignedOut from '../layouts/signedOut.jsx';
 import SignedIn from '../layouts/signedin.jsx';
@@ -34,11 +35,11 @@ const Social = () => {
   const renderContent = () => {
     switch (activeColumn) {
       case 'posts':
-        return <div>Content for Posts</div>;
-      case 'followers':
-        return <div>Content for Followers</div>;
-      case 'following':
-        return <div>Content for Following</div>;
+        return (
+        <div className='mb-6'>
+          <ImagesMasonry limit={3} />
+        </div>
+        )
       case 'likes':
         return <div>Content for Likes</div>;
       default:
@@ -114,18 +115,6 @@ const Social = () => {
             onClick={() => handleColumnClick('posts')}
           >
             Posts
-          </div>
-          <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'followers' ? 'text-tier3' : ''}`}
-            onClick={() => handleColumnClick('followers')}
-          >
-            Followers
-          </div>
-          <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'following' ? 'text-tier3' : ''}`}
-            onClick={() => handleColumnClick('following')}
-          >
-            Following
           </div>
           <div
             className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'likes' ? 'text-tier3' : ''}`}
