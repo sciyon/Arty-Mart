@@ -52,7 +52,7 @@ Use these account for the admin:
     passw: 123
 ```
 
-After successfully running the backend server, you can go to this link to read the built-in documentation that Apollo Server provides in testing the backend functions.
+After successfully running the backend server, you can go to this link to test the built-in documentation that Apollo Server provides in testing the backend functions.
 
 ```bash
     http://localhost:5000/
