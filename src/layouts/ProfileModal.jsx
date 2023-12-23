@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import Axios from "axios";
 
 import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useUpdateMutation } from '../backend/connect/usersConnectResolvers.ts';
@@ -32,16 +33,14 @@ function Profile({ isOpen, onClose }) {
   const [gender, setGender] = useState(user2?.gender || user?.gender);
   const [email, setEmail] = useState(user2?.email || user?.email);
   const [birthday, setBirthday] = useState(user2?.birthDate || user?.birthDate);
+  const [cloudinaryImage, setCloudinaryImage] = useState("")
 
   const { updateUser } = useUpdateMutation();
-  const { showToastPositive } = useToasts(); 
+  const { showToastPositive, showToastNegative } = useToasts(); 
 
   const handleProfileUpload = (event) => {
     const file = event.target.files[0];
     setProfileFile(file);
-
-    const limitedFileName = file ? (file.name.length > 35 ? file.name.substring(0, 35) + '...' : file.name) : 'No File Chosen';
-    setProfileFileName(limitedFileName);
   };
 
   const CloseProfile = () => {
@@ -49,23 +48,69 @@ function Profile({ isOpen, onClose }) {
     onClose(1);
   };
 
-  const UpdateProfile = () => {
+  const UpdateProfile = async () => {
+    if (profileFile) {
+      try {
+        const formData = new FormData();
+        formData.append("file", profileFile);
+        formData.append("upload_preset", "s51txqkb");
   
-    updateUser({
-      variables: {
-        id: user._id,
-        updateUserInput: {
-          email,
-          fname: firstname,
-          lname: lastname,
-          gender,
-          birthDate: birthday,
+        const response = await Axios.post(
+          "https://api.cloudinary.com/v1_1/dyqbjfpka/image/upload",
+          formData
+        );
+  
+        console.log(response);
+  
+        if (response.data.public_id) {
+          setCloudinaryImage(response.data.secure_url);
+  
+          await updateUser({
+            variables: {
+              id: user._id,
+              updateUserInput: {
+                email,
+                fname: firstname,
+                lname: lastname,
+                profileURL: response.data.public_id,
+                gender,
+                birthDate: birthday,
+              },
+            },
+            refetchQueries: [
+              { query: GETUSER_QUERY, variables: { id: user?._id } },
+            ],
+          });
+
+          showToastPositive('Your profile has been updated');
+          onClose(1);
+        } else {
+          showToastNegative('Error editing profile');
+        }
+      } catch (error) {
+        console.log(error);
+        showToastNegative('Error uploading image: ' + error.message);
+      }
+    } else {
+      await updateUser({
+        variables: {
+          id: user._id,
+          updateUserInput: {
+            email,
+            fname: firstname,
+            lname: lastname,
+            gender,
+            birthDate: birthday,
+          },
         },
-      },
-    });    
-    
-    showToastPositive('Your profile has been updated');
-    onClose(1);
+        refetchQueries: [
+          { query: GETUSER_QUERY, variables: { id: user?._id } },
+        ],
+      });
+  
+      showToastPositive('Your profile has been updated');
+      onClose(1);
+    }
   };
 
   if (!isOpen) return null;

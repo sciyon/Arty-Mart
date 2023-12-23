@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 import { UserIcon, CalendarDaysIcon, CakeIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
-import joshHutcherson from '../images/joshHutcherson.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
+import defaultProfile from '../images/defaultProfile.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
 
 import SignedOut from '../layouts/signedOut.jsx';
 import SignedIn from '../layouts/signedin.jsx';
@@ -16,14 +16,13 @@ const Social = () => {
 
   const { authState } = useAuth();
   const { isLoggedIn, user } = authState;
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const { data, refetch } = useQuery(GETUSER_QUERY, {
     variables: { id: user?._id || '' },
   });
 
   const user2 = data?.userGet;
-  
   useEffect(() => {
     refetch();
   }, [user, refetch]);
@@ -67,13 +66,19 @@ const Social = () => {
         <div className="flex items-center mb-6">
           {/* User Information */}
           <div>
-            <div className='mb-8'> {/* Skeleton rani, will make dynamic once naa na ang backend */}
-              <img
-                src={joshHutcherson} 
-                alt='Josh Hutcherson'
-                className='h-28 w-28 border-2 border-tier4 rounded-full object-cover'
-              />
-            </div>
+            {user2 && (
+              <div className='mb-8'>
+                <img
+                  src={
+                    user2.profileURL !== "N/A"
+                      ? `https://res.cloudinary.com/dyqbjfpka/image/upload/${user2.profileURL}.jpg`
+                      : defaultProfile
+                  }
+                  alt='Profile'
+                  className='h-28 w-28 border-2 border-tier4 rounded-full object-cover'
+                />
+              </div>
+            )}
             <div className='mb-4 uppercase font-medium'> {user2?.fname && user2?.lname ? `${user2.fname} ${user2.lname}` : 'N/A'}  </div>
             <div className='flex items-center mb-4'>
               <div className='flex-3 flex items-center mr-8'>

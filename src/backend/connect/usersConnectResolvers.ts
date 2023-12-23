@@ -9,6 +9,7 @@ const USER_LOGIN_MUTATION = gql`
       token 
       fname
       lname
+      profileURL
       gender
       birthDate
       role
@@ -25,6 +26,7 @@ const REGISTER_MUTATION = gql`
       email
       fname
       lname
+      profileURL
       gender
       birthDate
       role
@@ -40,6 +42,7 @@ const UPDATE_MUTATION = gql`
       email
       fname
       lname
+      profileURL
       gender
       birthDate
       status
@@ -127,6 +130,7 @@ const useRegisterMutation = () => {
         variables: {
           registerUserInput: {
             ...registerUserInput,
+            profileURL: "N/A",
             gender: "N/A",
             birthDate: "N/A",
             role: "user",
