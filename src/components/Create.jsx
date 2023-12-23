@@ -5,7 +5,7 @@ import Axios from "axios";
 import SignedIn from '../layouts/signedin.jsx';
 import chessCastle from '../images/chessCastle.png';
 import insertImage from '../images/insertImage.jpg';
-import artCreateMutation from '../backend/connect/artworkConnectResolvers.ts';
+import { artCreateMutation } from '../backend/connect/artworkConnectResolvers.ts';
 import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useToasts } from '../toastcontext.jsx';
 

@@ -9,7 +9,7 @@ import { useQuery } from '@apollo/client';
 import { GETALLARTWORKS_QUERY } from '../backend/connect/artworkConnectQueries.ts';
 import { useSession } from '../session.jsx';
 
-const ImagesMasonry = () => {
+const ImagesMasonry = ({ limit }) => {
   
   const { data, loading, error, refetch } = useQuery(GETALLARTWORKS_QUERY, {
     variables: { limit: 100 },
@@ -38,17 +38,30 @@ const ImagesMasonry = () => {
       columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1200: 4, 1500: 5 }}
     >
       <Masonry columnsCount={5} gutter="15px">
-        {artworks.map((artwork, i) => (
+        {/* Conditionally render based on the limit */}
+        {limit === 1 ? (
           <div 
-            key={i} 
-            onClick={() => handleArtworkClick(artwork._id)}>
+            onClick={() => handleArtworkClick(artworks[0]._id)}>
             <Image
-              src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
+              src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artworks[0].imageURL}.jpg`}
               className='image'
               fallback={<Shimmer />}
             />
           </div>
-        ))}
+        ) : (
+          // Render all artworks
+          artworks.map((artwork, i) => (
+            <div 
+              key={i} 
+              onClick={() => handleArtworkClick(artwork._id)}>
+              <Image
+                src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
+                className='image'
+                fallback={<Shimmer />}
+              />
+            </div>
+          ))
+        )}
       </Masonry>
     </ResponsiveMasonry>
   );

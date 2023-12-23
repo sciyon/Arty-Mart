@@ -8,13 +8,13 @@ import { useQuery } from '@apollo/client';
 import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 import { GETARTWORKSID_QUERY } from '../backend/connect/artworkConnectQueries.ts';
 import  { transactionCreateMutation } from '../backend/connect/transactionConnectResolvers.ts';
+import  { updateArtworkLikesMutation, removeArtworkLikesMutation } from '../backend/connect/artworkConnectResolvers.ts';
 import {
   HeartIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/solid";
 import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useToasts } from '../toastcontext.jsx';
-
 
 const Product = () => {
 
@@ -34,6 +34,7 @@ const Product = () => {
   const [categories, setCategories] = useState('');
   const [price, setPrice] = useState('');
   const [productQuantity, setProductQuantity] = useState('');
+  const [likes, setLikes] = useState('');
 
   const { selectedSessionID } = useSession();
   const { showToastPositive, showToastNegative } = useToasts(); 
@@ -41,6 +42,7 @@ const Product = () => {
   const { data, refetch } = useQuery(GETARTWORKSID_QUERY, {
     variables: { id: selectedSessionID },
   });
+  const [userLiked, setUserLikes] = useState((data?.likes && user?._id && data.likes.includes(user._id)) ? 'true' : 'false');
 
   useEffect(() => {
     const artworkData = data?.artworkGetByID;
@@ -53,11 +55,54 @@ const Product = () => {
     setCategories(artworkData?.categories || '');
     setPrice(artworkData?.price || '');
     setProductQuantity(artworkData?.quantity || '');
+    setLikes((artworkData?.likes && artworkData.likes.length) || 0);
   }, [data]);
 
-  const handleLikeClick = () => {
-    setLiked((prevLiked) => !prevLiked);
-  };
+
+  const { updateLikes } = updateArtworkLikesMutation();
+  const { removeLikes } = removeArtworkLikesMutation();
+  
+  const handleLikeClick = async () => {
+    if (isLoggedIn) {
+      try {
+        const likeInput = {
+          artworkID: artID,
+          userID: artistID,
+        };
+  
+        if (liked) {
+          const { result, error } = await removeLikes(likeInput);
+  
+          if (result) {
+            console.log('Like removed successfully:', result);
+            setUserLikes(result.data.likeArtworkRemove.likes.includes(user._id) ? 'true' : '')
+          } else if (error) {
+            console.error('Error removing like:', error);
+          }
+        } else {
+          const { result, error } = await updateLikes(likeInput);
+  
+          if (result) {
+            console.log('Like added successfully:', result);
+            setUserLikes('true')
+          } else if (error) {
+            console.error('Error adding like:', error);
+            setUserLikes('')
+          }
+        }
+  
+        setLiked((prevLiked) => !prevLiked);
+  
+        await refetch();
+  
+      } catch (error) {
+        console.error('An unexpected error occurred:', error);
+       setUserLikes('')
+      }
+    } else {
+      showToastNegative('User must be logged in to like artwork');
+    }
+  };  
 
   const handleChange = (event) => {
     setComment(event.target.value);
@@ -141,17 +186,19 @@ const Product = () => {
             />
           </div>
           <div className="flex pl-5 pr-8 py-2 border-b-2 mb-4 border-tier4" />
-          <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center">
-              <button
-                className={`mx-2 text-2xl ${liked ? 'text-red-900' : ''}`}
-                onClick={handleLikeClick}
-              >
-                <HeartIcon className="w-8 h-8 pt-1" />
-              </button>
-              Like
+            <div className="flex items-center justify-between mt-2">
+              <div className="flex items-center">
+                <button
+                  className={`mx-2 text-2xl ${
+                    userLiked == 'true' ? 'text-red-900' : ''
+                  }`}
+                  onClick={handleLikeClick}
+                >
+                  <HeartIcon className="w-8 h-8 pt-1" />
+                </button>
+                <p>{`Likes: ${likes}`}</p>
+              </div>
             </div>
-          </div>
           <div className="flex pl-5 pr-8 py-2 border-b-2 mb-4 border-tier4" />
           <p className='mb-4'>Please give an honest review</p>
           <div className="flex">
