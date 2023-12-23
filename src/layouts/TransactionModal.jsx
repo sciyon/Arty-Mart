@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
+import defaultProfile from '../images/defaultProfile.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
 
 import { transactionUpdateMutation } from '../backend/connect/transactionConnectResolvers.ts';
 import { useAuth } from '../backend/middleware/authContext.jsx';
@@ -41,8 +42,10 @@ function TransactionModal({ isOpen, onClose, transacID }) {
   const [artTitle, setArtTitle] = useState("N/A");
   const [buyerFname, setBuyerFname] = useState("N/A");
   const [buyerLname, setBuyerLname] = useState("N/A");
+  const [buyerEmail, setEmail] = useState("N/A");
   const [artistFname, setArtistFname] = useState("N/A");
   const [artistLname, setArtistLname] = useState("N/A");
+  const [artistEmail, setArtistEmail] = useState("N/A"); 
   const [total, setTotal] = useState("N/A");
   const [quantity, setQuantity] = useState("N/A");
   const [address, setAddress] = useState("N/A");
@@ -104,66 +107,71 @@ function TransactionModal({ isOpen, onClose, transacID }) {
           <XCircleIcon className="w-8 h-8 text-red-400 hover:text-red-600" />
         </button>
         <div className="text-center">
-          <h4 className="mb-6 mt-1 pb-1 text-lg font-semibold text-black">
+          <h4 className=" mt-1 pb-1 text-lg font-semibold text-black">
             {(artwork?.title || artTitle)} 
           </h4>
+          <img
+            src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork?.imageURL}.jpg`}
+            className='h-48 w-full object-cover rounded-2xl border-2 border-tier4 '
+            alt='Artwork Image'
+          />
         </div>
         <form>
-          <div className="mb-4 flex space-x-8">
+          <div className=" flex space-x-8">
             <div flex-1>
-              <p className="mb-1 mt-1 pb-1 text-black">
-                Buyer First Name
+              <p className=" mt-1 pb-1 text-black">
+                Buyer Full Name
               </p>
               <TEInput
                 type="text"
                 placeholder="First name"
                 className='text-black'
-                value={buyer?.fname || buyerFname}
+                value={(buyer?.fname ? buyer?.fname + ' ' : '') + (buyer?.lname || '') || (buyerFname + ' ' + buyerLname)}
                 readonly
               />
             </div>
             <div flex-1>
-              <p className="mb-1 mt-1 pb-1 text-black">
-              Buyer Last Name
+              <p className=" mt-1 pb-1 text-black">
+              Buyer Email
               </p>
               <TEInput
                 type="text"
                 placeholder="Last name"
                 className='text-black'
-                value={buyer?.lname || buyerLname}
+                value={buyer?.email || buyerEmail}
                 readOnly  
               />
             </div>
           </div>
-          <div className='mb-4 flex space-x-8'>
+          <div className=' flex space-x-8'>
             <div flex-1>
-              <p className="mb-1 mt-1 pb-1 text-black">
-              Artist First Name
+              <p className=" mt-1 pb-1 text-black">
+              Artist Full Name
               </p>
               <TEInput
                 type="text"
                 placeholder="First name"
                 className='text-black'
-                value={user2?.fname || artistFname}
+                value={(user2?.fname ? user2?.fname + ' ' : '') + (user2?.lname || '') || (artistFname + ' ' + artistLname)}
                 readonly
               />
             </div>
             <div flex-1>
-              <p className="mb-1 mt-1 pb-1 text-black">
+              <p className=" mt-1 pb-1 text-black">
               Artist Last Name
               </p>
               <TEInput
                 type="text"
                 placeholder="Last name"
                 className='text-black'
-                value={user2?.lname || artistLname}
+                value={user2?.email || artistEmail}
                 readOnly  
               />
             </div>
           </div>
-          <div className="mb-4">
+          <div className="">
             <div flex-1>
-              <p className="mb-1 mt-1 pb-1 text-black">
+              <p className=" mt-1 pb-1 text-black">
               Address
               </p>
               <TEInput
@@ -175,9 +183,9 @@ function TransactionModal({ isOpen, onClose, transacID }) {
               />
             </div>
           </div>
-          <div className='mb-4 flex space-x-8'>
+          <div className=' flex space-x-8 mb-3'>
            <div flex-1>
-              <p className="mb-1 mt-1 pb-1 text-black">
+              <p className=" mt-1 pb-1 text-black">
               Total
               </p>
               <TEInput
@@ -189,7 +197,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
               />
             </div>
             <div flex-1>
-              <p className="mb-1 mt-1 pb-1 text-black">
+              <p className=" mt-1 pb-1 text-black">
               Quantity
               </p>
               <TEInput
@@ -205,7 +213,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
             <TERipple rippleColor="light" className="w-full">
                 {transac?.status === 'Pending' ? (
                 <button
-                    className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                    className=" inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                     type="button"
                     onClick={DeactivateTransac}
                     style={{
@@ -217,7 +225,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
                 </button>
                 ) : (
                 <button
-                    className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                    className=" inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                     type="button"
                     onClick={ActivateTransac}
                     style={{
