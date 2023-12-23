@@ -71,7 +71,9 @@ const ImagesMasonry = ({ limit }) => {
         artworks.map((artwork, i) => (
           <div 
             key={i} 
-            onClick={() => handleArtworkClick(artwork._id)}>
+            onClick={() => handleArtworkClick(artwork._id)}
+            className="hover:scale-90 transition-transform"
+            >
             <Image
               src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
               className='image'
@@ -87,6 +89,7 @@ const ImagesMasonry = ({ limit }) => {
             <div
               key={i}
               onClick={() => handleArtworkClick(artwork._id)}
+              className="hover:scale-90 transition-transform"
             >
               <Image
                 src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
@@ -105,6 +108,7 @@ const ImagesMasonry = ({ limit }) => {
             <div
               key={i}
               onClick={() => handleArtworkClick(artwork._id)}
+              className="hover:scale-90 transition-transform"
             >
               <Image
                 src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
@@ -125,6 +129,7 @@ const ImagesMasonry = ({ limit }) => {
               <div
                 key={i}
                 onClick={() => handleArtworkClick(artwork._id)}
+                className="hover:scale-90 transition-transform"
               >
                 <Image
                   src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}

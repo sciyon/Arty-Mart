@@ -8,7 +8,6 @@ import Social from './Social.jsx';
 import Product from './Product.jsx';
 import Transaction from './Transaction.jsx';
 import AdminDashboard from './AdminDashboard.jsx';
-import AdminArt from './AdminArt.jsx';
 import AdminUsers from './AdminUsers.jsx';
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
           <Route path="/Product"  element={<Product/>} />
           <Route path="/Transaction"  element={<Transaction/>} />
           <Route path="/AdminDashboard"  element={<AdminDashboard/>} />
-          <Route path="/AdminArt"  element={<AdminArt/>} />
           <Route path="/AdminUsers"  element={<AdminUsers/>} />
         </Routes>
       </div>
