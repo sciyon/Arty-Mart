@@ -147,10 +147,6 @@ const useRegisterMutation = () => {
   return { register };
 };
 
-
-
-
-
 const useUpdateMutation = () => {
   const [updateUser, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_MUTATION);
 

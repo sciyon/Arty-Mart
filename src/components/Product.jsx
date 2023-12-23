@@ -5,7 +5,7 @@ import SignedIn from '../layouts/signedin.jsx';
 import { useSession } from '../session.jsx';
 import { useQuery } from '@apollo/client';
 import { GETARTWORKSID_QUERY } from '../backend/connect/artworkConnectQueries.ts';
-import  transactionCreateMutation from '../backend/connect/transactionConnectResolver.ts';
+import  { transactionCreateMutation } from '../backend/connect/transactionConnectResolvers.ts';
 import {
   HeartIcon,
   PaperAirplaneIcon,
@@ -109,7 +109,7 @@ const Product = () => {
       showToastNegative('User must log in to order');
     }
 
-    setPrice('')
+    setAddress('')
     setChosenQuantity('')
   };
   

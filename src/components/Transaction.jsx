@@ -108,7 +108,7 @@ const Transaction = () => {
                     </>
                     <TransactionModal
                       isOpen={openTransactionModal}
-                      onClose={() => setOpenAdminUsersModal(false)}
+                      onClose={() => setOpenTransactionModal(false)}
                       transacID={selectedTransactionId}
                     ></TransactionModal>
                 </React.Fragment>

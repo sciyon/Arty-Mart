@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
-import { useUpdateMutation } from '../backend/connect/usersConnectResolvers.ts';
+import { transactionUpdateMutation } from '../backend/connect/transactionConnectResolvers.ts';
 import { useQuery } from '@apollo/client';
 import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 import { GETUSERTRANSACTION_QUERY } from '../backend/connect/transactionConnectQueries.ts';
@@ -21,20 +21,19 @@ function TransactionModal({ isOpen, onClose, transacID }) {
   
   const transac = data?.transactionGetFromID;
 
-  const { artwork } = useQuery(GETARTWORKSID_QUERY, {
+  const { data: { artworkGetByID: artwork } = {} } = useQuery(GETARTWORKSID_QUERY, {
     variables: { id: transac?.artworkID || '' },
   });
+
   
-  const { buyer } = useQuery(GETUSER_QUERY, {
+  const { data: { userGet: buyer } = {} } = useQuery(GETUSER_QUERY, {
     variables: { id: transac?.buyerID || '' },
-  });  
-
+  });
   
-  const { user } = useQuery(GETUSER_QUERY, {
-    variables: { id: transac?.artistID || '' },
-  });  
-
-
+  const { data: { userGet: user } = {} } = useQuery(GETUSER_QUERY, {
+    variables: { id: transac?.artistID || '' }, 
+  });
+    
   const [artTitle, setArtTitle] = useState("N/A");
   const [buyerFname, setBuyerFname] = useState("N/A");
   const [buyerLname, setBuyerLname] = useState("N/A");
@@ -45,37 +44,39 @@ function TransactionModal({ isOpen, onClose, transacID }) {
   const [address, setAddress] = useState("N/A");
   const status = transac?.status || "N/A";
 
-  const { updateUser } = useUpdateMutation();
+  const { updateTransaction } = transactionUpdateMutation();
 
   const CloseProfile = () => {  
     onClose();
   };
 
-//   const DeactivateProfile = async () => {
-//     await updateUser({
-//       variables: {
-//         id: userId,
-//         updateUserInput: {
-//           status: "deactivated",
-//         },
-//       },
-//     });
-//     showToastPositive(user?.fname + ' has been deactivated');
-//     onClose();
-//   };
+  const DeactivateTransac = async () => {
+    console.log(transac._id)
+    await updateTransaction({
+      variables: {
+        id: transac._id,
+        updateTransactionInput: {
+          status: "Completed",
+        },
+      },
+    });
+    showToastPositive(artwork?.title + ' transaction has been completed');
+    onClose();
+  };
   
-//   const ActivateProfile = async () => {
-//     await updateUser({
-//       variables: {
-//         id: userId,
-//         updateUserInput: {
-//           status: "activated",
-//         },
-//       },
-//     });
-//     showToastPositive(user?.fname + ' has been reactivated');
-//     onClose();
-//   };
+  const ActivateTransac = async () => {
+    console.log(transac._id)
+    await updateTransaction({
+      variables: {
+        id: transac._id,
+        updateTransactionInput: {
+          status: "Pending",
+        },
+      },
+    });
+    showToastNegative(artwork?.title + '  transaction is still pending');
+    onClose();
+  };
   
 
   if (!isOpen) return null;
@@ -189,12 +190,12 @@ function TransactionModal({ isOpen, onClose, transacID }) {
             </div>
            </div>
           <div className="flex justify-end">
-            {/* <TERipple rippleColor="light" className="w-full">
-                {status === 'activated' ? (
+            <TERipple rippleColor="light" className="w-full">
+                {transac?.status === 'Pending' ? (
                 <button
                     className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                     type="button"
-                    onClick={DeactivateProfile}
+                    onClick={DeactivateTransac}
                     style={{
                     background:
                         'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
@@ -206,7 +207,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
                 <button
                     className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                     type="button"
-                    onClick={ActivateProfile}
+                    onClick={ActivateTransac}
                     style={{
                     background:
                         'linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))',
@@ -215,7 +216,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
                     COMPLETED
                 </button>
                 )}
-            </TERipple> */}
+            </TERipple>
           </div>
         </form>
       </div>

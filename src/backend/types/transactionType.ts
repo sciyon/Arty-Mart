@@ -20,6 +20,16 @@ const transactionType = `#graphql
     address: String
   }
  
+  input UpdateTransactionInput{
+    buyerID: String,
+    artworkID: String,
+    artistID: String,
+    total: Int,
+    status: String,
+    quantity: Int,
+    address: String
+}
+
   type Query {
     transactionGetFromUser(buyerID: String!): [Transaction]
     transactionGetFromArtist(artistID: String!): [Transaction]
@@ -29,6 +39,7 @@ const transactionType = `#graphql
  
   type Mutation {
     transactionCreate(transactionInput: TransactionInput): Transaction!
+    transactionUpdate(ID: ID!, updateTransactionInput: UpdateTransactionInput): Transaction
   }
 `;
 
