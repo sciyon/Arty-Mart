@@ -39,15 +39,28 @@ const ImagesMasonry = ({ limit }) => {
   const sortedArtworks = [...artworks].sort((a, b) => b.likes.length - a.likes.length);
   
   const sortedArtworks2 = [...artworks].sort((a, b) => {
-    if (a.artistID === user?._id && b.artistID !== user?._id) {
+    if (a.artist === user?._id && b.artist !== user?._id) {
       return -1; // a comes first
-    } else if (a.artistID !== user?._id && b.artistID === user?._id) {
+    } else if (a.artist !== user?._id && b.artist === user?._id) {
       return 1; // b comes first
     } else {
       return 0; // no change in order
     }
   });
   
+  const sortedArtworks3 = [...artworks].sort((a, b) => {
+    const aLikedByUser = a.likes.includes(user?._id);
+    const bLikedByUser = b.likes.includes(user?._id);
+  
+    if (aLikedByUser && !bLikedByUser) {
+      return -1; // a comes first
+    } else if (!aLikedByUser && bLikedByUser) {
+      return 1; // b comes first
+    } else {
+      return 0; // no change in order
+    }
+  });
+
   return (
     <ResponsiveMasonry
       columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1200: 4, 1500: 5 }}
@@ -103,17 +116,23 @@ const ImagesMasonry = ({ limit }) => {
 
         {/* Test Case: limit === 4 */}
         {limit === 4 && (
-          artworks.slice(0, 4).map((artwork, i) => (
-            <div 
-              key={i} 
-              onClick={() => handleArtworkClick(artwork._id)}>
-              <Image
-                src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
-                className='image'
-                fallback={<Shimmer />}
-              />
-            </div>
-          ))
+          console.log('Limit is 4. Artworks:', artworks),
+          artworks
+            .filter((artwork) => {
+              return artwork.likes?.includes(user?._id);
+            })
+            .map((artwork, i) => (
+              <div
+                key={i}
+                onClick={() => handleArtworkClick(artwork._id)}
+              >
+                <Image
+                  src={`https://res.cloudinary.com/dyqbjfpka/image/upload/${artwork.imageURL}.jpg`}
+                  className='image'
+                  fallback={<Shimmer />}
+                />
+              </div>
+            ))
         )}
       </Masonry>
     </ResponsiveMasonry>

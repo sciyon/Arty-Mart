@@ -67,7 +67,7 @@ const Product = () => {
       try {
         const likeInput = {
           artworkID: artID,
-          userID: artistID,
+          userID: user?._id,
         };
   
         if (liked) {

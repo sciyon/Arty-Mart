@@ -36,12 +36,16 @@ const Social = () => {
     switch (activeColumn) {
       case 'posts':
         return (
-        <div className='mb-6'>
-          <ImagesMasonry limit={3} />
-        </div>
-        )
+          <div className='mb-6'>
+            <ImagesMasonry limit={3} />
+          </div>
+        );
       case 'likes':
-        return <div>Content for Likes</div>;
+        return (
+          <div className='mb-6'>
+            <ImagesMasonry limit={4} />
+          </div>
+        );
       default:
         return null;
     }
