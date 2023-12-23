@@ -4,6 +4,7 @@ import { TEInput, TERipple } from 'tw-elements-react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
 import { transactionUpdateMutation } from '../backend/connect/transactionConnectResolvers.ts';
+import { useAuth } from '../backend/middleware/authContext.jsx';
 import { useQuery } from '@apollo/client';
 import { GETUSER_QUERY } from '../backend/connect/usersConnectQueries.ts';
 import { GETUSERTRANSACTION_QUERY } from '../backend/connect/transactionConnectQueries.ts';
@@ -14,6 +15,9 @@ import { useToasts } from '../toastcontext.jsx';
 function TransactionModal({ isOpen, onClose, transacID }) {
 
   const { showToastPositive, showToastNegative } = useToasts(); 
+  const { authState } = useAuth();
+  const { isLoggedIn, user } = authState;
+
 
   const { data } = useQuery(GETUSERTRANSACTION_QUERY, {
     variables: { id: transacID || '' },
@@ -30,7 +34,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
     variables: { id: transac?.buyerID || '' },
   });
   
-  const { data: { userGet: user } = {} } = useQuery(GETUSER_QUERY, {
+  const { data: { userGet: user2 } = {} } = useQuery(GETUSER_QUERY, {
     variables: { id: transac?.artistID || '' }, 
   });
     
@@ -51,29 +55,39 @@ function TransactionModal({ isOpen, onClose, transacID }) {
   };
 
   const DeactivateTransac = async () => {
-    await updateTransaction({
-      variables: {
-        id: transac._id,
-        updateTransactionInput: {
-          status: "Completed",
+    if(user?._id != transac?.artistID){
+      await updateTransaction({
+        variables: {
+          id: transac._id,
+          updateTransactionInput: {
+            status: "Completed",
+          },
         },
-      },
-    });
-    showToastPositive(artwork?.title + ' transaction has been completed');
-    onClose();
+      });
+      showToastPositive(artwork?.title + ' transaction has been completed');
+      onClose();
+    } else {
+      showToastNegative('User cannot edit his own transactions');
+      onClose();
+    }
   };
   
   const ActivateTransac = async () => {
-    await updateTransaction({
-      variables: {
-        id: transac._id,
-        updateTransactionInput: {
-          status: "Pending",
+    if(user?._id != transac?.artistID){
+      await updateTransaction({
+        variables: {
+          id: transac._id,
+          updateTransactionInput: {
+            status: "Pending",
+          },
         },
-      },
-    });
-    showToastNegative(artwork?.title + '  transaction is still pending');
-    onClose();
+      });
+      showToastNegative(artwork?.title + '  transaction is still pending');
+      onClose();
+    } else {
+      showToastNegative('User cannot edit his own transactions');
+      onClose();
+    }
   };
   
 
@@ -130,7 +144,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
                 type="text"
                 placeholder="First name"
                 className='text-black'
-                value={user?.fname || artistFname}
+                value={user2?.fname || artistFname}
                 readonly
               />
             </div>
@@ -142,7 +156,7 @@ function TransactionModal({ isOpen, onClose, transacID }) {
                 type="text"
                 placeholder="Last name"
                 className='text-black'
-                value={user?.lname || artistLname}
+                value={user2?.lname || artistLname}
                 readOnly  
               />
             </div>
