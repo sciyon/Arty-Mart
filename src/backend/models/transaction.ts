@@ -6,7 +6,9 @@ interface Transaction {
   artworkID: Types.ObjectId;
   artistID: Types.ObjectId;
   total: Number,
-  status: String
+  quantity: Number,
+  status: String,
+  address: String
 }
  
 const TransactionSchema = new Schema<Transaction>({
@@ -15,7 +17,9 @@ const TransactionSchema = new Schema<Transaction>({
   artworkID: { type: Schema.Types.ObjectId, ref:'Artwork', required: true },
   artistID: { type: Schema.Types.ObjectId, ref:'Artist', required: true },
   total: { type: Number, required: true },
+  quantity: { type: Number, required: true },
   status: { type: String, required: true },
+  address: { type: String, required: true },
 })
  
 const Transaction = model<Transaction>('transaction', TransactionSchema);

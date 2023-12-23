@@ -56,7 +56,7 @@ const resolvers = {
   },
 
   Mutation: {
-    async userRegister(_, { registerUserInput: { email, password, fname, lname, gender, birthDate, address, role, status, createdOn } }){
+    async userRegister(_, { registerUserInput: { email, password, fname, lname, profileURL, gender, birthDate,  role, status, createdOn } }){
       
       const oldUser = await User.findOne({ email });
       
@@ -77,14 +77,14 @@ const resolvers = {
       );
 
       
-      const newUser =  new User({ email, password, token, fname, lname, gender, birthDate, address, role, status,  createdOn });
+      const newUser =  new User({ email, password, token, fname, lname, profileURL, gender, birthDate, role, status,  createdOn });
 
       await newUser.save();
 
       return newUser;
     },
 
-    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, gender, birthDate, address, status, role }}){
+    async userUpdate(_, { ID, updateUserInput: { email, password, fname, lname, profileURL, gender, birthDate,  status, role }}){
       try {
         const update = await User.findOneAndUpdate(
           { _id: ID }, 
@@ -94,9 +94,9 @@ const resolvers = {
               password,
               fname, 
               lname, 
+              profileURL,
               gender, 
               birthDate, 
-              address,
               status,
               role
             }

@@ -6,7 +6,7 @@ import SignedOut from '../layouts/signedOut.jsx';
 import SignedIn from '../layouts/signedin.jsx';
 import { useAuth } from '../backend/middleware/authContext.jsx';
 
-import ImagesMasonry from '../layouts/ImagesMasonry.jsx'; 
+import ImagesMasonry from '../layouts/imagesMasonry.jsx'; 
 
 
 const Trending = () => {
@@ -32,7 +32,7 @@ const Trending = () => {
         </div>
       </div>
       <div className='relative top-36 ml-36 mr-16'>
-          <ImagesMasonry />
+          <ImagesMasonry limit={2} />
       </div>
     </>
   );

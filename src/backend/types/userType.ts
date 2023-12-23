@@ -6,9 +6,9 @@ const userType = `#graphql
     token: String,
     fname: String, 
     lname: String,
+    profileURL: String,
     gender: String,
     birthDate: String,
-    address: String,
     role: String,
     status: String,
     followers: [String],
@@ -27,9 +27,9 @@ const userType = `#graphql
     token: String,
     fname: String, 
     lname: String,
+    profileURL: String,
     gender: String,
     birthDate: String,
-    address: String,
     role: String,
     status: String,
     createdOn: String
@@ -45,10 +45,10 @@ const userType = `#graphql
     password: String,
     fname: String, 
     lname: String,
+    profileURL: String,
     gender: String,
     birthDate: String,
     status: String,
-    address: String,
     role: String
 }
   

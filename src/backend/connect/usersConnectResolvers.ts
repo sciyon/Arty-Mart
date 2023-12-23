@@ -1,4 +1,3 @@
-// usersConnect.ts
 import { gql, useMutation } from "@apollo/client";
 import { useAuth } from '../middleware/authContext.jsx';
 
@@ -10,6 +9,7 @@ const USER_LOGIN_MUTATION = gql`
       token 
       fname
       lname
+      profileURL
       gender
       birthDate
       role
@@ -26,11 +26,11 @@ const REGISTER_MUTATION = gql`
       email
       fname
       lname
+      profileURL
       gender
       birthDate
       role
       status
-      address
       createdOn
     }
   }
@@ -42,6 +42,7 @@ const UPDATE_MUTATION = gql`
       email
       fname
       lname
+      profileURL
       gender
       birthDate
       status
@@ -129,9 +130,9 @@ const useRegisterMutation = () => {
         variables: {
           registerUserInput: {
             ...registerUserInput,
+            profileURL: "N/A",
             gender: "N/A",
             birthDate: "N/A",
-            address: "N/A",
             role: "user",
             status: "activated",
             createdOn: new Date().toISOString().split('T')[0],
@@ -149,10 +150,6 @@ const useRegisterMutation = () => {
 
   return { register };
 };
-
-
-
-
 
 const useUpdateMutation = () => {
   const [updateUser, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_MUTATION);

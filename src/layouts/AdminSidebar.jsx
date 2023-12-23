@@ -49,14 +49,6 @@ const AdminSidebar = ({ sidebarOpen, toggleSidebar }) => {
           )}
         </div>
       </Link>
-      <Link to="/AdminArt" className="flex items-center pl-5 mb-6 mt-6 hover:bg-tier4">
-        <div className={`h-14 flex items-center`}>
-          <PaintBrushIcon className={`h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5`} />
-          {sidebarOpen && (
-            <h5 className={`transition-opacity duration-300`}>Artworks</h5>
-          )}
-        </div>
-      </Link>
       <div className="absolute h-14 flex items-center pl-5 bottom-20">
           <ArrowLeftOnRectangleIcon 
             className="h-8 w-8 text-white cursor-pointer hover:scale-90 hover:text-red-300 mr-5" 

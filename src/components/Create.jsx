@@ -1,62 +1,96 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { TEInput, TERipple } from 'tw-elements-react';
-import SignedIn from '../layouts/signedin.jsx';
+import Axios from "axios";
 
+import SignedIn from '../layouts/signedin.jsx';
 import chessCastle from '../images/chessCastle.png';
+import insertImage from '../images/insertImage.jpg';
+import { artCreateMutation } from '../backend/connect/artworkConnectResolvers.ts';
+import { useAuth } from '../backend/middleware/authContext.jsx';
+import { useToasts } from '../toastcontext.jsx';
 
 const Create = () => {
 
-  const [videoFile, setVideoFile] = useState(null);
-  const [imageFile1, setImageFile1] = useState(null);
-  const [imageFile2, setImageFile2] = useState(null);
-  const [imageFile3, setImageFile3] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [upload, setUpload] = useState('');
 
-  const handleVideoUpload = (event) => {
+  const { authState } = useAuth();
+  const { isLoggedIn, user } = authState;
+  const { showToastPositive, showToastNegative } = useToasts(); 
+
+
+  const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    setVideoFile(file);
+    setImageFile(file);
   };
 
-  const handleImageUpload1 = (event) => {
-    const file = event.target.files[0];
-    setImageFile1(file);
-  };
+  const [cloudinaryImage, setCloudinaryImage] = useState("")
+  const { artnew } = artCreateMutation();  
 
-  const handleImageUpload2 = (event) => {
-    const file = event.target.files[0];
-    setImageFile2(file);
-  };
+  //Upload art key to monggodb and save image to cloudinare
+  const uploadArt = async () => {
 
-  const handleImageUpload3 = (event) => {
-    const file = event.target.files[0];
-    setImageFile3(file);
-  };
-
-  //Add backend for this part
-  const uploadArt = () => {
-    setVideoFile(null);
-    setImageFile1(null);
-    setImageFile2(null);
-    setImageFile3(null);
+    if (isLoggedIn && imageFile && title && type && category && description && price && quantity ) {
+      try {
+        const formData = new FormData();
+        formData.append("file", imageFile);
+        formData.append("upload_preset", "s51txqkb");
+  
+        const response = await Axios.post(
+          "https://api.cloudinary.com/v1_1/dyqbjfpka/image/upload",
+          formData
+        );
+  
+        console.log(response);
+  
+        if (response.data.public_id) {
+          setCloudinaryImage(response.data.secure_url);
+  
+          const { result, error: artCreateError } = await artnew({
+            imageURL: response.data.public_id,
+            artist: user._id,
+            title: title,
+            type: type,
+            categories: category,
+            description: description,
+            price: price,
+            quantity: quantity
+          });
+  
+          if (result) {
+            showToastPositive(title + ' has been successfully published!');
+          } else {
+            showToastNegative(artCreateError || 'Artwork credentials invalid');
+          }
+        } else {
+          showToastNegative('Image not successfully stored');
+        }
+      } catch (error) {
+        console.log(error);
+        showToastNegative('Error uploading image: ' + error.message);
+      }
+    } else {
+      showToastNegative('Please fill out the important fields');
+    }
+  
+    // Reset form fields and file input values
+    setImageFile(null);
     setTitle('');
     setType('');
     setPrice('');
     setQuantity('');
     setDescription('');
     setCategory('');
-  
     const fileInputs = document.querySelectorAll('input[type="file"]');
     fileInputs.forEach((input) => {
       input.value = '';
     });
-  };
-  
+  };  
 
   return (
     <>
@@ -66,35 +100,27 @@ const Create = () => {
           {/* First Column */}
           <div className="flex-1 ml-8">
 
-            <p htmlFor="videoUpload" className='mb-3 mt-12'>Upload Art Video:</p>
-            <input 
-              className="mb-6 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
-              type="file" 
-              id="videoUpload" 
-              accept="video/*" 
-              onChange={handleVideoUpload} />
-
-            <p htmlFor="imageUpload" className='mb-3'>Upload Art Image:</p>
+            <p htmlFor="imageUpload" className='mb-3 mt-12'>Upload Art Image:</p>
             <input 
               className="mb-4 block w-68 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
               type="file" 
               id="imageUpload1" 
               accept="image/*"
-              onChange={handleImageUpload1} />
+              onChange={handleImageUpload} />
 
-            <input 
-              className="mb-4 block w-68 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
-              type="file" 
-              id="imageUpload2" 
-              accept="image/*"
-              onChange={handleImageUpload2} />
-
-            <input 
-              className="mb-4 block w-68 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"
-              type="file" 
-              id="imageUpload3" 
-              accept="image/*"
-              onChange={handleImageUpload3} />
+            
+            <div className='w-30% h-30% flex items-center justify-center'>
+              {cloudinaryImage && (
+                <div className="w-64 h-48 mb-5">
+                  <img src={cloudinaryImage} alt="Artwork" className="w-full h-full object-cover" />
+                </div>
+              )}
+              {!cloudinaryImage && (
+                <div className="w-64 h-48 mb-5">
+                  <img src={insertImage} alt="Insert Image" className="w-full h-full object-cover" />
+                </div>
+              )}
+            </div>
 
             <p htmlFor="imageUpload" className='mb-3'>Artpiece Title:</p>
             <div className='w-1/2 mb-6'>
@@ -253,7 +279,6 @@ const Create = () => {
             </div>
 
           </div>
-
         </div>
       </div>    
     </>

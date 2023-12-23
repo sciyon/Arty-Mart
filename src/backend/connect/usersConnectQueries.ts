@@ -7,6 +7,7 @@ export const GETUSER_QUERY = gql`
       email
       fname
       lname
+      profileURL
       gender
       birthDate
       role
@@ -25,6 +26,7 @@ export const GETALLUSER_QUERY = gql`
       token
       fname
       lname
+      profileURL
       gender
       birthDate
       role

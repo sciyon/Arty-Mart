@@ -3,7 +3,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 import { UserIcon, CalendarDaysIcon, CakeIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
-import joshHutcherson from '../images/joshHutcherson.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
+import defaultProfile from '../images/defaultProfile.jpg'; //Skeleton rani na image, we make it dynamic soon lezgo
+import ImagesMasonry from '../layouts/imagesMasonry.jsx'; 
 
 import SignedOut from '../layouts/signedOut.jsx';
 import SignedIn from '../layouts/signedin.jsx';
@@ -16,14 +17,13 @@ const Social = () => {
 
   const { authState } = useAuth();
   const { isLoggedIn, user } = authState;
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const { data, refetch } = useQuery(GETUSER_QUERY, {
     variables: { id: user?._id || '' },
   });
 
   const user2 = data?.userGet;
-  
   useEffect(() => {
     refetch();
   }, [user, refetch]);
@@ -35,13 +35,17 @@ const Social = () => {
   const renderContent = () => {
     switch (activeColumn) {
       case 'posts':
-        return <div>Content for Posts</div>;
-      case 'followers':
-        return <div>Content for Followers</div>;
-      case 'following':
-        return <div>Content for Following</div>;
+        return (
+          <div className='mb-6'>
+            <ImagesMasonry limit={3} />
+          </div>
+        );
       case 'likes':
-        return <div>Content for Likes</div>;
+        return (
+          <div className='mb-6'>
+            <ImagesMasonry limit={4} />
+          </div>
+        );
       default:
         return null;
     }
@@ -67,13 +71,19 @@ const Social = () => {
         <div className="flex items-center mb-6">
           {/* User Information */}
           <div>
-            <div className='mb-8'> {/* Skeleton rani, will make dynamic once naa na ang backend */}
-              <img
-                src={joshHutcherson} 
-                alt='Josh Hutcherson'
-                className='h-28 w-28 border-2 border-tier4 rounded-full object-cover'
-              />
-            </div>
+            {user2 && (
+              <div className='mb-8'>
+                <img
+                  src={
+                    user2.profileURL !== "N/A"
+                      ? `https://res.cloudinary.com/dyqbjfpka/image/upload/${user2.profileURL}.jpg`
+                      : defaultProfile
+                  }
+                  alt='Profile'
+                  className='h-28 w-28 border-2 border-tier4 rounded-full object-cover'
+                />
+              </div>
+            )}
             <div className='mb-4 uppercase font-medium'> {user2?.fname && user2?.lname ? `${user2.fname} ${user2.lname}` : 'N/A'}  </div>
             <div className='flex items-center mb-4'>
               <div className='flex-3 flex items-center mr-8'>
@@ -109,18 +119,6 @@ const Social = () => {
             onClick={() => handleColumnClick('posts')}
           >
             Posts
-          </div>
-          <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'followers' ? 'text-tier3' : ''}`}
-            onClick={() => handleColumnClick('followers')}
-          >
-            Followers
-          </div>
-          <div
-            className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'following' ? 'text-tier3' : ''}`}
-            onClick={() => handleColumnClick('following')}
-          >
-            Following
           </div>
           <div
             className={`flex-1 ml-8 uppercase cursor-pointer text-lg font-medium text-center ${activeColumn === 'likes' ? 'text-tier3' : ''}`}

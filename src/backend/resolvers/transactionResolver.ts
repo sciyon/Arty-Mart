@@ -69,10 +69,10 @@ const transactionResolver = {
   },
  
   Mutation: {
-    async transactionCreate(_, { transactionInput: { buyerID, artworkID, artistID, total, status } }) {
+    async transactionCreate(_, { transactionInput: { buyerID, artworkID, artistID, total, status, address, quantity } }) {
       try {
         const newTransaction = new Transaction({
-          buyerID, artworkID, artistID, total, status
+          buyerID, artworkID, artistID, total, status, address, quantity
         })
     
         // Save the populated transaction
@@ -89,7 +89,39 @@ const transactionResolver = {
           extensions: { code: 'TRANSACTION_CREATION_ERROR_2' },
         });
       }
-    }
+    },
+
+    async transactionUpdate(_, { ID, updateTransactionInput: { buyerID, artworkID, artistID, total, status, address, quantity }}){
+      try {
+        const update = await Transaction.findOneAndUpdate(
+          { _id: ID }, 
+          { 
+            $set: { 
+              buyerID, 
+              artworkID,
+              artistID, 
+              total, 
+              status, 
+              address, 
+              quantity
+            }
+          }, 
+          { new: true }
+        );
+    
+        if (!update) {
+          throw new GraphQLError("Failed to update transaction.", {
+            extensions: { code: 'UPDATE_TRANSACTION_FAILED_1' }
+          });
+        }
+        return update;
+    
+      } catch (error) {
+        throw new GraphQLError("Failed to update transaction.", {
+          extensions: { code: 'UPDATE_TRANSACTION_FAILED_2' }
+        });
+      }
+    },       
   }  
 }
 
