@@ -51,7 +51,6 @@ function TransactionModal({ isOpen, onClose, transacID }) {
   };
 
   const DeactivateTransac = async () => {
-    console.log(transac._id)
     await updateTransaction({
       variables: {
         id: transac._id,
@@ -65,7 +64,6 @@ function TransactionModal({ isOpen, onClose, transacID }) {
   };
   
   const ActivateTransac = async () => {
-    console.log(transac._id)
     await updateTransaction({
       variables: {
         id: transac._id,
